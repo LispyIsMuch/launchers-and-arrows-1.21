@@ -3,7 +3,9 @@
 	"package": "net.stln.launchersandarrows.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+	],
+	"client": [
+		"FovMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

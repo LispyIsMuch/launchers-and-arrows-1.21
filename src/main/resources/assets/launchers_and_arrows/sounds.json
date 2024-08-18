@@ -1,0 +1,8 @@
+{
+  "bow_release" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.bow_release" ,
+    "sounds" :  [
+      "launchers_and_arrows:bow_release"
+    ]
+  }
+}

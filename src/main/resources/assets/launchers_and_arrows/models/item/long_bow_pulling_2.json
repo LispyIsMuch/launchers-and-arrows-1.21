@@ -1,0 +1,6 @@
+{
+  "parent": "launchers_and_arrows:item/long_bow",
+  "textures": {
+    "layer0": "launchers_and_arrows:item/long_bow_pulling_2"
+  }
+}

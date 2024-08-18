@@ -9,10 +9,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.LaunchersAndArrowsDataGenerator;
+import net.stln.launchersandarrows.item.bow.LongBowItem;
 
 public class ItemInit {
 
-    public static final Item LONG_BOW = registerItem("long_bow", new BowItem(new Item.Settings()));
+    public static final Item LONG_BOW = registerItem("long_bow", new LongBowItem(new Item.Settings().maxDamage(512)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);

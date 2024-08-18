@@ -3,6 +3,7 @@ package net.stln.launchersandarrows;
 import net.fabricmc.api.ModInitializer;
 
 import net.stln.launchersandarrows.item.ItemInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,5 +14,6 @@ public class LaunchersAndArrows implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ItemInit.registerModItems();
+		SoundInit.registerSoundEvents();
 	}
 }
