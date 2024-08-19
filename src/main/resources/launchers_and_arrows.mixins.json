@@ -3,6 +3,7 @@
 	"package": "net.stln.launchersandarrows.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"BypassDamageCooldownProjectileMixin"
 	],
 	"client": [
 		"FovMixin"

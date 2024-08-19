@@ -13,6 +13,8 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
 import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,25 +22,34 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PersistentProjectileEntity.class)
 public abstract class BypassDamageCooldownProjectileMixin extends Entity implements BypassDamageCooldownProjectile {
 
-    TrackedData<Boolean> BYPASS_DAMAGE_COOLDOWN = DataTracker.registerData(Entity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    public BypassDamageCooldownProjectileMixin(EntityType<? extends ProjectileEntity> entityType, World world) {
+
+    public BypassDamageCooldownProjectileMixin(EntityType<?> entityType, World world) {
         super(entityType, world);
     }
 
+    @Shadow
+    protected abstract void initDataTracker(DataTracker.Builder builder);
+
     @Override
     public void setBypass(boolean flag) {
-        this.dataTracker.set(BYPASS_DAMAGE_COOLDOWN, flag);
+        this.dataTracker.set(BYPASS_DAMAGE_COOLDOWN, Boolean.valueOf(flag));
     }
 
     @Override
     public boolean getBypass() {
-        return this.dataTracker.get(BYPASS_DAMAGE_COOLDOWN);
+        if (this.dataTracker.get(BYPASS_DAMAGE_COOLDOWN) != null) {
+            return this.dataTracker.get(BYPASS_DAMAGE_COOLDOWN);
+        }
+        return false;
     }
 
-    @Inject(method = "initDataTracker", at = {@At("HEAD")})
+    @Unique
+    private static final TrackedData<Boolean> BYPASS_DAMAGE_COOLDOWN = DataTracker.registerData(BypassDamageCooldownProjectileMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Inject(method = "initDataTracker", at = {@At("TAIL")})
     protected void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
-        builder.add(BYPASS_DAMAGE_COOLDOWN, false);
+        builder.add(BYPASS_DAMAGE_COOLDOWN, Boolean.FALSE);
     }
 
     @Inject(method = "onEntityHit", at = {@At("HEAD")})
@@ -56,6 +67,8 @@ public abstract class BypassDamageCooldownProjectileMixin extends Entity impleme
 
     @Inject(method = "readCustomDataFromNbt", at = {@At("TAIL")})
     protected void readCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-        setBypass(nbt.getBoolean("BypassDamageCooldown"));
+        if (nbt.contains("BypassDamageCooldown")) {
+            setBypass(nbt.getBoolean("BypassDamageCooldown"));
+        }
     }
 }
