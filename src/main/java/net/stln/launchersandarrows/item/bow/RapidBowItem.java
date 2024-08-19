@@ -7,7 +7,6 @@ import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
@@ -18,24 +17,17 @@ import net.stln.launchersandarrows.sound.SoundInit;
 
 import java.util.List;
 
-public class LongBowItem extends BowItem implements FovModifierItem {
+public class RapidBowItem extends BowItem {
 
-    float fov = 1.0f;
-
-    public LongBowItem(Settings settings) {
+    public RapidBowItem(Settings settings) {
         super(settings);
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_END.value(), SoundCategory.PLAYERS, 1f, 1.5f);
-        world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE.value(), SoundCategory.PLAYERS, 1f, 0.5f);
+        world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE.value(), SoundCategory.PLAYERS, 1f, 2.0f);
         return super.use(world, user, hand);
-    }
-
-    @Override
-    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        this.fov = 1.0f - getPullProgress(getMaxUseTime(stack, user) - remainingUseTicks) / 4.0f;
     }
 
     @Override
@@ -45,10 +37,10 @@ public class LongBowItem extends BowItem implements FovModifierItem {
             if (!itemStack.isEmpty()) {
                 int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
                 float f = getPullProgress(i);
-                if (!((double)f < 0.3)) {
+                if (!((double)f < 0.5)) {
                     List<ItemStack> list = load(stack, itemStack, playerEntity);
                     if (world instanceof ServerWorld serverWorld && !list.isEmpty()) {
-                        this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, f * 6.0F, 1.0F, f == 1.0F, null);
+                        this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, f * 1.5F, 1.0F, f == 1.0F, null);
                     }
 
                     world.playSound(
@@ -59,7 +51,7 @@ public class LongBowItem extends BowItem implements FovModifierItem {
                             SoundInit.BOW_RELEASE,
                             SoundCategory.PLAYERS,
                             1.5F,
-                            0.75F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
+                            2.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
                     );
                     playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
                 }
@@ -67,8 +59,14 @@ public class LongBowItem extends BowItem implements FovModifierItem {
         }
     }
 
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        this.onStoppedUsing(stack, world, user, 0);
+        return super.finishUsing(stack, world, user);
+    }
+
     public static float getPullProgress(int useTicks) {
-        float f = (float)useTicks / 40.0F;
+        float f = (float)useTicks / 10.0F;
         f = (f * f + f * 2.0F) / 3.0F;
         if (f > 1.0F) {
             f = 1.0F;
@@ -78,12 +76,7 @@ public class LongBowItem extends BowItem implements FovModifierItem {
     }
 
     @Override
-    public float getFov() {
-        return fov;
-    }
-
-    @Override
-    public void resetFov() {
-        fov = 1.0f;
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+        return 10;
     }
 }

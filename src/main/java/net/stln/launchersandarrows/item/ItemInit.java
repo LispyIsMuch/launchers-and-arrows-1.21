@@ -10,10 +10,12 @@ import net.minecraft.util.Identifier;
 import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.LaunchersAndArrowsDataGenerator;
 import net.stln.launchersandarrows.item.bow.LongBowItem;
+import net.stln.launchersandarrows.item.bow.RapidBowItem;
 
 public class ItemInit {
 
     public static final Item LONG_BOW = registerItem("long_bow", new LongBowItem(new Item.Settings().maxDamage(512)));
+    public static final Item RAPID_BOW = registerItem("rapid_bow", new RapidBowItem(new Item.Settings().maxDamage(256)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
@@ -24,6 +26,7 @@ public class ItemInit {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(LONG_BOW);
+            entries.add(RAPID_BOW);
         });
     }
 }

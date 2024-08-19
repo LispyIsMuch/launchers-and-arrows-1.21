@@ -51,5 +51,6 @@ public abstract class FovMixin {
 					cir.setReturnValue(fov);
 				}
 			}
+		LaunchersAndArrows.LOGGER.info("PLAYER NULL");
 	}
 }
