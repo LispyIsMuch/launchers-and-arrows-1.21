@@ -1,4 +1,5 @@
 {
-  "item.launchers_and_arrows.long_bow": "ロングボウ",
-  "item.launchers_and_arrows.rapid_bow": "ラピッドボウ"
+  "item.launchers_and_arrows.long_bow": "長弓",
+  "item.launchers_and_arrows.rapid_bow": "速射弓",
+  "item.launchers_and_arrows.multishot_bow": "拡散弓"
 }

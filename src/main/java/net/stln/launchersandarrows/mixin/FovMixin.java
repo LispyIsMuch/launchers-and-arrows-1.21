@@ -43,9 +43,6 @@ public abstract class FovMixin {
 					if (playerEntity.getAbilities().getWalkSpeed() == 0.0F || Float.isNaN(fov) || Float.isInfinite(fov)) {
 						fov = 1.0F;
 					}
-					if (playerEntity.isSneaking()) {
-						fov *= 0.5f;
-					}
 
 					fov = MathHelper.lerp(MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue(), 1.0F, fov);
 					cir.setReturnValue(fov);

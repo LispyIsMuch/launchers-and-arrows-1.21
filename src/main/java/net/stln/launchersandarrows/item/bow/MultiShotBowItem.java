@@ -34,7 +34,7 @@ public class MultiShotBowItem extends BowItem implements FovModifierItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_END.value(), SoundCategory.PLAYERS, 1f, 1.5f);
-        world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE.value(), SoundCategory.PLAYERS, 1f, 0.5f);
+        world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE.value(), SoundCategory.PLAYERS, 1f, 1.0f);
         return super.use(world, user, hand);
     }
 
@@ -46,7 +46,7 @@ public class MultiShotBowItem extends BowItem implements FovModifierItem {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity playerEntity) {
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 3; j++) {
                 ItemStack itemStack = playerEntity.getProjectileType(stack);
                 if (!itemStack.isEmpty()) {
                     int i = this.getMaxUseTime(stack, user) - remainingUseTicks;

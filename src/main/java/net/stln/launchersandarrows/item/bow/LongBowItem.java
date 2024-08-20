@@ -36,6 +36,9 @@ public class LongBowItem extends BowItem implements FovModifierItem {
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         this.fov = 1.0f - getPullProgress(getMaxUseTime(stack, user) - remainingUseTicks) / 4.0f;
+        if (user.isSneaking()) {
+            this.fov *= 0.5f;
+        }
     }
 
     @Override

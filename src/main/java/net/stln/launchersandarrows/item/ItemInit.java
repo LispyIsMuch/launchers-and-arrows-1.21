@@ -12,12 +12,14 @@ import net.stln.launchersandarrows.LaunchersAndArrowsDataGenerator;
 import net.stln.launchersandarrows.item.bow.LongBowItem;
 import net.stln.launchersandarrows.item.bow.MultiShotBowItem;
 import net.stln.launchersandarrows.item.bow.RapidBowItem;
+import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 
 public class ItemInit {
 
     public static final Item LONG_BOW = registerItem("long_bow", new LongBowItem(new Item.Settings().maxDamage(512)));
-    public static final Item RAPID_BOW = registerItem("rapid_bow", new RapidBowItem(new Item.Settings().maxDamage(256)));
-    public static final Item MULTISHOT_BOW = registerItem("multishot_bow", new MultiShotBowItem(new Item.Settings().maxDamage(1024)));
+    public static final Item RAPID_BOW = registerItem("rapid_bow", new RapidBowItem(new Item.Settings().maxDamage(512)));
+    public static final Item MULTISHOT_BOW = registerItem("multishot_bow", new MultiShotBowItem(new Item.Settings().maxDamage(512)));
+    public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
@@ -30,6 +32,7 @@ public class ItemInit {
             entries.add(LONG_BOW);
             entries.add(RAPID_BOW);
             entries.add(MULTISHOT_BOW);
+            entries.add(CROSSLAUNCHER);
         });
     }
 }
