@@ -35,11 +35,9 @@ public abstract class FovMixin {
 
 	@Inject(at = @At("HEAD"), method = "getFovMultiplier", cancellable = true)
 	private void injected(CallbackInfoReturnable<Float> cir) {
-			if (playerEntity != null) {
-				ItemStack itemStack = playerEntity.getMainHandStack();
-				if (itemStack.getItem() instanceof FovModifierItem) {
-					FovModifierItem item = (FovModifierItem) itemStack.getItem();
-					float fov = item.getFov();
+				ItemStack itemStack = playerEntity.getActiveItem();
+				if (itemStack.getItem() instanceof FovModifierItem item) {
+                    float fov = item.getFov();
 					item.resetFov();
 						if (playerEntity.getAbilities().flying) {
 							fov *= 1.1F;
@@ -51,8 +49,7 @@ public abstract class FovMixin {
 						}
 
 						fov = MathHelper.lerp(MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue(), 1.0F, fov);
-						cir.setReturnValue(fov);
+                    cir.setReturnValue(fov);
 					}
-			}
 	}
 }
