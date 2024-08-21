@@ -28,14 +28,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(AbstractClientPlayerEntity.class)
-public abstract class FovMixin extends PlayerEntity {
+public abstract class FovMixin {
 
 	@Unique
-	AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity)(PlayerEntity)this;
-
-	public FovMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
-		super(world, pos, yaw, gameProfile);
-	}
+	AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity) (Object) this;
 
 	@Inject(at = @At("HEAD"), method = "getFovMultiplier", cancellable = true)
 	private void injected(CallbackInfoReturnable<Float> cir) {
@@ -45,7 +41,6 @@ public abstract class FovMixin extends PlayerEntity {
 					FovModifierItem item = (FovModifierItem) itemStack.getItem();
 					float fov = item.getFov();
 					item.resetFov();
-					if (!Float.isNaN(fov)) {
 						if (playerEntity.getAbilities().flying) {
 							fov *= 1.1F;
 						}
@@ -58,7 +53,6 @@ public abstract class FovMixin extends PlayerEntity {
 						fov = MathHelper.lerp(MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue(), 1.0F, fov);
 						cir.setReturnValue(fov);
 					}
-				}
 			}
 	}
 }

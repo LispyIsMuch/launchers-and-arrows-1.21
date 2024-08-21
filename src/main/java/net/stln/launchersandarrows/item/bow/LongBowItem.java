@@ -20,7 +20,7 @@ import java.util.List;
 
 public class LongBowItem extends BowItem implements FovModifierItem {
 
-    float fov = Float.NaN;
+    float fov = 1.0F;
 
     public LongBowItem(Settings settings) {
         super(settings);
@@ -87,6 +87,6 @@ public class LongBowItem extends BowItem implements FovModifierItem {
 
     @Override
     public void resetFov() {
-        this.fov = Float.NaN;
+        this.fov = 1.0F;
     }
 }
