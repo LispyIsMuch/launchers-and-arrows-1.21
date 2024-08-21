@@ -94,20 +94,7 @@ public class CrossLauncherItem extends CrossbowItem {
         ItemStack itemStack = user.getStackInHand(hand);
         ChargedProjectilesComponent chargedProjectilesComponent = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
         if (chargedProjectilesComponent != null && !chargedProjectilesComponent.isEmpty()) {
-            if (chargedProjectilesComponent.contains(Items.AMETHYST_SHARD) && world instanceof ServerWorld serverWorld) {
-                List<ItemStack> stacks = new java.util.ArrayList<>(List.of());
-                for (int i = 0; i < 10; i++) {
-                    stacks.add(new ItemStack(Items.AMETHYST_SHARD));
-                }
-                itemStack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT);
-                this.shootAll(serverWorld, user, hand, itemStack, stacks, getSpeed(chargedProjectilesComponent), 10.0F, true, null);
-                if (user instanceof ServerPlayerEntity serverPlayerEntity) {
-                    Criteria.SHOT_CROSSBOW.trigger(serverPlayerEntity, itemStack);
-                    serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(itemStack.getItem()));
-                }
-            } else {
-                this.shootAll(world, user, hand, itemStack, getSpeed(chargedProjectilesComponent), 1.0F, null);
-            }
+            this.shootAll(world, user, hand, itemStack, getSpeed(chargedProjectilesComponent), 1.0F, null);
             if (getShootSound(chargedProjectilesComponent) != null) {
                 user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(),
                         getShootSound(chargedProjectilesComponent), user.getSoundCategory(),
@@ -123,6 +110,48 @@ public class CrossLauncherItem extends CrossbowItem {
             return TypedActionResult.fail(itemStack);
         }
     }
+
+    @Override
+    protected void shootAll(
+            ServerWorld world,
+            LivingEntity shooter,
+            Hand hand,
+            ItemStack stack,
+            List<ItemStack> projectiles,
+            float speed,
+            float divergence,
+            boolean critical,
+            @Nullable LivingEntity target
+    ) {
+        float f = EnchantmentHelper.getProjectileSpread(world, stack, shooter, 0.0F);
+        float g = projectiles.size() == 1 ? 0.0F : 2.0F * f / (float)(projectiles.size() - 1);
+        float h = (float)((projectiles.size() - 1) % 2) * g / 2.0F;
+        float i = 1.0F;
+
+        for (int j = 0; j < projectiles.size(); j++) {
+            ItemStack itemStack = (ItemStack)projectiles.get(j);
+            if (!itemStack.isEmpty()) {
+                float k = h + i * (float)((j + 1) / 2) * g;
+                i = -i;
+                if (itemStack.isOf(Items.AMETHYST_SHARD)) {
+                    for (int l = 0; l < 10; l++) {
+                        ProjectileEntity projectileEntity = this.createArrowEntity(world, shooter, stack, itemStack, critical);
+                        this.shoot(shooter, projectileEntity, j, speed, divergence * 10, k, target);
+                        world.spawnEntity(projectileEntity);
+                    }
+                } else {
+                    ProjectileEntity projectileEntity = this.createArrowEntity(world, shooter, stack, itemStack, critical);
+                    this.shoot(shooter, projectileEntity, j, speed, divergence, k, target);
+                    world.spawnEntity(projectileEntity);
+                }
+                stack.damage(this.getWeaponStackDamage(itemStack), shooter, LivingEntity.getSlotForHand(hand));
+                if (stack.isEmpty()) {
+                    break;
+                }
+            }
+        }
+    }
+
 
     @Override
     protected void shoot(LivingEntity shooter, ProjectileEntity projectile, int index, float speed, float divergence, float yaw, @Nullable LivingEntity target) {
@@ -239,7 +268,7 @@ public class CrossLauncherItem extends CrossbowItem {
             };
 
         } else if (projectileStack.isOf(Items.FIRE_CHARGE)) {
-            ProjectileEntity entity = new FireballEntity(world, shooter, new Vec3d(0, 0, 0), 3);
+            ProjectileEntity entity = new FireballEntity(world, shooter, new Vec3d(0, 0, 0), 1);
             entity.setPos(shooter.getX(), shooter.getEyeY() - 0.1F, shooter.getZ());
             return entity;
 

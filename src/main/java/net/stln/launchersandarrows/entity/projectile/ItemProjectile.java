@@ -101,7 +101,7 @@ public class ItemProjectile extends ThrownItemEntity {
             }
         } else if (this.getStack().isOf(Items.INK_SAC)) {
             if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 400, 0));
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 100, 0));
             }
         } else if (this.getStack().isOf(Items.AMETHYST_SHARD)) {
             damage = 1;

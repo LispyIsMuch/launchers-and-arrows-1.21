@@ -48,12 +48,12 @@ public abstract class BypassDamageCooldownProjectileMixin extends Entity impleme
     private static final TrackedData<Boolean> BYPASS_DAMAGE_COOLDOWN = DataTracker.registerData(BypassDamageCooldownProjectileMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Inject(method = "initDataTracker", at = {@At("TAIL")})
-    protected void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+    private void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(BYPASS_DAMAGE_COOLDOWN, Boolean.FALSE);
     }
 
     @Inject(method = "onEntityHit", at = {@At("HEAD")})
-    protected void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
+    private void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         Entity target = entityHitResult.getEntity();
         if (getBypass() && target instanceof LivingEntity) {
             target.timeUntilRegen = 0;
@@ -61,12 +61,12 @@ public abstract class BypassDamageCooldownProjectileMixin extends Entity impleme
     }
 
     @Inject(method = "writeCustomDataToNbt", at = {@At("TAIL")})
-    protected void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+    private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("BypassDamageCooldown", getBypass());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = {@At("TAIL")})
-    protected void readCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+    private void readCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         if (nbt.contains("BypassDamageCooldown")) {
             setBypass(nbt.getBoolean("BypassDamageCooldown"));
         }

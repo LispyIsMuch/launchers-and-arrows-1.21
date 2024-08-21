@@ -1,5 +1,6 @@
 package net.stln.launchersandarrows.mixin;
 
+import com.mojang.authlib.GameProfile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -7,9 +8,12 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.item.FovModifierItem;
 import org.jetbrains.annotations.Nullable;
@@ -24,11 +28,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(AbstractClientPlayerEntity.class)
-public abstract class FovMixin {
+public abstract class FovMixin extends PlayerEntity {
+
+	public FovMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
+		super(world, pos, yaw, gameProfile);
+	}
 
 	@Inject(at = @At("HEAD"), method = "getFovMultiplier", cancellable = true)
 	private void injected(CallbackInfoReturnable<Float> cir) {
-			AbstractClientPlayerEntity playerEntity = MinecraftClient.getInstance().player;
+		AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity)(PlayerEntity)this;
 			if (playerEntity != null) {
 				ItemStack itemStack = playerEntity.getMainHandStack();
 				if (itemStack.getItem() instanceof FovModifierItem) {
