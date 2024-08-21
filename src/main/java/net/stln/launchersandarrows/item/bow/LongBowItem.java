@@ -82,11 +82,11 @@ public class LongBowItem extends BowItem implements FovModifierItem {
 
     @Override
     public float getFov() {
-        return fov;
+        return this.fov;
     }
 
     @Override
     public void resetFov() {
-        fov = 1.0f;
+        this.fov = 1.0f;
     }
 }
