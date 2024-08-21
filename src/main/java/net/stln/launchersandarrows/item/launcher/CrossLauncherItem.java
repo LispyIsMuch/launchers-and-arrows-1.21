@@ -78,7 +78,8 @@ public class CrossLauncherItem extends CrossbowItem {
             .or(stack -> stack.isOf(Items.ENDER_PEARL))
             .or(stack -> stack.isOf(Items.TRIDENT))
             .or(stack -> stack.isOf(Items.DRAGON_BREATH))
-            .or(stack -> stack.isOf(Items.END_ROD));
+            .or(stack -> stack.isOf(Items.END_ROD))
+            .or(stack -> stack.isOf(Items.ENDER_EYE));
 
     public CrossLauncherItem(Settings settings) {
         super(settings);
@@ -313,7 +314,7 @@ public class CrossLauncherItem extends CrossbowItem {
             v = 0.5F;
         } else if (stack.contains(Items.SPLASH_POTION) || stack.contains(Items.LINGERING_POTION)
                 || stack.contains(Items.SLIME_BALL) || stack.contains(Items.TORCH)
-                || stack.contains(Items.GLOW_INK_SAC) || stack.contains(Items.INK_SAC)) {
+                || stack.contains(Items.GLOW_INK_SAC) || stack.contains(Items.INK_SAC) || stack.contains(Items.ENDER_EYE)) {
             v = 3.0F;
         } else if (stack.contains(Items.SNOWBALL) || stack.contains(Items.EGG) || stack.contains(Items.ENDER_PEARL) || stack.contains(Items.TRIDENT)) {
             v = 5.0F;
@@ -356,6 +357,8 @@ public class CrossLauncherItem extends CrossbowItem {
             soundEvent = SoundEvents.ENTITY_SHULKER_SHOOT;
         } else if (stack.contains(Items.AMETHYST_SHARD)) {
             soundEvent = SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK;
+        } else if (stack.contains(Items.ENDER_EYE)) {
+            soundEvent = SoundEvents.ENTITY_ENDER_EYE_DEATH;
         } else {
             soundEvent = null;
         }

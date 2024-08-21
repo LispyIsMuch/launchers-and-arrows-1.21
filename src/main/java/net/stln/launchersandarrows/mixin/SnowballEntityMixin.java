@@ -15,7 +15,9 @@ public class SnowballEntityMixin {
     protected void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         if (!entityHitResult.getEntity().getWorld().isClient) {
             Entity entity = entityHitResult.getEntity();
-            entity.setFrozenTicks(entity.getFrozenTicks() + 30);
+            if (entity.canFreeze()) {
+                entity.setFrozenTicks(Math.min(entity.getFrozenTicks() + 30, entity.getMinFreezeDamageTicks() + 200));
+            }
         }
     }
 }
