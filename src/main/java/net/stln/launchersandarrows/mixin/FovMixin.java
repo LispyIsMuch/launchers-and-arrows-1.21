@@ -30,30 +30,34 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(AbstractClientPlayerEntity.class)
 public abstract class FovMixin extends PlayerEntity {
 
+	@Unique
+	AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity)(PlayerEntity)this;
+
 	public FovMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
 		super(world, pos, yaw, gameProfile);
 	}
 
 	@Inject(at = @At("HEAD"), method = "getFovMultiplier", cancellable = true)
 	private void injected(CallbackInfoReturnable<Float> cir) {
-		AbstractClientPlayerEntity playerEntity = (AbstractClientPlayerEntity)(PlayerEntity)this;
 			if (playerEntity != null) {
 				ItemStack itemStack = playerEntity.getMainHandStack();
 				if (itemStack.getItem() instanceof FovModifierItem) {
 					FovModifierItem item = (FovModifierItem) itemStack.getItem();
 					float fov = item.getFov();
 					item.resetFov();
-					if (playerEntity.getAbilities().flying) {
-						fov *= 1.1F;
-					}
+					if (!Float.isNaN(fov)) {
+						if (playerEntity.getAbilities().flying) {
+							fov *= 1.1F;
+						}
 
-					fov *= ((float)playerEntity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) / playerEntity.getAbilities().getWalkSpeed() + 1.0F) / 2.0F;
-					if (playerEntity.getAbilities().getWalkSpeed() == 0.0F || Float.isNaN(fov) || Float.isInfinite(fov)) {
-						fov = 1.0F;
-					}
+						fov *= ((float) playerEntity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED) / playerEntity.getAbilities().getWalkSpeed() + 1.0F) / 2.0F;
+						if (playerEntity.getAbilities().getWalkSpeed() == 0.0F || Float.isNaN(fov) || Float.isInfinite(fov)) {
+							fov = 1.0F;
+						}
 
-					fov = MathHelper.lerp(MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue(), 1.0F, fov);
-					cir.setReturnValue(fov);
+						fov = MathHelper.lerp(MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue(), 1.0F, fov);
+						cir.setReturnValue(fov);
+					}
 				}
 			}
 	}
