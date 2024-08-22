@@ -6,6 +6,7 @@ import net.stln.launchersandarrows.entity.EntityInit;
 import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.sound.SoundInit;
+import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,5 +20,6 @@ public class LaunchersAndArrows implements ModInitializer {
 		SoundInit.registerSoundEvents();
 		EntityInit.registerModEntitiesRenderer();
 		ParticleInit.registerParticleTypes();
+		StatusEffectInit.registerStatusEffect();
 	}
 }

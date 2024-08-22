@@ -3,11 +3,11 @@
   "package": "net.stln.launchersandarrows.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ArrowEffectMixin",
     "BypassDamageCooldownProjectileMixin",
     "SnowballEntityMixin"
   ],
   "client": [
-    "ArrowEffectMixin",
     "FovMixin",
     "PlayerEntityRendererMixin",
     "RenderFirstPersonItemMixin"

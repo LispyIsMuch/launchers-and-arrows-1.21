@@ -17,6 +17,6 @@ public class ParticleInit {
     }
 
     public static void registerParticleClient() {
-        ParticleFactoryRegistry.getInstance().register(ParticleInit.FLAME_EFFECT, EffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.FLAME_EFFECT, FlameEffectParticle.Factory::new);
     }
 }
