@@ -7,6 +7,7 @@
     "SnowballEntityMixin"
   ],
   "client": [
+    "ArrowEffectMixin",
     "FovMixin",
     "PlayerEntityRendererMixin",
     "RenderFirstPersonItemMixin"

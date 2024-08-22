@@ -1,6 +1,7 @@
 package net.stln.launchersandarrows.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.item.ArrowItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -21,6 +22,14 @@ public class ItemInit {
     public static final Item MULTISHOT_BOW = registerItem("multishot_bow", new MultiShotBowItem(new Item.Settings().maxDamage(512)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
 
+    public static final Item FLAME_ARROW = registerItem("flame_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item FREEZING_ARROW = registerItem("freezing_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item LIGHTNING_ARROW = registerItem("lightning_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item CORROSIVE_ARROW = registerItem("corrosive_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item FLOOD_ARROW = registerItem("flood_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item WAVE_ARROW = registerItem("wave_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item PIERCING_ARROW = registerItem("piercing_arrow", new ArrowItem(new Item.Settings()));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
     }
@@ -33,6 +42,13 @@ public class ItemInit {
             entries.add(RAPID_BOW);
             entries.add(MULTISHOT_BOW);
             entries.add(CROSSLAUNCHER);
+            entries.add(FLAME_ARROW);
+            entries.add(FREEZING_ARROW);
+            entries.add(LIGHTNING_ARROW);
+            entries.add(CORROSIVE_ARROW);
+            entries.add(FLOOD_ARROW);
+            entries.add(WAVE_ARROW);
+            entries.add(PIERCING_ARROW);
         });
     }
 }
