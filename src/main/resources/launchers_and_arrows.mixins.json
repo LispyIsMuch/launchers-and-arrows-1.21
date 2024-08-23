@@ -5,6 +5,7 @@
   "mixins": [
     "ArrowEffectMixin",
     "BypassDamageCooldownProjectileMixin",
+    "LivingEntityMixin",
     "SnowballEntityMixin"
   ],
   "client": [

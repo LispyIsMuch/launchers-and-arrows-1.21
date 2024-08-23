@@ -6,25 +6,24 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 
-public class FlameEffectParticle extends SpriteBillboardParticle {
+public class LightningEffectParticle extends SpriteBillboardParticle {
 
     private final SpriteProvider spriteProvider;
 
-    public FlameEffectParticle(ClientWorld clientWorld, double x, double y, double z, double vx, double vy, double vz, SpriteProvider spriteProvider) {
+    public LightningEffectParticle(ClientWorld clientWorld, double x, double y, double z, double vx, double vy, double vz, SpriteProvider spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
-        this.velocityX = (Math.random() - 0.5) / 100;
-        this.velocityY = (Math.random() - 0.5) / 100;
-        this.velocityZ = (Math.random() - 0.5) / 100;
+        this.velocityX = 0;
+        this.velocityY = 0;
+        this.velocityZ = 0;
         this.maxAge = 4 + this.random.nextInt(6);
         this.scale = 0.15F;
-        this.gravityStrength = -0.1F;
+        this.gravityStrength = 0.0F;
         this.spriteProvider = spriteProvider;
         this.setSpriteForAge(spriteProvider);
     }
     @Override
     public int getBrightness(float tint) {
-        int i = this.maxAge / 2;
-        return (int) Math.max(15728880 - (this.age >= i ? ((float) (this.age - i) / i * 7864440) : 0), tint);
+        return 15728880;
     }
 
     @Override
@@ -64,7 +63,7 @@ public class FlameEffectParticle extends SpriteBillboardParticle {
         }
 
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            return new FlameEffectParticle(clientWorld, d, e, f, g, h, i, this.spriteProvider);
+            return new LightningEffectParticle(clientWorld, d, e, f, g, h, i, this.spriteProvider);
         }
     }
 }

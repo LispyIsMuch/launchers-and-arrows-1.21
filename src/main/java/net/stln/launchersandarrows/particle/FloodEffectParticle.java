@@ -6,18 +6,19 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 
-public class FlameEffectParticle extends SpriteBillboardParticle {
+public class FloodEffectParticle extends SpriteBillboardParticle {
 
     private final SpriteProvider spriteProvider;
 
-    public FlameEffectParticle(ClientWorld clientWorld, double x, double y, double z, double vx, double vy, double vz, SpriteProvider spriteProvider) {
+    public FloodEffectParticle(ClientWorld clientWorld, double x, double y, double z, double vx, double vy, double vz, SpriteProvider spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.velocityX = (Math.random() - 0.5) / 100;
         this.velocityY = (Math.random() - 0.5) / 100;
         this.velocityZ = (Math.random() - 0.5) / 100;
         this.maxAge = 4 + this.random.nextInt(6);
+        this.alpha = 0.8F;
         this.scale = 0.15F;
-        this.gravityStrength = -0.1F;
+        this.gravityStrength = 0.5F;
         this.spriteProvider = spriteProvider;
         this.setSpriteForAge(spriteProvider);
     }
@@ -43,8 +44,8 @@ public class FlameEffectParticle extends SpriteBillboardParticle {
         this.velocityY = this.velocityY * (double)this.velocityMultiplier;
         this.velocityZ = this.velocityZ * (double)this.velocityMultiplier;
 
-        if (this.age >= this.maxAge * 0.6F) {
-                this.alpha = (this.maxAge - this.age) / (this.maxAge * 0.4F);
+        if (this.age >= this.maxAge * 0.8F) {
+                this.alpha = (this.maxAge - this.age) / (this.maxAge * 0.2F) * 0.6F + 0.2F;
             }
             this.setSpriteForAge(this.spriteProvider);
     }
@@ -64,7 +65,7 @@ public class FlameEffectParticle extends SpriteBillboardParticle {
         }
 
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            return new FlameEffectParticle(clientWorld, d, e, f, g, h, i, this.spriteProvider);
+            return new FloodEffectParticle(clientWorld, d, e, f, g, h, i, this.spriteProvider);
         }
     }
 }

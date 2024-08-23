@@ -10,11 +10,31 @@ import net.stln.launchersandarrows.LaunchersAndArrows;
 public class StatusEffectInit {
 
     public static final StatusEffect FLAME_ACCUMULATION_EFFECT = new FlameAccumulationEffect();
+    public static final StatusEffect FROST_ACCUMULATION_EFFECT = new FrostAccumulationEffect();
+    public static final StatusEffect LIGHTNING_ACCUMULATION_EFFECT = new LightningAccumulationEffect();
+    public static final StatusEffect ACID_ACCUMULATION_EFFECT = new AcidAccumulationEffect();
+    public static final StatusEffect FLOOD_ACCUMULATION_EFFECT = new FloodAccumulationEffect();
+    public static final StatusEffect SHOCK_EXPLOSION_EFFECT = new ShockExplosionEffect();
     public static final RegistryEntry<StatusEffect> FLAME_ACCUMULATION = register("flame_accumulation", new FlameAccumulationEffect());
+    public static final RegistryEntry<StatusEffect> FROST_ACCUMULATION = register("frost_accumulation", new FrostAccumulationEffect());
+    public static final RegistryEntry<StatusEffect> LIGHTNING_ACCUMULATION = register("lightning_accumulation", new LightningAccumulationEffect());
+    public static final RegistryEntry<StatusEffect> ACID_ACCUMULATION = register("acid_accumulation", new AcidAccumulationEffect());
+    public static final RegistryEntry<StatusEffect> FLOOD_ACCUMULATION = register("flood_accumulation", new FloodAccumulationEffect());
+    public static final RegistryEntry<StatusEffect> SHOCK_EXPLOSION = register("shock_explosion", new ShockExplosionEffect());
 
     public static void registerStatusEffect() {
         Registry.register(Registries.STATUS_EFFECT,
                 Identifier.of(LaunchersAndArrows.MOD_ID, "flame_accumulation"), FLAME_ACCUMULATION_EFFECT);
+        Registry.register(Registries.STATUS_EFFECT,
+                Identifier.of(LaunchersAndArrows.MOD_ID, "frost_accumulation"), FROST_ACCUMULATION_EFFECT);
+        Registry.register(Registries.STATUS_EFFECT,
+                Identifier.of(LaunchersAndArrows.MOD_ID, "lightning_accumulation"), LIGHTNING_ACCUMULATION_EFFECT);
+        Registry.register(Registries.STATUS_EFFECT,
+                Identifier.of(LaunchersAndArrows.MOD_ID, "acid_accumulation"), ACID_ACCUMULATION_EFFECT);
+        Registry.register(Registries.STATUS_EFFECT,
+                Identifier.of(LaunchersAndArrows.MOD_ID, "flood_accumulation"), FLOOD_ACCUMULATION_EFFECT);
+        Registry.register(Registries.STATUS_EFFECT,
+                Identifier.of(LaunchersAndArrows.MOD_ID, "shock_explosion"), SHOCK_EXPLOSION_EFFECT);
     }
 
     private static RegistryEntry<StatusEffect> register(String id, StatusEffect statusEffect) {

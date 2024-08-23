@@ -10,13 +10,28 @@ import net.stln.launchersandarrows.LaunchersAndArrows;
 
 public class ParticleInit {
 
-    public static final SimpleParticleType FLAME_EFFECT = FabricParticleTypes.simple();
+    public static final SimpleParticleType FLAME_EFFECT = FabricParticleTypes.simple(true);
+    public static final SimpleParticleType FROST_EFFECT = FabricParticleTypes.simple(true);
+    public static final SimpleParticleType LIGHTNING_EFFECT = FabricParticleTypes.simple(true);
+    public static final SimpleParticleType ACID_EFFECT = FabricParticleTypes.simple(true);
+    public static final SimpleParticleType FLOOD_EFFECT = FabricParticleTypes.simple(true);
+    public static final SimpleParticleType WAVE_EFFECT = FabricParticleTypes.simple(true);
 
     public static void registerParticleTypes() {
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "flame_effect"), FLAME_EFFECT);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "frost_effect"), FROST_EFFECT);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "lightning_effect"), LIGHTNING_EFFECT);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "acid_effect"), ACID_EFFECT);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "flood_effect"), FLOOD_EFFECT);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "wave_effect"), WAVE_EFFECT);
     }
 
     public static void registerParticleClient() {
         ParticleFactoryRegistry.getInstance().register(ParticleInit.FLAME_EFFECT, FlameEffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.FROST_EFFECT, FrostEffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.LIGHTNING_EFFECT, LightningEffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.ACID_EFFECT, AcidEffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.FLOOD_EFFECT, FloodEffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.WAVE_EFFECT, WaveEffectParticle.Factory::new);
     }
 }

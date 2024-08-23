@@ -2,5 +2,18 @@
   "item.launchers_and_arrows.long_bow": "Long Bow",
   "item.launchers_and_arrows.rapid_bow": "Rapid Bow",
   "item.launchers_and_arrows.multishot_bow": "Multishot Bow",
-  "item.launchers_and_arrows.crosslauncher": "CrossLauncher"
+  "item.launchers_and_arrows.crosslauncher": "CrossLauncher",
+  "item.launchers_and_arrows.flame_arrow": "Flame Arrow",
+  "item.launchers_and_arrows.freezing_arrow": "Freezing Arrow",
+  "item.launchers_and_arrows.lightning_arrow": "Lightning Arrow",
+  "item.launchers_and_arrows.corrosive_arrow": "Corrosive Arrow",
+  "item.launchers_and_arrows.flood_arrow": "Flood Arrow",
+  "item.launchers_and_arrows.wave_arrow": "Wave Arrow",
+  "item.launchers_and_arrows.piercing_arrow": "Piercing Arrow",
+  "effect.launchers_and_arrows.flame_accumulation": "Flame Accumulation",
+  "effect.launchers_and_arrows.frost_accumulation": "Frost Accumulation",
+  "effect.launchers_and_arrows.lightning_accumulation": "Lightning Accumulation",
+  "effect.launchers_and_arrows.acid_accumulation": "Acid Accumulation",
+  "effect.launchers_and_arrows.flood_accumulation": "Flood Accumulation",
+  "effect.launchers_and_arrows.shock_explosion": "Shock Explosion"
 }
