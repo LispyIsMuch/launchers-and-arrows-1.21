@@ -15,4 +15,9 @@ public class FloodAccumulationEffect extends AccumulationEffect {
     public void decreaseAmplifier() {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, amplifier - 1));
     }
+
+    @Override
+    public void applyEffect() {
+        entity.removeStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION);
+    }
 }

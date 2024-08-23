@@ -16,4 +16,10 @@ public class FlameAccumulationEffect extends AccumulationEffect {
     public void decreaseAmplifier() {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, amplifier - 1));
     }
+
+    @Override
+    public void applyEffect() {
+        entity.setOnFireFor(20);
+        entity.removeStatusEffect(StatusEffectInit.FLAME_ACCUMULATION);
+    }
 }

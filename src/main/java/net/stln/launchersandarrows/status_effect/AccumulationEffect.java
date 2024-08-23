@@ -18,6 +18,14 @@ public abstract class AccumulationEffect extends StatusEffect {
     }
 
     @Override
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+        if (entity.getMaxHealth() <= amplifier + 1) {
+            applyEffect();
+        }
+        return super.applyUpdateEffect(entity, amplifier);
+    }
+
+    @Override
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         this.entity = entity;
@@ -26,11 +34,12 @@ public abstract class AccumulationEffect extends StatusEffect {
 
     @Override
     public void onRemoved(AttributeContainer attributeContainer) {
-        super.onRemoved(attributeContainer);
         if (entity != null && amplifier > 0) {
             decreaseAmplifier();
         }
     }
 
     public abstract void decreaseAmplifier();
+
+    public abstract void applyEffect();
 }

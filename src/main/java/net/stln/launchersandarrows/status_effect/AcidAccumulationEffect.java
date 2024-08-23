@@ -15,4 +15,9 @@ public class AcidAccumulationEffect extends AccumulationEffect {
     public void decreaseAmplifier() {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, amplifier - 1));
     }
+
+    @Override
+    public void applyEffect() {
+        entity.removeStatusEffect(StatusEffectInit.ACID_ACCUMULATION);
+    }
 }

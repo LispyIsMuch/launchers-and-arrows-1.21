@@ -102,7 +102,9 @@ public abstract class LivingEntityMixin {
         } else {
             entity.getDataTracker().set(AMPLIFIER, amplifier);
         }
-        LaunchersAndArrows.LOGGER.info(String.valueOf(amplifier));
+        if (amplifier != 0) {
+            LaunchersAndArrows.LOGGER.info(String.valueOf(amplifier));
+        }
 
 //        if (particleEffect != null) {
 //            float w = entity.getWidth();

@@ -122,10 +122,19 @@ public abstract class ArrowEffectMixin {
     private void onHit(LivingEntity target, CallbackInfo ci) {
         if (itemStack.isIn(ModItemTags.ARROWS_WITH_EFFECT)) {
             if (itemStack.isOf(ItemInit.FLAME_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 100, 0));
+                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.FREEZING_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 100, 0));
+                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, 15));
+            }
+            else if (itemStack.isOf(ItemInit.LIGHTNING_ARROW)) {
+                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, 15));
+            }
+            else if (itemStack.isOf(ItemInit.CORROSIVE_ARROW)) {
+                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, 15));
+            }
+            else if (itemStack.isOf(ItemInit.FLOOD_ARROW)) {
+                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.WAVE_ARROW)) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffectInit.SHOCK_EXPLOSION, 50, 0));

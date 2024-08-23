@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class LightningAccumulationEffect extends AccumulationEffect {
@@ -12,5 +13,11 @@ public class LightningAccumulationEffect extends AccumulationEffect {
     @Override
     public void decreaseAmplifier() {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, amplifier - 1));
+    }
+
+    @Override
+    public void applyEffect() {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 400, 7));
+        entity.removeStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION);
     }
 }
