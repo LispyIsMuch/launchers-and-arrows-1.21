@@ -17,7 +17,7 @@ public class LightningAccumulationEffect extends AccumulationEffect {
 
     @Override
     public void applyEffect() {
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 400, 7));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.ELECTRICK_SHOCK, 300, 0));
         entity.removeStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION);
     }
 }

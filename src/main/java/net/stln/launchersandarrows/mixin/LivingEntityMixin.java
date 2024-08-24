@@ -26,10 +26,6 @@ public abstract class LivingEntityMixin {
         DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     @Unique
-    private static final TrackedData<Integer> AMPLIFIER =
-        DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
-    @Unique
     private static int FLAME = 1;
     @Unique
     private static int FROST = 2;
@@ -44,42 +40,36 @@ public abstract class LivingEntityMixin {
 
     @Unique
     LivingEntity entity = (LivingEntity) (Object) this;
-    @Unique
-    int amplifier = 0;
 
     @Unique
     private @NotNull ParticleEffect setParticleAndAmplifier(int status, ParticleEffect particleEffect, RegistryEntry<StatusEffect> statusEffect) {
         entity.getDataTracker().set(EFFECT_STATUS, status);
-
-        if (entity.hasStatusEffect(statusEffect)) {
-            amplifier = entity.getStatusEffect(statusEffect).getAmplifier();
-        }
         return particleEffect;
     }
 
     @Inject(method = "tickStatusEffects", at = @At("TAIL"))
     private void tickStatusEffects(CallbackInfo ci) {
         ParticleEffect particleEffect = null;
-        if (entity.hasStatusEffect(StatusEffectInit.FLAME_ACCUMULATION)
+        if (entity.hasStatusEffect(StatusEffectInit.BURNING)
                 || (entity.getDataTracker().get(EFFECT_STATUS) == FLAME && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(FLAME, ParticleInit.FLAME_EFFECT, StatusEffectInit.FLAME_ACCUMULATION);
+            particleEffect = setParticleAndAmplifier(FLAME, ParticleInit.FLAME_EFFECT, StatusEffectInit.BURNING);
 
 
-        } else if (entity.hasStatusEffect(StatusEffectInit.FROST_ACCUMULATION)
+        } else if (entity.hasStatusEffect(StatusEffectInit.FREEZE)
                 || (entity.getDataTracker().get(EFFECT_STATUS) == FROST && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(FROST, ParticleInit.FROST_EFFECT, StatusEffectInit.FROST_ACCUMULATION);
+            particleEffect = setParticleAndAmplifier(FROST, ParticleInit.FROST_EFFECT, StatusEffectInit.FREEZE);
 
 
 
-        } else if (entity.hasStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION)
+        } else if (entity.hasStatusEffect(StatusEffectInit.ELECTRICK_SHOCK)
                 || (entity.getDataTracker().get(EFFECT_STATUS) == LIGHTNING && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(LIGHTNING, ParticleInit.LIGHTNING_EFFECT, StatusEffectInit.LIGHTNING_ACCUMULATION);
+            particleEffect = setParticleAndAmplifier(LIGHTNING, ParticleInit.LIGHTNING_EFFECT, StatusEffectInit.ELECTRICK_SHOCK);
 
 
 
-        } else if (entity.hasStatusEffect(StatusEffectInit.ACID_ACCUMULATION)
+        } else if (entity.hasStatusEffect(StatusEffectInit.CORROSION)
                 || (entity.getDataTracker().get(EFFECT_STATUS) == ACID && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(ACID, ParticleInit.ACID_EFFECT, StatusEffectInit.ACID_ACCUMULATION);
+            particleEffect = setParticleAndAmplifier(ACID, ParticleInit.ACID_EFFECT, StatusEffectInit.CORROSION);
 
 
 
@@ -97,34 +87,24 @@ public abstract class LivingEntityMixin {
             entity.getDataTracker().set(EFFECT_STATUS, 0);
         }
 
-        if (entity.getWorld().isClient()) {
-            amplifier = entity.getDataTracker().get(AMPLIFIER);
-        } else {
-            entity.getDataTracker().set(AMPLIFIER, amplifier);
+        if (particleEffect != null) {
+            float w = entity.getWidth();
+            float h = entity.getHeight();
+            int entitySize = (int) (w * h * 10);
+            for (int i = 0; i < entitySize; i++) {
+                entity.getWorld().addParticle(
+                        particleEffect,
+                        entity.getParticleX(0.5F),
+                        entity.getRandomBodyY(),
+                        entity.getParticleZ(0.5F),
+                        0.0, 0.0, 0.0
+                );
+            }
         }
-        if (amplifier != 0) {
-            LaunchersAndArrows.LOGGER.info(String.valueOf(amplifier));
-        }
-
-//        if (particleEffect != null) {
-//            float w = entity.getWidth();
-//            float h = entity.getHeight();
-//            int entitySize = (int) (w * w * h * (amplifier + 1));
-//            for (int i = 0; i < entitySize; i++) {
-//                entity.getWorld().addParticle(
-//                        particleEffect,
-//                        entity.getParticleX(0.5F),
-//                        entity.getRandomBodyY(),
-//                        entity.getParticleZ(0.5F),
-//                        0.0, 0.0, 0.0
-//                );
-//            }
-//        }
     }
 
     @Inject(method = "initDataTracker", at = @At("HEAD"))
     private void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(EFFECT_STATUS, 0);
-        builder.add(AMPLIFIER, 0);
     }
 }

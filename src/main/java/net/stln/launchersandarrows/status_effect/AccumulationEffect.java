@@ -11,7 +11,8 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 public abstract class AccumulationEffect extends StatusEffect {
 
     protected LivingEntity entity;
-    protected int amplifier;
+    protected int amplifier = 0;
+    protected boolean remove = false;
 
     protected AccumulationEffect(StatusEffectCategory category, int color, ParticleEffect particleEffect) {
         super(category, color, particleEffect);
@@ -19,22 +20,30 @@ public abstract class AccumulationEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity.getMaxHealth() <= amplifier + 1) {
+        if (amplifier > Math.sqrt(entity.getMaxHealth()) * 5) {
+            amplifier = 0;
+            remove = true;
             applyEffect();
+        } else {
+            this.amplifier = amplifier;
         }
         return super.applyUpdateEffect(entity, amplifier);
+    }
+
+    @Override
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return true;
     }
 
     @Override
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         this.entity = entity;
-        this.amplifier = amplifier;
     }
 
     @Override
     public void onRemoved(AttributeContainer attributeContainer) {
-        if (entity != null && amplifier > 0) {
+        if (entity != null && amplifier > 0 && !remove) {
             decreaseAmplifier();
         }
     }

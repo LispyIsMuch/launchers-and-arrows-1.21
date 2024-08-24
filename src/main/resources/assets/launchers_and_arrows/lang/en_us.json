@@ -15,5 +15,6 @@
   "effect.launchers_and_arrows.lightning_accumulation": "Lightning Accumulation",
   "effect.launchers_and_arrows.acid_accumulation": "Acid Accumulation",
   "effect.launchers_and_arrows.flood_accumulation": "Flood Accumulation",
-  "effect.launchers_and_arrows.shock_explosion": "Shock Explosion"
+  "effect.launchers_and_arrows.shock_explosion": "Shock Explosion",
+  "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows"
 }

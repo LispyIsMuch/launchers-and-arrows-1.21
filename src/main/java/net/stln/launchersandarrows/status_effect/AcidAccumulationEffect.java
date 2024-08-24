@@ -18,6 +18,7 @@ public class AcidAccumulationEffect extends AccumulationEffect {
 
     @Override
     public void applyEffect() {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.CORROSION, 300, 0));
         entity.removeStatusEffect(StatusEffectInit.ACID_ACCUMULATION);
     }
 }

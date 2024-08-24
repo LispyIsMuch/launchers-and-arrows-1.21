@@ -36,19 +36,5 @@ public class ItemInit {
 
     public static void  registerModItems() {
         LaunchersAndArrows.LOGGER.info("Registering Mod Items for" + LaunchersAndArrows.MOD_ID);
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
-            entries.add(LONG_BOW);
-            entries.add(RAPID_BOW);
-            entries.add(MULTISHOT_BOW);
-            entries.add(CROSSLAUNCHER);
-            entries.add(FLAME_ARROW);
-            entries.add(FREEZING_ARROW);
-            entries.add(LIGHTNING_ARROW);
-            entries.add(CORROSIVE_ARROW);
-            entries.add(FLOOD_ARROW);
-            entries.add(WAVE_ARROW);
-            entries.add(PIERCING_ARROW);
-        });
     }
 }
