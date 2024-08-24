@@ -1,25 +1,45 @@
 package net.stln.launchersandarrows.mixin;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.stln.launchersandarrows.LaunchersAndArrows;
+import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.util.math.Vec3d;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+
+    @Shadow public abstract Vec3d applyMovementInput(Vec3d movementInput, float slipperiness);
+
+    @Shadow protected abstract float applyArmorToDamage(DamageSource source, float amount);
+
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
+
+    @Shadow @Nullable private DamageSource lastDamageSource;
+    @Shadow @Nullable private LivingEntity attacker;
+
+    @Shadow public abstract void damageArmor(DamageSource source, float amount);
+
+    @Shadow public abstract boolean isFallFlying();
 
     @Unique
     private static final TrackedData<Integer> EFFECT_STATUS =
@@ -47,6 +67,43 @@ public abstract class LivingEntityMixin {
         return particleEffect;
     }
 
+    @Unique
+    DamageSource damageSource = null;
+
+    @Inject(method = "damage", at = @At("HEAD"))
+    private void getDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        damageSource = source;
+    }
+
+    @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0)
+    private float modifyDamage(float damage) {
+        if (entity.hasStatusEffect(StatusEffectInit.CORROSION) && !damageSource.isIn(DamageTypeTags.BYPASSES_ARMOR)) {
+            damage *= (float) (entity.getStatusEffect(StatusEffectInit.CORROSION).getAmplifier() + 3) / 2;
+        }
+        if (damageSource.getAttacker() != null && damageSource.getAttacker() instanceof LivingEntity attacker) {
+            if (attacker.hasStatusEffect(StatusEffectInit.SUBMERGED)) {
+                damage /= (attacker.getStatusEffect(StatusEffectInit.SUBMERGED).getAmplifier() + 2);
+            }
+        }
+        return damage;
+    }
+
+    @Inject(method = "getNextAirOnLand", at = @At("HEAD"), cancellable = true)
+    private void checkHasSubmergedEffect(int air, CallbackInfoReturnable<Integer> cir) {
+        if (entity.hasStatusEffect(StatusEffectInit.SUBMERGED)) {
+            cir.setReturnValue(air);
+        }
+    }
+
+    @ModifyArg(method = "applyArmorToDamage", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(Lnet/minecraft/entity/LivingEntity;FLnet/minecraft/entity/damage/DamageSource;FF)F"),
+            index = 3)
+    private float getArmorLeft(float armor) {
+        if (entity.hasStatusEffect(StatusEffectInit.CORROSION)) {
+            return armor / (float) (entity.getStatusEffect(StatusEffectInit.CORROSION).getAmplifier() + 2);
+        }
+        return armor;
+    }
     @Inject(method = "tickStatusEffects", at = @At("TAIL"))
     private void tickStatusEffects(CallbackInfo ci) {
         ParticleEffect particleEffect = null;
@@ -73,9 +130,9 @@ public abstract class LivingEntityMixin {
 
 
 
-        } else if (entity.hasStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION)
+        } else if (entity.hasStatusEffect(StatusEffectInit.SUBMERGED)
                 || (entity.getDataTracker().get(EFFECT_STATUS) == FLOOD && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(FLOOD, ParticleInit.FLOOD_EFFECT, StatusEffectInit.FLOOD_ACCUMULATION);
+            particleEffect = setParticleAndAmplifier(FLOOD, ParticleInit.FLOOD_EFFECT, StatusEffectInit.SUBMERGED);
 
 
 
