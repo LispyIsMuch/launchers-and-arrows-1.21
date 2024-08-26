@@ -9,7 +9,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class SubmergedEffect extends StatusEffect {
     protected SubmergedEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x0080FF, ParticleInit.FLOOD_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0x74C6FF, ParticleInit.FLOOD_EFFECT);
     }
 
     int duration = 0;
@@ -39,6 +39,6 @@ public class SubmergedEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
-        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.PLAYERS, 1.0F, 1.0F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.PLAYERS, 1.0F, 0.5F);
     }
 }

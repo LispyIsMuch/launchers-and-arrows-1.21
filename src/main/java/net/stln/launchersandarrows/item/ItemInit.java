@@ -1,10 +1,7 @@
 package net.stln.launchersandarrows.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -14,6 +11,8 @@ import net.stln.launchersandarrows.item.bow.LongBowItem;
 import net.stln.launchersandarrows.item.bow.MultiShotBowItem;
 import net.stln.launchersandarrows.item.bow.RapidBowItem;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
+import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
+import net.stln.launchersandarrows.util.AttributeEnum;
 
 public class ItemInit {
 
@@ -27,14 +26,31 @@ public class ItemInit {
     public static final Item LIGHTNING_ARROW = registerItem("lightning_arrow", new ArrowItem(new Item.Settings()));
     public static final Item CORROSIVE_ARROW = registerItem("corrosive_arrow", new ArrowItem(new Item.Settings()));
     public static final Item FLOOD_ARROW = registerItem("flood_arrow", new ArrowItem(new Item.Settings()));
+    public static final Item REVERBERATING_ARROW = registerItem("reverberating_arrow", new ArrowItem(new Item.Settings()));
     public static final Item WAVE_ARROW = registerItem("wave_arrow", new ArrowItem(new Item.Settings()));
     public static final Item PIERCING_ARROW = registerItem("piercing_arrow", new ArrowItem(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
+        registerAttributeEffect();
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
     }
 
     public static void  registerModItems() {
         LaunchersAndArrows.LOGGER.info("Registering Mod Items for" + LaunchersAndArrows.MOD_ID);
+    }
+
+    private static void registerAttributeEffect() {
+        AttributeEffectsDictionary.registerToDict(FLAME_ARROW, AttributeEnum.FLAME.get(), 15);
+        AttributeEffectsDictionary.registerToDict(FREEZING_ARROW, AttributeEnum.FROST.get(), 15);
+        AttributeEffectsDictionary.registerToDict(LIGHTNING_ARROW, AttributeEnum.LIGHTNING.get(), 15);
+        AttributeEffectsDictionary.registerToDict(CORROSIVE_ARROW, AttributeEnum.ACID.get(), 15);
+        AttributeEffectsDictionary.registerToDict(FLOOD_ARROW, AttributeEnum.FLOOD.get(), 15);
+        AttributeEffectsDictionary.registerToDict(REVERBERATING_ARROW, AttributeEnum.ECHO.get(), 15);
+        AttributeEffectsDictionary.registerToDict(PIERCING_ARROW, AttributeEnum.INJURY.get(), 5);
+
+        AttributeEffectsDictionary.registerToDict(Items.MAGMA_CREAM, AttributeEnum.FLAME.get(), 5);
+        AttributeEffectsDictionary.registerToDict(Items.SNOWBALL, AttributeEnum.FROST.get(), 5);
+        AttributeEffectsDictionary.registerToDict(Items.ECHO_SHARD, AttributeEnum.ECHO.get(), 175);
+        AttributeEffectsDictionary.registerToDict(Items.HEART_OF_THE_SEA, AttributeEnum.FLOOD.get(), 175);
     }
 }

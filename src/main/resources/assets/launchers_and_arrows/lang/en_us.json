@@ -8,6 +8,7 @@
   "item.launchers_and_arrows.lightning_arrow": "Lightning Arrow",
   "item.launchers_and_arrows.corrosive_arrow": "Corrosive Arrow",
   "item.launchers_and_arrows.flood_arrow": "Flood Arrow",
+  "item.launchers_and_arrows.reverberating_arrow": "Reverberating Arrow",
   "item.launchers_and_arrows.wave_arrow": "Wave Arrow",
   "item.launchers_and_arrows.piercing_arrow": "Piercing Arrow",
   "effect.launchers_and_arrows.flame_accumulation": "Flame Accumulation",
@@ -15,6 +16,14 @@
   "effect.launchers_and_arrows.lightning_accumulation": "Lightning Accumulation",
   "effect.launchers_and_arrows.acid_accumulation": "Acid Accumulation",
   "effect.launchers_and_arrows.flood_accumulation": "Flood Accumulation",
+  "effect.launchers_and_arrows.echo_accumulation": "Echo Accumulation",
+  "effect.launchers_and_arrows.burning": "Burning",
+  "effect.launchers_and_arrows.freeze": "Freeze",
+  "effect.launchers_and_arrows.electric_shock": "Electric Shock",
+  "effect.launchers_and_arrows.corrosion": "Corrosion",
+  "effect.launchers_and_arrows.submerged": "Submerged",
+  "effect.launchers_and_arrows.confusion": "Confusion",
   "effect.launchers_and_arrows.shock_explosion": "Shock Explosion",
-  "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows"
+  "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows",
+  "tooltip.launchers_and_arrows.attribute_effects": "Attribute Effects"
 }

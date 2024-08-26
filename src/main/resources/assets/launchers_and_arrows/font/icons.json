@@ -1,0 +1,50 @@
+{
+    "providers": [
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/flame.png",
+            "ascent": 8,
+            "chars": ["\u0001"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/frost.png",
+            "ascent": 8,
+            "chars": ["\u0002"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/lightning.png",
+            "ascent": 8,
+            "chars": ["\u0003"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/acid.png",
+            "ascent": 8,
+            "chars": ["\u0004"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/flood.png",
+            "ascent": 8,
+            "chars": ["\u0005"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/echo.png",
+            "ascent": 8,
+            "chars": ["\u0006"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/injury.png",
+            "ascent": 8,
+            "chars": ["\u0007"]
+        },
+        {
+            "type": "reference",
+            "id": "minecraft:default"
+        }
+    ]
+}

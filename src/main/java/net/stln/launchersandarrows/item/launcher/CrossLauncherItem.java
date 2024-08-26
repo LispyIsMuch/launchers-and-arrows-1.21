@@ -79,7 +79,11 @@ public class CrossLauncherItem extends CrossbowItem {
             .or(stack -> stack.isOf(Items.TRIDENT))
             .or(stack -> stack.isOf(Items.DRAGON_BREATH))
             .or(stack -> stack.isOf(Items.END_ROD))
-            .or(stack -> stack.isOf(Items.ENDER_EYE));
+            .or(stack -> stack.isOf(Items.ENDER_EYE))
+            .or(stack -> stack.isOf(Items.MAGMA_CREAM))
+            .or(stack -> stack.isOf(Items.ECHO_SHARD))
+            .or(stack -> stack.isOf(Items.HEART_OF_THE_SEA))
+            .or(stack -> stack.isOf(Items.HEAVY_CORE));
 
     public CrossLauncherItem(Settings settings) {
         super(settings);
@@ -314,11 +318,13 @@ public class CrossLauncherItem extends CrossbowItem {
             v = 0.5F;
         } else if (stack.contains(Items.SPLASH_POTION) || stack.contains(Items.LINGERING_POTION)
                 || stack.contains(Items.SLIME_BALL) || stack.contains(Items.TORCH)
-                || stack.contains(Items.GLOW_INK_SAC) || stack.contains(Items.INK_SAC) || stack.contains(Items.ENDER_EYE)) {
+                || stack.contains(Items.GLOW_INK_SAC) || stack.contains(Items.INK_SAC)
+                || stack.contains(Items.ENDER_EYE) || stack.contains(Items.MAGMA_CREAM)
+                || stack.contains(Items.ECHO_SHARD)|| stack.contains(Items.HEART_OF_THE_SEA)) {
             v = 3.0F;
         } else if (stack.contains(Items.SNOWBALL) || stack.contains(Items.EGG) || stack.contains(Items.ENDER_PEARL) || stack.contains(Items.TRIDENT)) {
             v = 5.0F;
-        } else if (stack.contains(Items.BLAZE_ROD)) {
+        } else if (stack.contains(Items.BLAZE_ROD) || stack.contains(Items.HEAVY_CORE)) {
             v = 1.0F;
         } else if (stack.contains(Items.WIND_CHARGE)) {
             v = 5.0F;
@@ -347,7 +353,7 @@ public class CrossLauncherItem extends CrossbowItem {
             soundEvent = SoundEvents.ITEM_TRIDENT_THROW.value();
         } else if (stack.contains(Items.DRAGON_BREATH)) {
             soundEvent = SoundEvents.ENTITY_ENDER_DRAGON_SHOOT;
-        } else if (stack.contains(Items.SLIME_BALL)) {
+        } else if (stack.contains(Items.SLIME_BALL) || stack.contains(Items.MAGMA_CREAM)) {
             soundEvent = SoundEvents.ENTITY_SLIME_JUMP;
         } else if (stack.contains(Items.TORCH)) {
             soundEvent = SoundEvents.BLOCK_WOOD_BREAK;
@@ -359,6 +365,12 @@ public class CrossLauncherItem extends CrossbowItem {
             soundEvent = SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK;
         } else if (stack.contains(Items.ENDER_EYE)) {
             soundEvent = SoundEvents.ENTITY_ENDER_EYE_DEATH;
+        } else if (stack.contains(Items.ECHO_SHARD)) {
+            soundEvent = SoundEvents.BLOCK_SCULK_SHRIEKER_SHRIEK;
+        } else if (stack.contains(Items.HEART_OF_THE_SEA)) {
+            soundEvent = SoundEvents.BLOCK_CONDUIT_ACTIVATE;
+        } else if (stack.contains(Items.HEAVY_CORE)) {
+            soundEvent = SoundEvents.BLOCK_HEAVY_CORE_BREAK;
         } else {
             soundEvent = null;
         }

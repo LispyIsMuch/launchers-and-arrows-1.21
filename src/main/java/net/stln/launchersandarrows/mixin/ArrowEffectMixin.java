@@ -19,6 +19,7 @@ import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
+import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -50,6 +51,7 @@ public abstract class ArrowEffectMixin {
          else if (itemStack.isOf(ItemInit.LIGHTNING_ARROW)) return ParticleInit.LIGHTNING_EFFECT;
          else if (itemStack.isOf(ItemInit.CORROSIVE_ARROW)) return ParticleInit.ACID_EFFECT;
          else if (itemStack.isOf(ItemInit.FLOOD_ARROW)) return ParticleInit.FLOOD_EFFECT;
+         else if (itemStack.isOf(ItemInit.REVERBERATING_ARROW)) return ParticleInit.ECHO_EFFECT;
          else if (itemStack.isOf(ItemInit.WAVE_ARROW)) return ParticleInit.WAVE_EFFECT;
         return null;
     }
@@ -62,17 +64,6 @@ public abstract class ArrowEffectMixin {
                 2.0F, false, World.ExplosionSourceType.TRIGGER,
                 ParticleTypes.GUST_EMITTER_SMALL, ParticleTypes.GUST_EMITTER_LARGE, SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST);
         arrowEntity.kill();
-    }
-
-    @Unique
-    private void stackStatusEffect(LivingEntity target, StatusEffectInstance effectInstance) {
-        StatusEffectInstance targetEffect = target.getStatusEffect(effectInstance.getEffectType());
-        int amplifier = -1;
-        if (targetEffect != null) {
-            amplifier = targetEffect.getAmplifier();
-        }
-        target.addStatusEffect(new StatusEffectInstance(effectInstance.getEffectType(),
-                effectInstance.getDuration(),  amplifier + effectInstance.getAmplifier() + 1));
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -99,7 +90,7 @@ public abstract class ArrowEffectMixin {
 
     @Inject(method = "spawnParticles", at = @At("HEAD"))
     private void spawnParticles(int amount, CallbackInfo ci) {
-        if (itemStack.isIn(ModItemTags.ARROWS_WITH_EFFECT)) {
+        if (itemStack.isIn(ModItemTags.ARROWS_WITH_EFFECT) && !itemStack.isOf(ItemInit.PIERCING_ARROW)) {
             if (amount > 0) {
                 NbtCompound nbt = new NbtCompound();
                 arrowEntity.writeCustomDataToNbt(nbt);
@@ -122,22 +113,28 @@ public abstract class ArrowEffectMixin {
     private void onHit(LivingEntity target, CallbackInfo ci) {
         if (itemStack.isIn(ModItemTags.ARROWS_WITH_EFFECT)) {
             if (itemStack.isOf(ItemInit.FLAME_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, 15));
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.FREEZING_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, 15));
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.LIGHTNING_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, 15));
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.CORROSIVE_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, 15));
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.FLOOD_ARROW)) {
-                stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, 15));
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, 15));
+            }
+            else if (itemStack.isOf(ItemInit.REVERBERATING_ARROW)) {
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.ECHO_ACCUMULATION, 20, 15));
             }
             else if (itemStack.isOf(ItemInit.WAVE_ARROW)) {
                 target.addStatusEffect(new StatusEffectInstance(StatusEffectInit.SHOCK_EXPLOSION, 50, 0));
+            }
+            else if (itemStack.isOf(ItemInit.PIERCING_ARROW)) {
+                StatusEffectUtil.stackStatusEffect(target, new StatusEffectInstance(StatusEffectInit.SERIOUS_INJURY, 100, 5));
             }
         }
     }

@@ -8,7 +8,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class FloodAccumulationEffect extends AccumulationEffect {
     protected FloodAccumulationEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x0080FF, ParticleInit.FLOOD_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0x74C6FF, ParticleInit.FLOOD_EFFECT);
     }
 
     @Override
@@ -18,6 +18,7 @@ public class FloodAccumulationEffect extends AccumulationEffect {
 
     @Override
     public void applyEffect() {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.SUBMERGED, 300, 0));
         entity.removeStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION);
     }
 }

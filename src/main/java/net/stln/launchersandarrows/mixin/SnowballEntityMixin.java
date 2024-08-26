@@ -1,8 +1,13 @@
 package net.stln.launchersandarrows.mixin;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.util.hit.EntityHitResult;
+import net.stln.launchersandarrows.status_effect.StatusEffectInit;
+import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,9 +19,8 @@ public class SnowballEntityMixin {
     @Inject(method = "onEntityHit", at = @At("TAIL"))
     protected void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         if (!entityHitResult.getEntity().getWorld().isClient) {
-            Entity entity = entityHitResult.getEntity();
-            if (entity.canFreeze()) {
-                entity.setFrozenTicks(Math.min(entity.getFrozenTicks() + 30, entity.getMinFreezeDamageTicks() + 200));
+            if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, 5));
             }
         }
     }

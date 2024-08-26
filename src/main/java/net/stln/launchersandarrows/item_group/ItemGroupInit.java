@@ -24,7 +24,9 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.LIGHTNING_ARROW);
                 entries.add(ItemInit.CORROSIVE_ARROW);
                 entries.add(ItemInit.FLOOD_ARROW);
+                entries.add(ItemInit.REVERBERATING_ARROW);
                 entries.add(ItemInit.WAVE_ARROW);
+                entries.add(ItemInit.PIERCING_ARROW);
             })
             .build();
 

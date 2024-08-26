@@ -8,7 +8,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class AcidAccumulationEffect extends AccumulationEffect {
     protected AcidAccumulationEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x00FF00, ParticleInit.ACID_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0xA3FF4C, ParticleInit.ACID_EFFECT);
     }
 
     @Override

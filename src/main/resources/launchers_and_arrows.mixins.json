@@ -10,6 +10,7 @@
   ],
   "client": [
     "FovMixin",
+    "ItemTooltipMixin",
     "PlayerEntityRendererMixin",
     "RenderFirstPersonItemMixin"
   ],

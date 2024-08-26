@@ -85,7 +85,19 @@ public abstract class LivingEntityMixin {
                 damage /= (attacker.getStatusEffect(StatusEffectInit.SUBMERGED).getAmplifier() + 2);
             }
         }
+        if (entity.hasStatusEffect(StatusEffectInit.SERIOUS_INJURY)) {
+            damage += (float) entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() / 2 + 1;
+            entity.removeStatusEffect(StatusEffectInit.SERIOUS_INJURY);
+        }
         return damage;
+    }
+
+    @ModifyVariable(method = "heal", at = @At("HEAD"), ordinal = 0)
+    private float modifyHeal(float amount) {
+        if (entity.hasStatusEffect(StatusEffectInit.SERIOUS_INJURY)) {
+            return amount / (entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() + 2);
+        }
+        return amount;
     }
 
     @Inject(method = "getNextAirOnLand", at = @At("HEAD"), cancellable = true)
@@ -100,10 +112,11 @@ public abstract class LivingEntityMixin {
             index = 3)
     private float getArmorLeft(float armor) {
         if (entity.hasStatusEffect(StatusEffectInit.CORROSION)) {
-            return armor / (float) (entity.getStatusEffect(StatusEffectInit.CORROSION).getAmplifier() + 2);
+            return armor * (1 - ((float) (entity.getStatusEffect(StatusEffectInit.CORROSION).getAmplifier() + 1) / (entity.getStatusEffect(StatusEffectInit.CORROSION).getAmplifier() + 3)));
         }
         return armor;
     }
+
     @Inject(method = "tickStatusEffects", at = @At("TAIL"))
     private void tickStatusEffects(CallbackInfo ci) {
         ParticleEffect particleEffect = null;
@@ -135,10 +148,6 @@ public abstract class LivingEntityMixin {
             particleEffect = setParticleAndAmplifier(FLOOD, ParticleInit.FLOOD_EFFECT, StatusEffectInit.SUBMERGED);
 
 
-
-        } else if (entity.hasStatusEffect(StatusEffectInit.SHOCK_EXPLOSION)
-                || (entity.getDataTracker().get(EFFECT_STATUS) == WAVE && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(WAVE, ParticleInit.WAVE_EFFECT, StatusEffectInit.SHOCK_EXPLOSION);
 
         } else {
             entity.getDataTracker().set(EFFECT_STATUS, 0);

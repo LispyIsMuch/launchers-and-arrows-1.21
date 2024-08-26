@@ -5,28 +5,25 @@ import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.stln.launchersandarrows.particle.ParticleInit;
 
-public abstract class AccumulationEffect extends StatusEffect {
+public class SeriousInjuryEffect extends StatusEffect {
 
     protected LivingEntity entity;
     protected int amplifier = 0;
     protected boolean remove = false;
 
-    protected AccumulationEffect(StatusEffectCategory category, int color, ParticleEffect particleEffect) {
-        super(category, color, particleEffect);
+    protected SeriousInjuryEffect() {
+        super(StatusEffectCategory.HARMFUL, 0x800000);
     }
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (amplifier > Math.sqrt(entity.getMaxHealth()) * 5) {
-            amplifier = 0;
-            this.remove = true;
-            applyEffect();
-        } else {
-            this.amplifier = amplifier;
-            this.remove = false;
+        this.amplifier = amplifier;
+        this.remove = false;
+        if (entity.isSprinting()) {
+            entity.setSprinting(false);
         }
         return super.applyUpdateEffect(entity, amplifier);
     }
@@ -49,7 +46,8 @@ public abstract class AccumulationEffect extends StatusEffect {
         }
     }
 
-    public abstract void decreaseAmplifier();
 
-    public abstract void applyEffect();
+    public void decreaseAmplifier() {
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffectInit.SERIOUS_INJURY, 100, amplifier - 1));
+    }
 }

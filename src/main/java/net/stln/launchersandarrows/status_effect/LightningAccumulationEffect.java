@@ -8,7 +8,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class LightningAccumulationEffect extends AccumulationEffect {
-    protected LightningAccumulationEffect() {super(StatusEffectCategory.HARMFUL, 0x0000FF, ParticleInit.LIGHTNING_EFFECT);}
+    protected LightningAccumulationEffect() {super(StatusEffectCategory.HARMFUL, 0x4C5CFF, ParticleInit.LIGHTNING_EFFECT);}
 
     @Override
     public void decreaseAmplifier() {

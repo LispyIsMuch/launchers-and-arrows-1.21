@@ -15,6 +15,7 @@ public class ParticleInit {
     public static final SimpleParticleType LIGHTNING_EFFECT = FabricParticleTypes.simple(true);
     public static final SimpleParticleType ACID_EFFECT = FabricParticleTypes.simple(true);
     public static final SimpleParticleType FLOOD_EFFECT = FabricParticleTypes.simple(true);
+    public static final SimpleParticleType ECHO_EFFECT = FabricParticleTypes.simple(true);
     public static final SimpleParticleType WAVE_EFFECT = FabricParticleTypes.simple(true);
 
     public static void registerParticleTypes() {
@@ -23,6 +24,7 @@ public class ParticleInit {
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "lightning_effect"), LIGHTNING_EFFECT);
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "acid_effect"), ACID_EFFECT);
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "flood_effect"), FLOOD_EFFECT);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "echo_effect"), ECHO_EFFECT);
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "wave_effect"), WAVE_EFFECT);
     }
 
@@ -32,6 +34,7 @@ public class ParticleInit {
         ParticleFactoryRegistry.getInstance().register(ParticleInit.LIGHTNING_EFFECT, LightningEffectParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleInit.ACID_EFFECT, AcidEffectParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleInit.FLOOD_EFFECT, FloodEffectParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleInit.ECHO_EFFECT, EchoEffectParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleInit.WAVE_EFFECT, WaveEffectParticle.Factory::new);
     }
 }

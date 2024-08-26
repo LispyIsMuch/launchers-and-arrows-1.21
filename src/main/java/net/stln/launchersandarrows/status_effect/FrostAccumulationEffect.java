@@ -8,7 +8,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class FrostAccumulationEffect extends AccumulationEffect {
     protected FrostAccumulationEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x00FFFF, ParticleInit.FROST_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0x89FEFF, ParticleInit.FROST_EFFECT);
     }
 
     @Override

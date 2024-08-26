@@ -9,7 +9,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class CorrosionEffect extends StatusEffect {
     protected CorrosionEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x00FF00, ParticleInit.ACID_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0xA3FF4C, ParticleInit.ACID_EFFECT);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class CorrosionEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
-        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.PLAYERS, 1.0F, 2.0F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 0.5F);
     }
 }

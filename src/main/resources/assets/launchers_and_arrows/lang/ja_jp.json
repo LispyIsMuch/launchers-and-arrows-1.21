@@ -8,6 +8,7 @@
   "item.launchers_and_arrows.lightning_arrow": "雷の矢",
   "item.launchers_and_arrows.corrosive_arrow": "酸の矢",
   "item.launchers_and_arrows.flood_arrow": "浸水の矢",
+  "item.launchers_and_arrows.reverberating_arrow": "残響の矢",
   "item.launchers_and_arrows.wave_arrow": "波動の矢",
   "item.launchers_and_arrows.piercing_arrow": "貫通の矢",
   "effect.launchers_and_arrows.flame_accumulation": "炎蓄積",
@@ -15,6 +16,14 @@
   "effect.launchers_and_arrows.lightning_accumulation": "電撃蓄積",
   "effect.launchers_and_arrows.acid_accumulation": "酸蓄積",
   "effect.launchers_and_arrows.flood_accumulation": "浸水蓄積",
+  "effect.launchers_and_arrows.echo_accumulation": "残響蓄積",
+  "effect.launchers_and_arrows.burning": "燃焼",
+  "effect.launchers_and_arrows.freeze": "凍結",
+  "effect.launchers_and_arrows.electric_shock": "感電",
+  "effect.launchers_and_arrows.corrosion": "腐食",
+  "effect.launchers_and_arrows.submerged": "沈水",
+  "effect.launchers_and_arrows.confusion": "混乱",
   "effect.launchers_and_arrows.shock_explosion": "衝撃炸裂",
-  "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows"
+  "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows",
+  "tooltip.launchers_and_arrows.attribute_effects": "属性効果"
 }

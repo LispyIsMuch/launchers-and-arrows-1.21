@@ -15,7 +15,7 @@ import static net.minecraft.entity.projectile.AbstractWindChargeEntity.EXPLOSION
 
 public class ShockExplosionEffect extends StatusEffect {
     protected ShockExplosionEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xFFFFFF, ParticleInit.WAVE_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0xCDC7FF, ParticleInit.WAVE_EFFECT);
     }
 
     LivingEntity entity;

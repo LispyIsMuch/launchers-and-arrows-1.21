@@ -9,7 +9,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class FreezeEffect extends StatusEffect {
     protected FreezeEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x00FFFF, ParticleInit.FROST_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0x89FEFF, ParticleInit.FROST_EFFECT);
     }
 
     @Override
@@ -32,5 +32,6 @@ public class FreezeEffect extends StatusEffect {
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.PLAYERS, 1.0F, 2.0F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 }

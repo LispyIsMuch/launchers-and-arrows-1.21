@@ -9,7 +9,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class FlameAccumulationEffect extends AccumulationEffect {
     protected FlameAccumulationEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xFF0000, ParticleInit.FLAME_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0xFFAB32, ParticleInit.FLAME_EFFECT);
     }
 
     @Override

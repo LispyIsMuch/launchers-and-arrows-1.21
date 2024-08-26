@@ -13,7 +13,7 @@ import net.stln.launchersandarrows.particle.ParticleInit;
 
 public class BurningEffect extends StatusEffect {
     protected BurningEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xFF0000, ParticleInit.FLAME_EFFECT);
+        super(StatusEffectCategory.HARMFUL, 0xFFAB32, ParticleInit.FLAME_EFFECT);
     }
 
     @Override
