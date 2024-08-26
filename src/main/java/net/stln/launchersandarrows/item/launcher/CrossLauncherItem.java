@@ -83,7 +83,9 @@ public class CrossLauncherItem extends CrossbowItem {
             .or(stack -> stack.isOf(Items.MAGMA_CREAM))
             .or(stack -> stack.isOf(Items.ECHO_SHARD))
             .or(stack -> stack.isOf(Items.HEART_OF_THE_SEA))
-            .or(stack -> stack.isOf(Items.HEAVY_CORE));
+            .or(stack -> stack.isOf(Items.HEAVY_CORE))
+            .or(stack -> stack.isOf(Items.POINTED_DRIPSTONE))
+            .or(stack -> stack.isOf(Items.LIGHTNING_ROD));
 
     public CrossLauncherItem(Settings settings) {
         super(settings);
@@ -316,20 +318,21 @@ public class CrossLauncherItem extends CrossbowItem {
         float v;
         if (stack.contains(Items.POTION)) {
             v = 0.5F;
+        } else if (stack.contains(Items.BLAZE_ROD) || stack.contains(Items.HEAVY_CORE)) {
+            v = 1.0F;
+        } else if (stack.contains(Items.POINTED_DRIPSTONE)) {
+            v = 2.0F;
+        } else if (stack.contains(Items.FIRE_CHARGE) || stack.contains(Items.DRAGON_BREATH) || stack.contains(Items.END_ROD)) {
+            v = 2.5F;
         } else if (stack.contains(Items.SPLASH_POTION) || stack.contains(Items.LINGERING_POTION)
                 || stack.contains(Items.SLIME_BALL) || stack.contains(Items.TORCH)
                 || stack.contains(Items.GLOW_INK_SAC) || stack.contains(Items.INK_SAC)
                 || stack.contains(Items.ENDER_EYE) || stack.contains(Items.MAGMA_CREAM)
-                || stack.contains(Items.ECHO_SHARD)|| stack.contains(Items.HEART_OF_THE_SEA)) {
+                || stack.contains(Items.ECHO_SHARD) || stack.contains(Items.HEART_OF_THE_SEA)
+                || stack.contains(Items.LIGHTNING_ROD)) {
             v = 3.0F;
-        } else if (stack.contains(Items.SNOWBALL) || stack.contains(Items.EGG) || stack.contains(Items.ENDER_PEARL) || stack.contains(Items.TRIDENT)) {
+        } else if (stack.contains(Items.WIND_CHARGE) || stack.contains(Items.SNOWBALL) || stack.contains(Items.EGG) || stack.contains(Items.ENDER_PEARL) || stack.contains(Items.TRIDENT)) {
             v = 5.0F;
-        } else if (stack.contains(Items.BLAZE_ROD) || stack.contains(Items.HEAVY_CORE)) {
-            v = 1.0F;
-        } else if (stack.contains(Items.WIND_CHARGE)) {
-            v = 5.0F;
-        } else if (stack.contains(Items.FIRE_CHARGE) || stack.contains(Items.DRAGON_BREATH) || stack.contains(Items.END_ROD)) {
-            v = 2.5F;
         } else {
             v = 1.5F;
         }
@@ -371,6 +374,10 @@ public class CrossLauncherItem extends CrossbowItem {
             soundEvent = SoundEvents.BLOCK_CONDUIT_ACTIVATE;
         } else if (stack.contains(Items.HEAVY_CORE)) {
             soundEvent = SoundEvents.BLOCK_HEAVY_CORE_BREAK;
+        } else if (stack.contains(Items.POINTED_DRIPSTONE)) {
+            soundEvent = SoundEvents.BLOCK_DRIPSTONE_BLOCK_BREAK;
+        } else if (stack.contains(Items.LIGHTNING_ROD)) {
+            soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER.value();
         } else {
             soundEvent = null;
         }

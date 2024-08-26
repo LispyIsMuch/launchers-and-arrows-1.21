@@ -34,7 +34,7 @@ public class ItemTooltipMixin {
         }
         if (AttributeEffectsDictionary.getDict().containsKey1(item)) {
             tooltip.add(Text.empty());
-            tooltip.add(Text.translatable("tooltip.launchers_and_arrows.attribute_effects").append(" :").withColor(0xC0C0C0));
+            tooltip.add(Text.translatable("tooltip.launchers_and_arrows.attribute_effects").append(":").withColor(0xC0C0C0));
         }
         if (attributes[AttributeEnum.FLAME.get()] != null) {
             tooltip.add(Text.literal("\u0001").setStyle(Style.EMPTY.withFont(iconFont))
