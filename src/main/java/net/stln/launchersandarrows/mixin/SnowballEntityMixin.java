@@ -5,6 +5,8 @@ import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.hit.EntityHitResult;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
@@ -20,7 +22,7 @@ public class SnowballEntityMixin {
     protected void onEntityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         if (!entityHitResult.getEntity().getWorld().isClient) {
             if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, 5));
+                StatusEffectUtil.applyAttributeEffect(livingEntity, Items.SNOWBALL.getDefaultStack());
             }
         }
     }

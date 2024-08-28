@@ -23,6 +23,7 @@
   "effect.launchers_and_arrows.corrosion": "腐食",
   "effect.launchers_and_arrows.submerged": "沈水",
   "effect.launchers_and_arrows.confusion": "混乱",
+  "effect.launchers_and_arrows.serious_injury": "重傷",
   "effect.launchers_and_arrows.shock_explosion": "衝撃炸裂",
   "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows",
   "tooltip.launchers_and_arrows.attribute_effects": "属性効果"

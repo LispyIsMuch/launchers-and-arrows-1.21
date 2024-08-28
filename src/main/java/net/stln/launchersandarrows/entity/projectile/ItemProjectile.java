@@ -27,6 +27,8 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -37,8 +39,10 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import net.stln.launchersandarrows.entity.EntityInit;
+import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
+import net.stln.launchersandarrows.util.AttributeEnum;
 
 import java.util.List;
 
@@ -142,7 +146,6 @@ public class ItemProjectile extends ThrownItemEntity {
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 2));
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 100, 2));
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, 2));
             }
         } else if (this.getStack().isOf(Items.TORCH)) {
             if (entity instanceof LivingEntity livingEntity) {
@@ -162,26 +165,14 @@ public class ItemProjectile extends ThrownItemEntity {
             damage = 1;
             damageSource = this.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner());
             entity.timeUntilRegen = 0;
-        } else if (this.getStack().isOf(Items.MAGMA_CREAM)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, 4));
-            }
-        } else if (this.getStack().isOf(Items.LIGHTNING_ROD)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, 4));
-            }
         } else if (this.getStack().isOf(Items.POINTED_DRIPSTONE)) {
             damage = 3;
             damageSource = this.getDamageSources().fallingStalactite(this.getOwner());
         } else if (this.getStack().isOf(Items.ECHO_SHARD)) {
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 100, 0));
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.ECHO_ACCUMULATION, 20, 174));
             }
         } else if (this.getStack().isOf(Items.HEART_OF_THE_SEA)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, 174));
-            }
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     for (int k = -1; k < 2; k++) {
@@ -198,17 +189,14 @@ public class ItemProjectile extends ThrownItemEntity {
                 livingEntity.takeKnockback(4, -this.getVelocity().x, -this.getVelocity().z);
                 damage = 10;
                 damageSource = this.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner());
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.SERIOUS_INJURY, 100, 9));
             }
             this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), new ItemStack(Items.HEAVY_CORE)));
         }
         this.getWorld().playSound(null, entity.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
                 1.0F, 1.0F / (entity.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F);
         entity.damage(damageSource, damage);
-        if (this.getStack().isOf(Items.POINTED_DRIPSTONE)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.SERIOUS_INJURY, 100, 2));
-            }
+        if (entity instanceof LivingEntity livingEntity) {
+            StatusEffectUtil.applyAttributeEffect(livingEntity, this.getStack());
         }
         this.hitEffect();
     }

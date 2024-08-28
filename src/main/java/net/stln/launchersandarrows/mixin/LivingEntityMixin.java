@@ -86,7 +86,7 @@ public abstract class LivingEntityMixin {
             }
         }
         if (entity.hasStatusEffect(StatusEffectInit.SERIOUS_INJURY)) {
-            damage += (float) entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() / 2 + 1;
+            damage += (float) entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() / 4 + 1;
             entity.removeStatusEffect(StatusEffectInit.SERIOUS_INJURY);
         }
         return damage;
@@ -95,7 +95,7 @@ public abstract class LivingEntityMixin {
     @ModifyVariable(method = "heal", at = @At("HEAD"), ordinal = 0)
     private float modifyHeal(float amount) {
         if (entity.hasStatusEffect(StatusEffectInit.SERIOUS_INJURY)) {
-            return amount / (entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() + 2);
+            return amount * (1 - ((float) (entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() + 1) / (entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() + 3)));
         }
         return amount;
     }
