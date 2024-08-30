@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "minecraft:stick"
+    },
+    "I": {
+      "tag": "minecraft:iron_ingot"
+    },
+    "T": {
+      "tag": "minecraft:string"
+    },
+    "D": {
+      "tag": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "#D#",
+    "ISI",
+    "TIT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "launchers_and_arrows:crosslauncher"
+  }
+}

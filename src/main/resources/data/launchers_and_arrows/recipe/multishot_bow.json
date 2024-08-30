@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "minecraft:stick"
+    },
+    "I": {
+      "tag": "minecraft:copper_block"
+    },
+    "T": {
+      "tag": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " #T",
+    "SIT",
+    " #T"
+  ],
+  "result": {
+    "count": 1,
+    "id": "launchers_and_arrows:multishot_bow"
+  }
+}
