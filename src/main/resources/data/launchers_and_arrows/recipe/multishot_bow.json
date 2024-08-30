@@ -6,13 +6,13 @@
       "tag": "minecraft:planks"
     },
     "S": {
-      "tag": "minecraft:stick"
+      "item": "minecraft:stick"
     },
     "I": {
-      "tag": "minecraft:copper_block"
+      "item": "minecraft:copper_block"
     },
     "T": {
-      "tag": "minecraft:string"
+      "item": "minecraft:string"
     }
   },
   "pattern": [

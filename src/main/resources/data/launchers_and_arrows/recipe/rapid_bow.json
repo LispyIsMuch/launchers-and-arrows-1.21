@@ -6,10 +6,10 @@
       "tag": "minecraft:stick"
     },
     "I": {
-      "tag": "minecraft:gold_ingot"
+      "item": "minecraft:gold_ingot"
     },
     "T": {
-      "tag": "minecraft:string"
+      "item": "minecraft:string"
     }
   },
   "pattern": [

@@ -6,13 +6,13 @@
       "tag": "minecraft:planks"
     },
     "S": {
-      "tag": "minecraft:stick"
+      "item": "minecraft:stick"
     },
     "I": {
-      "tag": "minecraft:iron_ingot"
+      "item": "minecraft:iron_ingot"
     },
     "T": {
-      "tag": "minecraft:string"
+      "item": "minecraft:string"
     }
   },
   "pattern": [
