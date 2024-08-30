@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:snow"
+      "item": "minecraft:snow_block"
     },
     {
       "item": "minecraft:stick"
