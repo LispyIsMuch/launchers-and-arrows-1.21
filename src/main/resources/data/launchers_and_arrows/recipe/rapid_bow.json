@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "S": {
-      "tag": "minecraft:stick"
+      "item": "minecraft:stick"
     },
     "I": {
       "item": "minecraft:gold_ingot"
