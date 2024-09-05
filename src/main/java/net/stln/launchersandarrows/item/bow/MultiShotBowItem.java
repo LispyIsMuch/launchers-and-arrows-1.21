@@ -4,7 +4,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import net.stln.launchersandarrows.item.FovModifierItem;
-import net.stln.launchersandarrows.mixin.BypassDamageCooldownProjectileMixin;
 import net.stln.launchersandarrows.sound.SoundInit;
 import org.jetbrains.annotations.Nullable;
 

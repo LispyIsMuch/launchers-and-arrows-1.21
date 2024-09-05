@@ -8,6 +8,13 @@ public enum AttributeEnum {
     FLOOD(4),
     ECHO(5),
     INJURY(6),
+    FLAME_RATIO(-1),
+    FROST_RATIO(-2),
+    LIGHTNING_RATIO(-3),
+    ACID_RATIO(-4),
+    FLOOD_RATIO(-5),
+    ECHO_RATIO(-6),
+    INJURY_RATIO(-7),
     ;
 
     private final int id;

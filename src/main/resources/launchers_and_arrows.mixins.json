@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ArrowEffectMixin",
-    "BypassDamageCooldownProjectileMixin",
+    "AddDataProjectileMixin",
     "LivingEntityMixin",
     "SnowballEntityMixin"
   ],
