@@ -12,6 +12,7 @@ import net.stln.launchersandarrows.item.bow.MultiShotBowItem;
 import net.stln.launchersandarrows.item.bow.RapidBowItem;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
+import net.stln.launchersandarrows.item.util.AttributeModifierDictionary;
 import net.stln.launchersandarrows.util.AttributeEnum;
 
 public class ItemInit {
@@ -29,6 +30,13 @@ public class ItemInit {
     public static final Item REVERBERATING_ARROW = registerItem("reverberating_arrow", new ArrowItem(new Item.Settings()));
     public static final Item WAVE_ARROW = registerItem("wave_arrow", new ArrowItem(new Item.Settings()));
     public static final Item PIERCING_ARROW = registerItem("piercing_arrow", new ArrowItem(new Item.Settings()));
+
+    public static final Item IGNITION_STRING = registerItem("ignition_string", new ModifierItem(new Item.Settings()));
+    public static final Item FROSTBITE_STRING = registerItem("frostbite_string", new ModifierItem(new Item.Settings()));
+    public static final Item CHARGING_STRING = registerItem("charging_string", new ModifierItem(new Item.Settings()));
+    public static final Item DETERIORATION_STRING = registerItem("deterioration_string", new ModifierItem(new Item.Settings()));
+    public static final Item PERMEATION_STRING = registerItem("permeation_string", new ModifierItem(new Item.Settings()));
+    public static final Item VIBRATING_STRING = registerItem("vibrating_string", new ModifierItem(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
@@ -55,5 +63,12 @@ public class ItemInit {
         AttributeEffectsDictionary.registerToDict(Items.HEART_OF_THE_SEA, AttributeEnum.FLOOD.get(), 175);
         AttributeEffectsDictionary.registerToDict(Items.HEAVY_CORE, AttributeEnum.INJURY.get(), 10);
         AttributeEffectsDictionary.registerToDict(Items.POINTED_DRIPSTONE, AttributeEnum.INJURY.get(), 3);
+
+        AttributeModifierDictionary.registerToDict(IGNITION_STRING, AttributeEnum.FLAME.get(), 10);
+        AttributeModifierDictionary.registerToDict(FROSTBITE_STRING, AttributeEnum.FROST.get(), 10);
+        AttributeModifierDictionary.registerToDict(CHARGING_STRING, AttributeEnum.LIGHTNING.get(), 10);
+        AttributeModifierDictionary.registerToDict(DETERIORATION_STRING, AttributeEnum.ACID.get(), 10);
+        AttributeModifierDictionary.registerToDict(PERMEATION_STRING, AttributeEnum.FLOOD.get(), 10);
+        AttributeModifierDictionary.registerToDict(VIBRATING_STRING, AttributeEnum.ECHO.get(), 10);
     }
 }

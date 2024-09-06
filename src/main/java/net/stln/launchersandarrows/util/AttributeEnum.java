@@ -14,7 +14,6 @@ public enum AttributeEnum {
     ACID_RATIO(-4),
     FLOOD_RATIO(-5),
     ECHO_RATIO(-6),
-    INJURY_RATIO(-7),
     ;
 
     private final int id;

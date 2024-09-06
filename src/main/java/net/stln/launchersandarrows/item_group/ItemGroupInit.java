@@ -27,6 +27,12 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.REVERBERATING_ARROW);
                 entries.add(ItemInit.WAVE_ARROW);
                 entries.add(ItemInit.PIERCING_ARROW);
+                entries.add(ItemInit.IGNITION_STRING);
+                entries.add(ItemInit.FROSTBITE_STRING);
+                entries.add(ItemInit.CHARGING_STRING);
+                entries.add(ItemInit.DETERIORATION_STRING);
+                entries.add(ItemInit.PERMEATION_STRING);
+                entries.add(ItemInit.VIBRATING_STRING);
             })
             .build();
 

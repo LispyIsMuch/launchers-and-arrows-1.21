@@ -3,7 +3,6 @@ package net.stln.launchersandarrows.item.bow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -12,12 +11,11 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.stln.launchersandarrows.item.FovModifierItem;
 import net.stln.launchersandarrows.sound.SoundInit;
 
 import java.util.List;
 
-public class RapidBowItem extends BowItem {
+public class RapidBowItem extends ModfiableBowItem {
 
     public RapidBowItem(Settings settings) {
         super(settings);

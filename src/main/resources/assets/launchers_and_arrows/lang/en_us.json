@@ -26,5 +26,6 @@
   "effect.launchers_and_arrows.serious_injury": "Serious Injury",
   "effect.launchers_and_arrows.shock_explosion": "Shock Explosion",
   "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows",
-  "tooltip.launchers_and_arrows.attribute_effects": "Attribute Effects"
+  "tooltip.launchers_and_arrows.attribute_effects": "Attribute Effects",
+  "tooltip.launchers_and_arrows.attribute_modifiers": "When Installed"
 }

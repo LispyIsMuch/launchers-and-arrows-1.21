@@ -15,6 +15,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.stln.launchersandarrows.entity.AttributedProjectile;
 import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.particle.ParticleInit;
@@ -113,7 +114,8 @@ public abstract class ArrowEffectMixin {
     private void onHit(LivingEntity target, CallbackInfo ci) {
         if (target instanceof LivingEntity livingEntity) {
             StatusEffectUtil.applyAttributeEffect(livingEntity, this.itemStack);
-            StatusEffectUtil.applyAttributeModifier(livingEntity, arrowEntity.getDataTracker().get(AddDataProjectileMixin.ATT));
+            StatusEffectUtil.applyAttributeModifier(livingEntity, ((AttributedProjectile) arrowEntity).getAttributes());
+            StatusEffectUtil.applyAttributeRatioModifier(livingEntity, this.itemStack, ((AttributedProjectile) arrowEntity).getAttributes());
         }
     }
 

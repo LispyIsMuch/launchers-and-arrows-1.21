@@ -61,8 +61,8 @@ public abstract class AddDataProjectileMixin extends Entity implements BypassDam
     }
 
     @Override
-    public int[] getAttributes() {
-        int[] array = new int[7];
+    public Integer[] getAttributes() {
+        Integer[] array = new Integer[7];
         for (int i = 0; i < 7; i++) {
             array[i] = getAttribute(i);
         }

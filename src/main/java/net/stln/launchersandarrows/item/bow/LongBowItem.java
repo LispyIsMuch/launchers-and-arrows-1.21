@@ -3,11 +3,9 @@ package net.stln.launchersandarrows.item.bow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
@@ -18,7 +16,7 @@ import net.stln.launchersandarrows.sound.SoundInit;
 
 import java.util.List;
 
-public class LongBowItem extends BowItem implements FovModifierItem {
+public class LongBowItem extends ModfiableBowItem implements FovModifierItem {
 
     float fov = 1.0F;
 
