@@ -115,7 +115,7 @@ public abstract class ArrowEffectMixin {
         if (target instanceof LivingEntity livingEntity) {
             StatusEffectUtil.applyAttributeEffect(livingEntity, this.itemStack);
             StatusEffectUtil.applyAttributeModifier(livingEntity, ((AttributedProjectile) arrowEntity).getAttributes());
-            StatusEffectUtil.applyAttributeRatioModifier(livingEntity, this.itemStack, ((AttributedProjectile) arrowEntity).getAttributes());
+            StatusEffectUtil.applyAttributeRatioModifier(livingEntity, this.itemStack, ((AttributedProjectile) arrowEntity).getRatioAttributes());
         }
     }
 

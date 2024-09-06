@@ -10,6 +10,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
+import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.entity.AttributedProjectile;
 import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +19,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Arrays;
 
 @Mixin(PersistentProjectileEntity.class)
 public abstract class AddDataProjectileMixin extends Entity implements BypassDamageCooldownProjectile, AttributedProjectile {
@@ -70,9 +73,9 @@ public abstract class AddDataProjectileMixin extends Entity implements BypassDam
     }
 
     @Override
-    public int[] getRatioAttributes() {
-        int[] array = new int[7];
-        for (int i = 0; i < 7; i++) {
+    public Integer[] getRatioAttributes() {
+        Integer[] array = new Integer[6];
+        for (int i = 0; i < 6; i++) {
             array[i] = getAttribute(-i - 1);
         }
         return array;

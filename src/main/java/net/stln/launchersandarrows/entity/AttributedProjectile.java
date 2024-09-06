@@ -7,7 +7,7 @@ public interface AttributedProjectile {
     default Integer[] getAttributes() {
         return null;
     }
-    default int[] getRatioAttributes() {
+    default Integer[] getRatioAttributes() {
         return null;
     }
 

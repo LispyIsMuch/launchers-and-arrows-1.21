@@ -20,9 +20,9 @@ public class ModifierItem extends Item {
         ItemStack offhandStack = user.getOffHandStack();
         if (hand == Hand.MAIN_HAND && offhandStack.getItem() instanceof ModfiableBowItem bow && user.isSneaking()) {
             for (int i = 0; i < bow.getSlotsize(); i++) {
-                if (bow.getModifier(i, offhandStack).isEmpty()) {
-                    bow.setModifier(i, offhandStack, mainhandStack);
-                    offhandStack.setCount(offhandStack.getCount() - 1);
+                if (bow.getModifier(i, offhandStack) != null && bow.getModifier(i, offhandStack).isEmpty()) {
+                    bow.setModifier(i, offhandStack, mainhandStack.copy());
+                    mainhandStack.setCount(mainhandStack.getCount() - 1);
 
                     float h = 1.0F / (user.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F;
                     user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_DISPENSER_FAIL, user.getSoundCategory(), 1.0F, h + 1.0F);

@@ -10,15 +10,18 @@ import net.stln.launchersandarrows.LaunchersAndArrowsDataGenerator;
 import net.stln.launchersandarrows.item.bow.LongBowItem;
 import net.stln.launchersandarrows.item.bow.MultiShotBowItem;
 import net.stln.launchersandarrows.item.bow.RapidBowItem;
+import net.stln.launchersandarrows.item.component.ModComponentInit;
+import net.stln.launchersandarrows.item.component.ModifierComponent;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
 import net.stln.launchersandarrows.item.util.AttributeModifierDictionary;
 import net.stln.launchersandarrows.util.AttributeEnum;
 
+import java.util.List;
+
 public class ItemInit {
 
     public static final Item LONG_BOW = registerItem("long_bow", new LongBowItem(new Item.Settings().maxDamage(512)));
-    public static final Item RAPID_BOW = registerItem("rapid_bow", new RapidBowItem(new Item.Settings().maxDamage(512)));
     public static final Item MULTISHOT_BOW = registerItem("multishot_bow", new MultiShotBowItem(new Item.Settings().maxDamage(512)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
 
@@ -37,6 +40,9 @@ public class ItemInit {
     public static final Item DETERIORATION_STRING = registerItem("deterioration_string", new ModifierItem(new Item.Settings()));
     public static final Item PERMEATION_STRING = registerItem("permeation_string", new ModifierItem(new Item.Settings()));
     public static final Item VIBRATING_STRING = registerItem("vibrating_string", new ModifierItem(new Item.Settings()));
+    public static final Item RAPID_BOW = registerItem("rapid_bow",
+            new RapidBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
+            ModifierComponent.of(List.of(new ItemStack(ItemInit.CHARGING_STRING))))));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);

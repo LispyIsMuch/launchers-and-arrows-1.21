@@ -15,9 +15,9 @@ import java.util.function.UnaryOperator;
 
 public class ModComponentInit {
 
-    public static final ComponentType<List<ItemStack>> MODIFIER_COMPONENT = Registry.register(
+    public static final ComponentType<ModifierComponent> MODIFIER_COMPONENT = Registry.register(
             Registries.DATA_COMPONENT_TYPE,
             Identifier.of(LaunchersAndArrows.MOD_ID, "modifier"),
-            ComponentType.<List<ItemStack>>builder().codec(ItemStack.CODEC.listOf()).build()
+            ComponentType.<ModifierComponent>builder().codec(ModifierComponent.CODEC).packetCodec(ModifierComponent.PACKET_CODEC).build()
     );
 }

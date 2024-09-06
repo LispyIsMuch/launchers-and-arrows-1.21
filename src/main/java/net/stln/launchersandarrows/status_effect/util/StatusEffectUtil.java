@@ -15,8 +15,10 @@ public class StatusEffectUtil {
         if (targetEffect != null) {
             amplifier = targetEffect.getAmplifier();
         }
-        target.addStatusEffect(new StatusEffectInstance(effectInstance.getEffectType(),
-                effectInstance.getDuration(),  amplifier + effectInstance.getAmplifier() + 1));
+        if (effectInstance.getAmplifier() >= 0) {
+            target.addStatusEffect(new StatusEffectInstance(effectInstance.getEffectType(),
+                    effectInstance.getDuration(), amplifier + effectInstance.getAmplifier() + 1));
+        }
     }
 
     public static void applyAttributeEffect(LivingEntity entity, ItemStack stack) {
@@ -49,25 +51,25 @@ public class StatusEffectUtil {
     }
 
     public static void applyAttributeModifier(LivingEntity entity, Integer[] data) {
-            if (data[AttributeEnum.FLAME.get()] != null) {
+            if (data[AttributeEnum.FLAME.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, data[AttributeEnum.FLAME.get()] - 1));
             }
-            if (data[AttributeEnum.FROST.get()] != null) {
+            if (data[AttributeEnum.FROST.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, data[AttributeEnum.FROST.get()] - 1));
             }
-            if (data[AttributeEnum.LIGHTNING.get()] != null) {
+            if (data[AttributeEnum.LIGHTNING.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, data[AttributeEnum.LIGHTNING.get()] - 1));
             }
-            if (data[AttributeEnum.ACID.get()] != null) {
+            if (data[AttributeEnum.ACID.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, data[AttributeEnum.ACID.get()] - 1));
             }
-            if (data[AttributeEnum.FLOOD.get()] != null) {
+            if (data[AttributeEnum.FLOOD.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, data[AttributeEnum.FLOOD.get()] - 1));
             }
-            if (data[AttributeEnum.ECHO.get()] != null) {
+            if (data[AttributeEnum.ECHO.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.ECHO_ACCUMULATION, 20, data[AttributeEnum.ECHO.get()] - 1));
             }
-            if (data[AttributeEnum.INJURY.get()] != null) {
+            if (data[AttributeEnum.INJURY.get()] > 0) {
                 StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.SERIOUS_INJURY, 100, data[AttributeEnum.INJURY.get()] - 1));
             }
     }
@@ -78,23 +80,23 @@ public class StatusEffectUtil {
         for (int i = 0; i < 7; i++) {
             attributes[i] = AttributeEffectsDictionary.getAttributeEffect(item, i);
         }
-            if (data[AttributeEnum.FLAME.get()] != null && attributes[AttributeEnum.FLAME_RATIO.get()] != null) {
-                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, Math.round((attributes[AttributeEnum.FLAME.get()] - 1) * (data[AttributeEnum.FLAME_RATIO.get()] / 100.0F))));
+            if (attributes[AttributeEnum.FLAME.get()] != null && data[AttributeEnum.FLAME.get()] > 0) {
+                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FLAME_ACCUMULATION, 20, Math.round(attributes[AttributeEnum.FLAME.get()] * (data[AttributeEnum.FLAME.get()] / 100.0F) - 1)));
             }
-            if (data[AttributeEnum.FROST.get()] != null && attributes[AttributeEnum.FROST.get()] != null) {
-                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, Math.round((attributes[AttributeEnum.FROST.get()] - 1) * (data[AttributeEnum.FROST_RATIO.get()] / 100.0F))));
+            if (attributes[AttributeEnum.FROST.get()] != null && data[AttributeEnum.FROST.get()] > 0) {
+                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FROST_ACCUMULATION, 20, Math.round(attributes[AttributeEnum.FROST.get()] * (data[AttributeEnum.FROST.get()] / 100.0F) - 1)));
             }
-            if (data[AttributeEnum.LIGHTNING.get()] != null && attributes[AttributeEnum.LIGHTNING_RATIO.get()] != null) {
-                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, Math.round((attributes[AttributeEnum.LIGHTNING.get()] - 1) * (data[AttributeEnum.LIGHTNING_RATIO.get()] / 100.0F))));
+            if (attributes[AttributeEnum.LIGHTNING.get()] != null && data[AttributeEnum.LIGHTNING.get()] > 0) {
+                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.LIGHTNING_ACCUMULATION, 20, Math.round(attributes[AttributeEnum.LIGHTNING.get()] * (data[AttributeEnum.LIGHTNING.get()] / 100.0F) - 1)));
             }
-            if (data[AttributeEnum.ACID.get()] != null && attributes[AttributeEnum.ACID_RATIO.get()] != null) {
-                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, Math.round((attributes[AttributeEnum.ACID.get()] - 1) * (data[AttributeEnum.ACID_RATIO.get()] / 100.0F))));
+            if (attributes[AttributeEnum.ACID.get()] != null && data[AttributeEnum.ACID.get()] > 0) {
+                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.ACID_ACCUMULATION, 20, Math.round(attributes[AttributeEnum.ACID.get()] * (data[AttributeEnum.ACID.get()] / 100.0F) - 1)));
             }
-            if (data[AttributeEnum.FLOOD.get()] != null && attributes[AttributeEnum.FLOOD_RATIO.get()] != null) {
-                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, Math.round((attributes[AttributeEnum.FLOOD.get()] - 1) * (data[AttributeEnum.FLOOD_RATIO.get()] / 100.0F))));
+            if (attributes[AttributeEnum.FLOOD.get()] != null && data[AttributeEnum.FLOOD.get()] > 0) {
+                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.FLOOD_ACCUMULATION, 20, Math.round(attributes[AttributeEnum.FLOOD.get()] * (data[AttributeEnum.FLOOD.get()] / 100.0F) - 1)));
             }
-            if (data[AttributeEnum.ECHO.get()] != null && attributes[AttributeEnum.ECHO_RATIO.get()] != null) {
-                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.ECHO_ACCUMULATION, 20, Math.round((attributes[AttributeEnum.ECHO.get()] - 1) * (data[AttributeEnum.ECHO_RATIO.get()] / 100.0F))));
+            if (attributes[AttributeEnum.ECHO.get()] != null && data[AttributeEnum.ECHO.get()] > 0) {
+                StatusEffectUtil.stackStatusEffect(entity, new StatusEffectInstance(StatusEffectInit.ECHO_ACCUMULATION, 20, Math.round(attributes[AttributeEnum.ECHO.get()] * (data[AttributeEnum.ECHO.get()] / 100.0F) - 1)));
             }
     }
 }

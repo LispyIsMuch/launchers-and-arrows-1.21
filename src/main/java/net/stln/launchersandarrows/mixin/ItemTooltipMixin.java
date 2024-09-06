@@ -78,7 +78,7 @@ public class ItemTooltipMixin {
         }
         if (attributeModifiers[AttributeEnum.FLAME.get() + 6] != null) {
             tooltip.add(Text.literal("\u0001").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(String.valueOf(attributeModifiers[AttributeEnum.FLAME.get() + 6])).withColor(0xFFC080)));
+                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.FLAME.get() + 6]).withColor(0xFFC080)));
         }
         if (attributeModifiers[AttributeEnum.FROST.get() + 6] != null) {
             tooltip.add(Text.literal("\u0002").setStyle(Style.EMPTY.withFont(iconFont))
@@ -86,23 +86,23 @@ public class ItemTooltipMixin {
         }
         if (attributeModifiers[AttributeEnum.LIGHTNING.get() + 6] != null) {
             tooltip.add(Text.literal("\u0003").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.LIGHTNING.get() + 6])).withColor(0x8080FF));
+                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.LIGHTNING.get() + 6]).withColor(0x8080FF)));
         }
         if (attributeModifiers[AttributeEnum.ACID.get() + 6] != null) {
             tooltip.add(Text.literal("\u0004").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ACID.get() + 6])).withColor(0xC0FF80));
+                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ACID.get() + 6]).withColor(0xC0FF80)));
         }
         if (attributeModifiers[AttributeEnum.FLOOD.get() + 6] != null) {
             tooltip.add(Text.literal("\u0005").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.FLOOD.get() + 6])).withColor(0x80C0FF));
+                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.FLOOD.get() + 6]).withColor(0x80C0FF)));
         }
         if (attributeModifiers[AttributeEnum.ECHO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0006").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ECHO.get() + 6])).withColor(0x008080));
+                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ECHO.get() + 6]).withColor(0x008080)));
         }
         if (attributeModifiers[AttributeEnum.INJURY.get() + 6] != null) {
             tooltip.add(Text.literal("\u0007").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.INJURY.get() + 6])).withColor(0xFFFFFF));
+                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.INJURY.get() + 6]).withColor(0xFFFFFF)));
         }
 
         if (attributeModifiers[AttributeEnum.FLAME_RATIO.get() + 6] != null) {
