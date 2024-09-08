@@ -20,13 +20,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MultiShotBowItem extends ModfiableBowItem{
+public class MultiShotBowItem extends ModfiableBowItem implements FovModifierItem{
 
     float fov = 1.0f;
 
     public MultiShotBowItem(Settings settings) {
         super(settings);
-        pulltime = 40;
+        pulltime = 20;
     }
 
     @Override
@@ -38,17 +38,17 @@ public class MultiShotBowItem extends ModfiableBowItem{
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        this.fov = 1.0f - getPullProgress(getMaxUseTime(stack, user) - remainingUseTicks) / 9.0f;
+        this.fov = 1.0f - getModifiedPullProgress(getMaxUseTime(stack, user) - remainingUseTicks, stack) / 9.0f;
     }
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity playerEntity) {
             for (int j = 0; j < 3; j++) {
-                ItemStack itemStack = playerEntity.getProjectileType(stack);
+                ItemStack itemStack = this.getProjectileTypeWithSelector(playerEntity, stack);
                 if (!itemStack.isEmpty()) {
                     int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
-                    float f = getPullProgress(i);
+                    float f = getModifiedPullProgress(i, stack);
                     if (!((double) f < 0.3)) {
                         List<ItemStack> list = load(stack, itemStack, playerEntity);
                         if (world instanceof ServerWorld serverWorld && !list.isEmpty()) {
@@ -105,5 +105,15 @@ public class MultiShotBowItem extends ModfiableBowItem{
                 }
             }
         }
+    }
+
+    @Override
+    public float getFov() {
+        return this.fov;
+    }
+
+    @Override
+    public void resetFov() {
+        this.fov = 1.0F;
     }
 }

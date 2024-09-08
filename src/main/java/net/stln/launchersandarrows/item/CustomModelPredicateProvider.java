@@ -12,24 +12,25 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.GlobalPos;
+import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 
 @Environment(EnvType.CLIENT)
 public class CustomModelPredicateProvider {
     public static void registerModModels() {
-        registerModBow(ItemInit.LONG_BOW, 40);
-        registerModBow(ItemInit.RAPID_BOW, 10);
-        registerModBow(ItemInit.MULTISHOT_BOW, 20);
+        registerModBow(ItemInit.LONG_BOW);
+        registerModBow(ItemInit.RAPID_BOW);
+        registerModBow(ItemInit.MULTISHOT_BOW);
         registerCrosslauncher(ItemInit.CROSSLAUNCHER);
 
     }
 
-    private static void registerModBow(Item bow, int drawTick) {
+    private static void registerModBow(Item bow) {
         ModelPredicateProviderRegistry.register(bow, Identifier.ofVanilla("pull"), (stack, world, entity, seed) -> {
             if (entity == null) {
                 return 0.0F;
             } else {
-                return entity.getActiveItem() != stack ? 0.0F : (float)(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / (float) drawTick;
+                return entity.getActiveItem() != stack ? 0.0F : ((ModfiableBowItem) bow).getModifiedPullProgress(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft(), stack);
             }
         });
         ModelPredicateProviderRegistry.register(bow, Identifier.ofVanilla("pulling"), (stack, world, entity, seed) ->

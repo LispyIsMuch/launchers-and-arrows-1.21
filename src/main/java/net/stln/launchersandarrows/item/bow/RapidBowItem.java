@@ -11,7 +11,9 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import net.stln.launchersandarrows.item.util.ModifierDictionary;
 import net.stln.launchersandarrows.sound.SoundInit;
+import net.stln.launchersandarrows.util.ModifierEnum;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class RapidBowItem extends ModfiableBowItem {
 
     public RapidBowItem(Settings settings) {
         super(settings);
-        pulltime = 20;
+        pulltime = 10;
     }
 
     @Override
@@ -32,10 +34,10 @@ public class RapidBowItem extends ModfiableBowItem {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity playerEntity) {
-            ItemStack itemStack = playerEntity.getProjectileType(stack);
+            ItemStack itemStack = this.getProjectileTypeWithSelector(playerEntity, stack);
             if (!itemStack.isEmpty()) {
                 int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
-                float f = getPullProgress(i);
+                float f = getModifiedPullProgress(i, stack);
                 if (!((double)f < 0.5)) {
                     List<ItemStack> list = load(stack, itemStack, playerEntity);
                     if (world instanceof ServerWorld serverWorld && !list.isEmpty()) {
@@ -66,6 +68,16 @@ public class RapidBowItem extends ModfiableBowItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 10;
+        float lightweightMod = 1F;
+        for (int i = 0; i < slotsize; i++) {
+            if (i < getModifiers(stack).size()) {
+                ItemStack modifier = getModifier(i, stack);
+                if (ModifierDictionary.getEffect(modifier.getItem(), ModifierEnum.LIGHTWEIGHT.get()) != null) {
+                    lightweightMod -= ModifierDictionary.getEffect(modifier.getItem(), ModifierEnum.LIGHTWEIGHT.get()) / 100.0F;
+                }
+            }
+        }
+        lightweightMod = lightweightMod < 0 ? 0 : lightweightMod;
+        return (int) Math.ceil(lightweightMod * this.pulltime);
     }
 }

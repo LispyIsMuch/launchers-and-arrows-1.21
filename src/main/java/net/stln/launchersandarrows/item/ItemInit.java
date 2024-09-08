@@ -94,6 +94,6 @@ public class ItemInit {
 
         ModifierDictionary.registerToDict(RANGE_STRING, ModifierEnum.RANGE.get(), 25);
         ModifierDictionary.registerToDict(STURDY_STRING, ModifierEnum.STURDY.get(), 25);
-        ModifierDictionary.registerToDict(LIGHTWEIGHT_STRING, ModifierEnum.LIGHTWEIGHT.get(), 25);
+        ModifierDictionary.registerToDict(LIGHTWEIGHT_STRING, ModifierEnum.LIGHTWEIGHT.get(), 15);
     }
 }

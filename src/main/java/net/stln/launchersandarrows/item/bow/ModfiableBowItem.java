@@ -1,15 +1,13 @@
 package net.stln.launchersandarrows.item.bow;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.entity.AttributedProjectile;
 import net.stln.launchersandarrows.item.component.ModComponentInit;
 import net.stln.launchersandarrows.item.component.ModifierComponent;
@@ -19,6 +17,7 @@ import net.stln.launchersandarrows.util.ModifierEnum;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ModfiableBowItem extends BowItem {
     protected static int slotsize = 3;
@@ -83,6 +82,28 @@ public class ModfiableBowItem extends BowItem {
         return entity;
     }
 
+    protected ItemStack getProjectileTypeWithSelector(PlayerEntity playerEntity, ItemStack stack) {
+        ItemStack mainHandStack = playerEntity.getMainHandStack();
+        ItemStack offHandStack = playerEntity.getOffHandStack();
+        Predicate<ItemStack> predicate = ((RangedWeaponItem)stack.getItem()).getHeldProjectiles();
+        String selector = stack.get(ModComponentInit.ARROW_SELECTOR_COMPONENT);
+        if (!offHandStack.isEmpty() && predicate.test(offHandStack)) {
+            stack.set(ModComponentInit.ARROW_SELECTOR_COMPONENT, offHandStack.getItem().getName().getString());
+            return offHandStack;
+        } else if (!mainHandStack.isEmpty() && predicate.test(mainHandStack)) {
+            stack.set(ModComponentInit.ARROW_SELECTOR_COMPONENT, mainHandStack.getItem().getName().getString());
+            return mainHandStack;
+        } else if (selector != null && !selector.isEmpty()) {
+            for (int i = 0; i < playerEntity.getInventory().size(); i++) {
+                ItemStack invStack = playerEntity.getInventory().getStack(i);
+                if (selector.equals(invStack.getItem().getName().getString())) {
+                    return invStack;
+                }
+            }
+        }
+        return playerEntity.getProjectileType(stack);
+    }
+
     @Override
     protected void shootAll(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack stack, List<ItemStack> projectiles, float speed, float divergence, boolean critical, @Nullable LivingEntity target) {
         speed = applyModifier(shooter, stack, speed);
@@ -102,10 +123,8 @@ public class ModfiableBowItem extends BowItem {
                 }
             }
         }
-        LaunchersAndArrows.LOGGER.info(String.valueOf(sturdyPercentage));
         if (shooter.getRandom().nextFloat() < sturdyPercentage) {
             stack.setDamage(stack.getDamage() - 1);
-            LaunchersAndArrows.LOGGER.info("applied");
         }
         return speed;
     }
@@ -118,9 +137,19 @@ public class ModfiableBowItem extends BowItem {
         return pulltime;
     }
 
-    @Override
-    public static float getPullProgress(int useTicks) {
-        float f = (float)useTicks / ;
+
+    public float getModifiedPullProgress(int useTicks, ItemStack stack) {
+        float lightweightMod = 1F;
+        for (int i = 0; i < slotsize; i++) {
+            if (i < getModifiers(stack).size()) {
+                ItemStack modifier = getModifier(i, stack);
+                if (ModifierDictionary.getEffect(modifier.getItem(), ModifierEnum.LIGHTWEIGHT.get()) != null) {
+                    lightweightMod -= ModifierDictionary.getEffect(modifier.getItem(), ModifierEnum.LIGHTWEIGHT.get()) / 100.0F;
+                }
+            }
+        }
+        lightweightMod = lightweightMod < 0 ? 0 : lightweightMod;
+        float f = (float)useTicks / (this.pulltime * lightweightMod);
         f = (f * f + f * 2.0F) / 3.0F;
         if (f > 1.0F) {
             f = 1.0F;

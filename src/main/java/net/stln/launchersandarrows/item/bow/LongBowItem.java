@@ -34,7 +34,7 @@ public class LongBowItem extends ModfiableBowItem implements FovModifierItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        this.fov = 1.0f - getPullProgress(getMaxUseTime(stack, user) - remainingUseTicks) / 4.0f;
+        this.fov = 1.0f - getModifiedPullProgress(getMaxUseTime(stack, user) - remainingUseTicks, stack) / 4.0f;
         if (user.isSneaking()) {
             this.fov *= 0.5f;
         }
@@ -43,10 +43,10 @@ public class LongBowItem extends ModfiableBowItem implements FovModifierItem {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity playerEntity) {
-            ItemStack itemStack = playerEntity.getProjectileType(stack);
+            ItemStack itemStack = this.getProjectileTypeWithSelector(playerEntity, stack);
             if (!itemStack.isEmpty()) {
                 int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
-                float f = getPullProgress(i);
+                float f = getModifiedPullProgress(i, stack);
                 if (!((double)f < 0.3)) {
                     List<ItemStack> list = load(stack, itemStack, playerEntity);
                     if (world instanceof ServerWorld serverWorld && !list.isEmpty()) {
