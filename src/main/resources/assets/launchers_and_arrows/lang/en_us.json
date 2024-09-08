@@ -11,6 +11,12 @@
   "item.launchers_and_arrows.reverberating_arrow": "Reverberating Arrow",
   "item.launchers_and_arrows.wave_arrow": "Wave Arrow",
   "item.launchers_and_arrows.piercing_arrow": "Piercing Arrow",
+  "item.launchers_and_arrows.ignition_string": "Ignition String",
+  "item.launchers_and_arrows.frostbite_string": "Frostbite String",
+  "item.launchers_and_arrows.charging_string": "Charging String",
+  "item.launchers_and_arrows.deterioration_string": "Deterioration String",
+  "item.launchers_and_arrows.permeation_string": "Permeation String",
+  "item.launchers_and_arrows.vibrating_string": "Vibrating String",
   "effect.launchers_and_arrows.flame_accumulation": "Flame Accumulation",
   "effect.launchers_and_arrows.frost_accumulation": "Frost Accumulation",
   "effect.launchers_and_arrows.lightning_accumulation": "Lightning Accumulation",
@@ -27,5 +33,7 @@
   "effect.launchers_and_arrows.shock_explosion": "Shock Explosion",
   "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows",
   "tooltip.launchers_and_arrows.attribute_effects": "Attribute Effects",
-  "tooltip.launchers_and_arrows.attribute_modifiers": "When Installed"
+  "tooltip.launchers_and_arrows.attribute_modifiers": "When Installed",
+  "tooltip.launchers_and_arrows.modifier": "Modifier Slots",
+  "tooltip.launchers_and_arrows.empty": "Empty"
 }

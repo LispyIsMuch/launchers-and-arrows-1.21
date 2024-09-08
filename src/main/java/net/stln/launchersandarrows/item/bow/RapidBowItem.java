@@ -19,6 +19,7 @@ public class RapidBowItem extends ModfiableBowItem {
 
     public RapidBowItem(Settings settings) {
         super(settings);
+        pulltime = 20;
     }
 
     @Override
@@ -61,16 +62,6 @@ public class RapidBowItem extends ModfiableBowItem {
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         this.onStoppedUsing(stack, world, user, 0);
         return super.finishUsing(stack, world, user);
-    }
-
-    public static float getPullProgress(int useTicks) {
-        float f = (float)useTicks / 10.0F;
-        f = (f * f + f * 2.0F) / 3.0F;
-        if (f > 1.0F) {
-            f = 1.0F;
-        }
-
-        return f;
     }
 
     @Override

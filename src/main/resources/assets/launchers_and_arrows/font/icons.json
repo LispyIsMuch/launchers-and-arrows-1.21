@@ -43,6 +43,78 @@
             "chars": ["\u0007"]
         },
         {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/range.png",
+            "ascent": 8,
+            "chars": ["\u0008"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/sturdy.png",
+            "ascent": 8,
+            "chars": ["\u0009"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:icon/lightweight.png",
+            "ascent": 8,
+            "chars": ["\u000b"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/ignition_string.png",
+            "ascent": 7,
+            "chars": ["\u1000"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/frostbite_string.png",
+            "ascent": 7,
+            "chars": ["\u1001"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/charging_string.png",
+            "ascent": 7,
+            "chars": ["\u1002"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/deterioration_string.png",
+            "ascent": 7,
+            "chars": ["\u1003"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/permeation_string.png",
+            "ascent": 7,
+            "chars": ["\u1004"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/vibrating_string.png",
+            "ascent": 7,
+            "chars": ["\u1005"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/range_string.png",
+            "ascent": 7,
+            "chars": ["\u2000"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/sturdy_string.png",
+            "ascent": 7,
+            "chars": ["\u2001"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/lightweight_string.png",
+            "ascent": 7,
+            "chars": ["\u2002"]
+        },
+        {
             "type": "reference",
             "id": "minecraft:default"
         }

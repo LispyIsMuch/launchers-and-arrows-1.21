@@ -20,13 +20,14 @@ public class ModifierItem extends Item {
         ItemStack offhandStack = user.getOffHandStack();
         if (hand == Hand.MAIN_HAND && offhandStack.getItem() instanceof ModfiableBowItem bow && user.isSneaking()) {
             for (int i = 0; i < bow.getSlotsize(); i++) {
-                if (bow.getModifier(i, offhandStack) != null && bow.getModifier(i, offhandStack).isEmpty()) {
+                if (bow.getModifier(i, offhandStack) == null) {
                     bow.setModifier(i, offhandStack, mainhandStack.copy());
                     mainhandStack.setCount(mainhandStack.getCount() - 1);
 
                     float h = 1.0F / (user.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F;
-                    user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_DISPENSER_FAIL, user.getSoundCategory(), 1.0F, h + 1.0F);
-                    user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_IRON_DOOR_OPEN, user.getSoundCategory(), 1.0F, h + 1.0F);
+                    user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_DISPENSER_FAIL, user.getSoundCategory(), 1.0F, h);
+                    user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_IRON_DOOR_OPEN, user.getSoundCategory(), 1.0F, h);
+                    user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, user.getSoundCategory(), 1.0F, h);
                     return TypedActionResult.consume(user.getMainHandStack());
                 }
             }

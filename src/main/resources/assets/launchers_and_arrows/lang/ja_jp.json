@@ -11,6 +11,12 @@
   "item.launchers_and_arrows.reverberating_arrow": "残響の矢",
   "item.launchers_and_arrows.wave_arrow": "波動の矢",
   "item.launchers_and_arrows.piercing_arrow": "貫通の矢",
+  "item.launchers_and_arrows.ignition_string": "着火の弦",
+  "item.launchers_and_arrows.frostbite_string": "凍傷の弦",
+  "item.launchers_and_arrows.charging_string": "充電の弦",
+  "item.launchers_and_arrows.deterioration_string": "劣化の弦",
+  "item.launchers_and_arrows.permeation_string": "浸透の弦",
+  "item.launchers_and_arrows.vibrating_string": "振動の弦",
   "effect.launchers_and_arrows.flame_accumulation": "炎蓄積",
   "effect.launchers_and_arrows.frost_accumulation": "冷気蓄積",
   "effect.launchers_and_arrows.lightning_accumulation": "電撃蓄積",
@@ -26,5 +32,8 @@
   "effect.launchers_and_arrows.serious_injury": "重傷",
   "effect.launchers_and_arrows.shock_explosion": "衝撃炸裂",
   "itemgroup.launchers_and_arrows.launchers_and_arrows": "Launchers And Arrows",
-  "tooltip.launchers_and_arrows.attribute_effects": "属性効果"
+  "tooltip.launchers_and_arrows.attribute_effects": "属性効果",
+  "tooltip.launchers_and_arrows.attribute_modifiers": "装着したとき",
+  "tooltip.launchers_and_arrows.modifier": "改造スロット",
+  "tooltip.launchers_and_arrows.empty": "空"
 }

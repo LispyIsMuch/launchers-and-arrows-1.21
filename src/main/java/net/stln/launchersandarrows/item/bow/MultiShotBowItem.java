@@ -20,12 +20,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MultiShotBowItem extends ModfiableBowItem implements FovModifierItem {
+public class MultiShotBowItem extends ModfiableBowItem{
 
     float fov = 1.0f;
 
     public MultiShotBowItem(Settings settings) {
         super(settings);
+        pulltime = 40;
     }
 
     @Override
@@ -83,6 +84,7 @@ public class MultiShotBowItem extends ModfiableBowItem implements FovModifierIte
             boolean critical,
             @Nullable LivingEntity target
     ) {
+        speed = applyModifier(shooter, stack, speed);
         float f = EnchantmentHelper.getProjectileSpread(world, stack, shooter, 0.0F);
         float g = projectiles.size() == 1 ? 0.0F : 2.0F * f / (float)(projectiles.size() - 1);
         float h = (float)((projectiles.size() - 1) % 2) * g / 2.0F;
@@ -103,25 +105,5 @@ public class MultiShotBowItem extends ModfiableBowItem implements FovModifierIte
                 }
             }
         }
-    }
-
-    public static float getPullProgress(int useTicks) {
-        float f = (float)useTicks / 20.0F;
-        f = (f * f + f * 2.0F) / 3.0F;
-        if (f > 1.0F) {
-            f = 1.0F;
-        }
-
-        return f;
-    }
-
-    @Override
-    public float getFov() {
-        return fov;
-    }
-
-    @Override
-    public void resetFov() {
-        fov = 1.0f;
     }
 }

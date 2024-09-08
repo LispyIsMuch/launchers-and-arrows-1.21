@@ -33,6 +33,9 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.DETERIORATION_STRING);
                 entries.add(ItemInit.PERMEATION_STRING);
                 entries.add(ItemInit.VIBRATING_STRING);
+                entries.add(ItemInit.RANGE_STRING);
+                entries.add(ItemInit.STURDY_STRING);
+                entries.add(ItemInit.LIGHTWEIGHT_STRING);
             })
             .build();
 

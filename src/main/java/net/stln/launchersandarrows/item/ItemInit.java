@@ -15,14 +15,23 @@ import net.stln.launchersandarrows.item.component.ModifierComponent;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
 import net.stln.launchersandarrows.item.util.AttributeModifierDictionary;
+import net.stln.launchersandarrows.item.util.ModifierDictionary;
 import net.stln.launchersandarrows.util.AttributeEnum;
+import net.stln.launchersandarrows.util.ModifierEnum;
 
 import java.util.List;
 
 public class ItemInit {
 
-    public static final Item LONG_BOW = registerItem("long_bow", new LongBowItem(new Item.Settings().maxDamage(512)));
-    public static final Item MULTISHOT_BOW = registerItem("multishot_bow", new MultiShotBowItem(new Item.Settings().maxDamage(512)));
+    public static final Item LONG_BOW = registerItem("long_bow",
+            new LongBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
+                    ModifierComponent.DEFAULT)));
+    public static final Item RAPID_BOW = registerItem("rapid_bow",
+            new RapidBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
+                    ModifierComponent.DEFAULT)));
+    public static final Item MULTISHOT_BOW = registerItem("multishot_bow",
+            new MultiShotBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
+                    ModifierComponent.DEFAULT)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
 
     public static final Item FLAME_ARROW = registerItem("flame_arrow", new ArrowItem(new Item.Settings()));
@@ -40,9 +49,9 @@ public class ItemInit {
     public static final Item DETERIORATION_STRING = registerItem("deterioration_string", new ModifierItem(new Item.Settings()));
     public static final Item PERMEATION_STRING = registerItem("permeation_string", new ModifierItem(new Item.Settings()));
     public static final Item VIBRATING_STRING = registerItem("vibrating_string", new ModifierItem(new Item.Settings()));
-    public static final Item RAPID_BOW = registerItem("rapid_bow",
-            new RapidBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
-            ModifierComponent.of(List.of(new ItemStack(ItemInit.CHARGING_STRING))))));
+    public static final Item RANGE_STRING = registerItem("range_string", new ModifierItem(new Item.Settings()));
+    public static final Item STURDY_STRING = registerItem("sturdy_string", new ModifierItem(new Item.Settings()));
+    public static final Item LIGHTWEIGHT_STRING = registerItem("lightweight_string", new ModifierItem(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
@@ -70,11 +79,21 @@ public class ItemInit {
         AttributeEffectsDictionary.registerToDict(Items.HEAVY_CORE, AttributeEnum.INJURY.get(), 10);
         AttributeEffectsDictionary.registerToDict(Items.POINTED_DRIPSTONE, AttributeEnum.INJURY.get(), 3);
 
-        AttributeModifierDictionary.registerToDict(IGNITION_STRING, AttributeEnum.FLAME.get(), 10);
-        AttributeModifierDictionary.registerToDict(FROSTBITE_STRING, AttributeEnum.FROST.get(), 10);
-        AttributeModifierDictionary.registerToDict(CHARGING_STRING, AttributeEnum.LIGHTNING.get(), 10);
-        AttributeModifierDictionary.registerToDict(DETERIORATION_STRING, AttributeEnum.ACID.get(), 10);
-        AttributeModifierDictionary.registerToDict(PERMEATION_STRING, AttributeEnum.FLOOD.get(), 10);
-        AttributeModifierDictionary.registerToDict(VIBRATING_STRING, AttributeEnum.ECHO.get(), 10);
+        AttributeModifierDictionary.registerToDict(IGNITION_STRING, AttributeEnum.FLAME.get(), 3);
+        AttributeModifierDictionary.registerToDict(IGNITION_STRING, AttributeEnum.FLAME_RATIO.get(), 75);
+        AttributeModifierDictionary.registerToDict(FROSTBITE_STRING, AttributeEnum.FROST.get(), 3);
+        AttributeModifierDictionary.registerToDict(FROSTBITE_STRING, AttributeEnum.FROST_RATIO.get(), 75);
+        AttributeModifierDictionary.registerToDict(CHARGING_STRING, AttributeEnum.LIGHTNING.get(), 3);
+        AttributeModifierDictionary.registerToDict(CHARGING_STRING, AttributeEnum.LIGHTNING_RATIO.get(), 75);
+        AttributeModifierDictionary.registerToDict(DETERIORATION_STRING, AttributeEnum.ACID.get(), 3);
+        AttributeModifierDictionary.registerToDict(DETERIORATION_STRING, AttributeEnum.ACID_RATIO.get(), 75);
+        AttributeModifierDictionary.registerToDict(PERMEATION_STRING, AttributeEnum.FLOOD.get(), 3);
+        AttributeModifierDictionary.registerToDict(PERMEATION_STRING, AttributeEnum.FLOOD_RATIO.get(), 75);
+        AttributeModifierDictionary.registerToDict(VIBRATING_STRING, AttributeEnum.ECHO.get(), 3);
+        AttributeModifierDictionary.registerToDict(VIBRATING_STRING, AttributeEnum.ECHO_RATIO.get(), 75);
+
+        ModifierDictionary.registerToDict(RANGE_STRING, ModifierEnum.RANGE.get(), 25);
+        ModifierDictionary.registerToDict(STURDY_STRING, ModifierEnum.STURDY.get(), 25);
+        ModifierDictionary.registerToDict(LIGHTWEIGHT_STRING, ModifierEnum.LIGHTWEIGHT.get(), 25);
     }
 }
