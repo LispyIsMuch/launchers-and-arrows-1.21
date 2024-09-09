@@ -32,13 +32,12 @@ import net.minecraft.text.Text;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import net.stln.launchersandarrows.entity.EntityInit;
+import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
@@ -122,18 +121,49 @@ public class ItemProjectile extends ThrownItemEntity {
                                 this.getRandom().nextFloat() / 10);
                     }
                 }
-                if (this.getDataTracker().get(HIT_EFFECT_TICK) >= 100) {
+            } else if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) {
+                this.setVelocity(0, 0, 0);
+                Entity owner = this.getOwner();
+                if (owner == null || owner.isSneaking()) {
                     this.kill();
-                    ParticleEffect particleEffect = this.getParticleParameters();
-                    for(int i = 0; i < 8; ++i) {
-                        this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                } else {
+                    Vec3d hookPos = this.getPos();
+                    Vec3d ownerPos = owner.getPos().add(0, owner.getEyeY() - 0.1, 0);
+                    Vec3d subtract = hookPos.subtract(ownerPos);
+                    double length = subtract.length();
+                    for (int i = 0; i < length * 5; i++) {
+                        ownerPos = ownerPos.add(subtract.multiply(1 / (length * 5)));
+                        this.getWorld().addParticle(ParticleTypes.CRIT, ownerPos.x, ownerPos.y, ownerPos.z, 0, 0, 0);
+                        this.getWorld().addParticle(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
                     }
-                    this.getWorld().playSound(null, this.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
-                            1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.33F);
+                    int lefttick = this.getLifeTimeAfterHit() - this.getDataTracker().get(HIT_EFFECT_TICK);
+                    double strength = 0.2 / subtract.length();
+                    double vx = subtract.x * strength;
+                    double vy = subtract.y * strength * 2 + (owner.getFinalGravity() * lefttick * 1.5 / getLifeTimeAfterHit());
+                    double vz = subtract.z * strength;
+                    owner.addVelocity(vx, vy, vz);
+                    if (length < 2) {
+                        this.kill();
+                    }
                 }
+            }
+            if (this.getDataTracker().get(HIT_EFFECT_TICK) >= getLifeTimeAfterHit()) {
+                this.kill();
+                ParticleEffect particleEffect = this.getParticleParameters();
+                for(int i = 0; i < 8; ++i) {
+                    this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                }
+                this.getWorld().playSound(null, this.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
+                        1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.33F);
             }
         }
         super.tick();
+    }
+
+    private int getLifeTimeAfterHit() {
+        if (this.getStack().isOf(Items.ENDER_EYE)) return 100;
+        if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) return 100;
+        return 0;
     }
 
     @Override
@@ -281,6 +311,8 @@ public class ItemProjectile extends ThrownItemEntity {
             this.getDataTracker().set(HIT, true);
             this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.PLAYERS,
                     1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F);
+        } else if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) {
+            this.getDataTracker().set(HIT, true);
         } else {
             this.kill();
         }
@@ -325,7 +357,13 @@ public class ItemProjectile extends ThrownItemEntity {
         if (this.getStack().isOf(Items.POINTED_DRIPSTONE)) {
             return SoundEvents.BLOCK_DRIPSTONE_BLOCK_BREAK;
         }
-        return null;
+        if (this.getStack().isOf(Items.POINTED_DRIPSTONE)) {
+            return SoundEvents.BLOCK_DRIPSTONE_BLOCK_BREAK;
+        }
+        if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) {
+            return SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN;
+        }
+        return SoundEvents.BLOCK_STONE_BREAK;
     }
 
     @Override

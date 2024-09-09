@@ -8,10 +8,10 @@
 		"Stln"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/launchers_and_arrows",
+		"sources": "https://github.com/STLN-S1NcLair/launchers-and-arrows-1.21"
 	},
-	"license": "MIT",
+	"license": "ARR",
 	"icon": "assets/launchers_and_arrows/icon.png",
 	"environment": "*",
 	"entrypoints": {

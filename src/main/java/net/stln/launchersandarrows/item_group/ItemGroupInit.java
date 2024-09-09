@@ -19,6 +19,7 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.RAPID_BOW);
                 entries.add(ItemInit.MULTISHOT_BOW);
                 entries.add(ItemInit.CROSSLAUNCHER);
+                entries.add(ItemInit.HOOK_LAUNCHER);
                 entries.add(ItemInit.FLAME_ARROW);
                 entries.add(ItemInit.FREEZING_ARROW);
                 entries.add(ItemInit.LIGHTNING_ARROW);
@@ -27,6 +28,7 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.REVERBERATING_ARROW);
                 entries.add(ItemInit.WAVE_ARROW);
                 entries.add(ItemInit.PIERCING_ARROW);
+                entries.add(ItemInit.GRAPPLING_HOOK);
                 entries.add(ItemInit.IGNITION_STRING);
                 entries.add(ItemInit.FROSTBITE_STRING);
                 entries.add(ItemInit.CHARGING_STRING);

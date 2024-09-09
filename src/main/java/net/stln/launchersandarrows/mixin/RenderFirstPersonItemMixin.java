@@ -42,7 +42,7 @@ public class RenderFirstPersonItemMixin {
     public void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch,
                                       Hand hand, float swingProgress, ItemStack item, float equipProgress,
                                       MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if (item.isOf(ItemInit.CROSSLAUNCHER)) {
+        if (item.isOf(ItemInit.CROSSLAUNCHER) || item.isOf(ItemInit.HOOK_LAUNCHER)) {
 
             boolean bl = hand == Hand.MAIN_HAND;
             Arm arm = bl ? player.getMainArm() : player.getMainArm().getOpposite();

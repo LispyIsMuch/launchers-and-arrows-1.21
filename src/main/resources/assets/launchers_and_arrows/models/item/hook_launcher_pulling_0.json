@@ -1,0 +1,6 @@
+{
+    "parent": "launchers_and_arrows:item/hook_launcher",
+    "textures": {
+        "layer0": "launchers_and_arrows:item/hook_launcher_pulling_0"
+    }
+}
