@@ -87,7 +87,7 @@ public class ItemTooltipMixin {
         getAttributeModifierTooltip(tooltip, attributeModifiers, iconFont);
         getOtherModifierTooltip(tooltip, otherModifiers, iconFont);
 
-        if (stack.getItem() instanceof ModfiableBowItem) {
+        if (stack.getItem() instanceof ModfiableBowItem modfiableBowItem && modfiableBowItem.getSlotsize() > 0) {
             tooltip.add(Text.empty());
             tooltip.add(Text.translatable("tooltip.launchers_and_arrows.modifier").append(":").withColor(0xC0C0C0));
             if (stack.get(ModComponentInit.MODIFIER_COMPONENT) != null) {

@@ -3,6 +3,7 @@ package net.stln.launchersandarrows.entity.projectile;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TorchBlock;
@@ -17,6 +18,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -237,6 +239,10 @@ public class ItemProjectile extends ThrownItemEntity {
                 damageSource = this.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner());
             }
             this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), new ItemStack(Items.HEAVY_CORE)));
+        } else if (this.getStack().getItem() instanceof BlockItem blockItem) {
+            Block block = blockItem.getBlock();
+                damage = (float) Math.ceil(block.getHardness() * 2);
+                damageSource = this.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner());
         }
         this.getWorld().playSound(null, entity.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
                 1.0F, 1.0F / (entity.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F);
@@ -279,8 +285,20 @@ public class ItemProjectile extends ThrownItemEntity {
                     this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.TORCH)));
                 }
             }
-        } else if (this.getStack().isOf(Items.HEAVY_CORE)) {
-
+        } else if (this.getStack().isOf(Items.HEART_OF_THE_SEA)) {
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    for (int k = -1; k < 2; k++) {
+                        BlockPos pos = blockHitResult.getBlockPos();
+                        if (this.getWorld().getBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)).isOf(Blocks.AIR)) {
+                            this.getWorld().setBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k),
+                                    Fluids.FLOWING_WATER.getDefaultState().getBlockState());
+                        }
+                    }
+                }
+            }
+        } else if (this.getStack().getItem() instanceof BlockItem blockItem) {
+            Block block = blockItem.getBlock();
             BlockPos pos = blockHitResult.getBlockPos();
             Direction direction = blockHitResult.getSide();
             if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
@@ -299,21 +317,9 @@ public class ItemProjectile extends ThrownItemEntity {
                 }
                 pos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
                 if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
-                    this.getWorld().setBlockState(pos, Blocks.HEAVY_CORE.getDefaultState());
+                    this.getWorld().setBlockState(pos, block.getDefaultState());
                 } else {
-                    this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.HEAVY_CORE)));
-                }
-            }
-        } else if (this.getStack().isOf(Items.HEART_OF_THE_SEA)) {
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    for (int k = -1; k < 2; k++) {
-                        BlockPos pos = blockHitResult.getBlockPos();
-                        if (this.getWorld().getBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)).isOf(Blocks.AIR)) {
-                            this.getWorld().setBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k),
-                                    Fluids.FLOWING_WATER.getDefaultState().getBlockState());
-                        }
-                    }
+                    this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(blockItem)));
                 }
             }
         }
@@ -379,7 +385,11 @@ public class ItemProjectile extends ThrownItemEntity {
         if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) {
             return SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN;
         }
+        if (this.getStack().getItem() instanceof BlockItem) {
+            return this.getStack().getBreakSound();
+        }
         return SoundEvents.BLOCK_STONE_BREAK;
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import net.stln.launchersandarrows.item.component.ModComponentInit;
 import net.stln.launchersandarrows.item.component.ModifierComponent;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 import net.stln.launchersandarrows.item.launcher.HookLauncherItem;
+import net.stln.launchersandarrows.item.launcher.SlingShotItem;
 import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
 import net.stln.launchersandarrows.item.util.AttributeModifierDictionary;
 import net.stln.launchersandarrows.item.util.ModifierDictionary;
@@ -35,6 +36,9 @@ public class ItemInit {
                     ModifierComponent.DEFAULT)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
     public static final Item HOOK_LAUNCHER = registerItem("hook_launcher", new HookLauncherItem(new Item.Settings().maxDamage(512)));
+    public static final Item SLINGSHOT = registerItem("slingshot",
+            new SlingShotItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
+                    ModifierComponent.DEFAULT)));
 
     public static final Item FLAME_ARROW = registerItem("flame_arrow", new ArrowItem(new Item.Settings()));
     public static final Item FREEZING_ARROW = registerItem("freezing_arrow", new ArrowItem(new Item.Settings()));

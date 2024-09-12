@@ -8,6 +8,7 @@ import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
@@ -15,6 +16,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.stln.launchersandarrows.item.ItemInit;
+import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
+import net.stln.launchersandarrows.item.launcher.SlingShotItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -73,17 +76,6 @@ public class RenderFirstPersonItemMixin {
                 matrices.translate(g * 0.0F, g * 0.0F, g * 0.04F);
                 matrices.scale(1.0F, 1.0F, 1.0F + g * 0.2F);
                 matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees((float) i * 45.0F));
-            } else {
-                float fx = -0.4F * MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) Math.PI);
-                float gx = 0.2F * MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) (Math.PI * 2));
-                float h = -0.2F * MathHelper.sin(swingProgress * (float) Math.PI);
-                matrices.translate((float) i * fx, gx, h);
-                this.applyEquipOffset(matrices, arm, equipProgress);
-                this.applySwingOffset(matrices, arm, swingProgress);
-                if (bl2 && swingProgress < 0.001F && bl) {
-                    matrices.translate((float) i * -0.641864F, 0.0F, 0.0F);
-                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) i * 10.0F));
-                }
             }
 
             this.renderItem(

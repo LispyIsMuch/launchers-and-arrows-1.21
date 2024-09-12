@@ -20,6 +20,7 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.MULTISHOT_BOW);
                 entries.add(ItemInit.CROSSLAUNCHER);
                 entries.add(ItemInit.HOOK_LAUNCHER);
+                entries.add(ItemInit.SLINGSHOT);
                 entries.add(ItemInit.FLAME_ARROW);
                 entries.add(ItemInit.FREEZING_ARROW);
                 entries.add(ItemInit.LIGHTNING_ARROW);

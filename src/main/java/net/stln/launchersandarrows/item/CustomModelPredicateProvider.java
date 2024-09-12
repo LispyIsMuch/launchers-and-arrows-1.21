@@ -23,6 +23,7 @@ public class CustomModelPredicateProvider {
         registerModBow(ItemInit.MULTISHOT_BOW);
         registerCrosslauncher(ItemInit.CROSSLAUNCHER);
         registerCrosslauncher(ItemInit.HOOK_LAUNCHER);
+        registerCrosslauncher(ItemInit.SLINGSHOT);
 
     }
 

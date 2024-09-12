@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ModfiableBowItem extends BowItem {
-    protected static int slotsize = 3;
+    protected int slotsize = 3;
     protected int pulltime = 40;
 
     public ModfiableBowItem(Settings settings) {
