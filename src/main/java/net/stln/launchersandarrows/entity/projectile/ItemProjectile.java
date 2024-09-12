@@ -99,6 +99,21 @@ public class ItemProjectile extends ThrownItemEntity {
 
     @Override
     public void tick() {
+        if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) {
+            Entity owner = this.getOwner();
+            if (owner == null || owner.isSneaking()) {
+                this.kill();
+            } else {
+                Vec3d hookPos = this.getPos();
+                Vec3d ownerPos = owner.getEyePos().add(0, -0.5, 0);
+                Vec3d subtract = hookPos.subtract(ownerPos);
+                double length = subtract.length();
+                for (int i = 0; i < length * 3; i++) {
+                    ownerPos = ownerPos.add(subtract.multiply(1 / (length * 3)));
+                    this.getWorld().addParticle(ParticleTypes.CRIT, ownerPos.x, ownerPos.y, ownerPos.z, 0, 0, 0);
+                }
+            }
+        }
         if (this.getDataTracker().get(HIT)) {
             this.getDataTracker().set(HIT_EFFECT_TICK, this.getDataTracker().get(HIT_EFFECT_TICK) + 1);
             if (this.getStack().isOf(Items.ENDER_EYE)) {
@@ -128,22 +143,23 @@ public class ItemProjectile extends ThrownItemEntity {
                     this.kill();
                 } else {
                     Vec3d hookPos = this.getPos();
-                    Vec3d ownerPos = owner.getPos().add(0, owner.getEyeY() - 0.1, 0);
+                    Vec3d ownerPos = owner.getEyePos().add(0, -0.5, 0);
                     Vec3d subtract = hookPos.subtract(ownerPos);
                     double length = subtract.length();
-                    for (int i = 0; i < length * 5; i++) {
-                        ownerPos = ownerPos.add(subtract.multiply(1 / (length * 5)));
-                        this.getWorld().addParticle(ParticleTypes.CRIT, ownerPos.x, ownerPos.y, ownerPos.z, 0, 0, 0);
-                        this.getWorld().addParticle(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-                    }
                     int lefttick = this.getLifeTimeAfterHit() - this.getDataTracker().get(HIT_EFFECT_TICK);
-                    double strength = 0.2 / subtract.length();
-                    double vx = subtract.x * strength;
-                    double vy = subtract.y * strength * 2 + (owner.getFinalGravity() * lefttick * 1.5 / getLifeTimeAfterHit());
-                    double vz = subtract.z * strength;
+                    double strength = 0.125 / subtract.length();
+                    double control = 0.075;
+                    double vx = subtract.x * strength + owner.getFacing().getOffsetX() * control;
+                    double vy = subtract.y * strength + owner.getFacing().getOffsetY() * control + Math.max(owner.getFinalGravity() * lefttick * 1.5 / getLifeTimeAfterHit(), owner.getFinalGravity());
+                    double vz = subtract.z * strength + owner.getFacing().getOffsetZ() * control;
                     owner.addVelocity(vx, vy, vz);
+                    owner.fallDistance = 0;
+                    this.getWorld().playSound(null, BlockPos.ofFloored(owner.getPos()), SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.PLAYERS,
+                            1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.33F);
                     if (length < 2) {
                         this.kill();
+                        this.getWorld().playSound(null, this.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
+                                1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.33F);
                     }
                 }
             }
