@@ -18,7 +18,6 @@ public class LaunchersAndArrows implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		SoundInit.registerSoundEvents();
-		EntityInit.registerModEntitiesRenderer();
 		ParticleInit.registerParticleTypes();
 		StatusEffectInit.registerStatusEffect();
 		ItemInit.registerModItems();

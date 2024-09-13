@@ -241,7 +241,7 @@ public class ItemProjectile extends ThrownItemEntity {
             this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), new ItemStack(Items.HEAVY_CORE)));
         } else if (this.getStack().getItem() instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
-                damage = (float) Math.ceil(block.getHardness() * 2);
+                damage = (float) Math.ceil(Math.sqrt(Math.max(block.getHardness(), 0)) * 2);
                 damageSource = this.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner());
         }
         this.getWorld().playSound(null, entity.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
@@ -385,8 +385,8 @@ public class ItemProjectile extends ThrownItemEntity {
         if (this.getStack().isOf(ItemInit.GRAPPLING_HOOK)) {
             return SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN;
         }
-        if (this.getStack().getItem() instanceof BlockItem) {
-            return this.getStack().getBreakSound();
+        if (this.getStack().getItem() instanceof BlockItem blockItem) {
+            return blockItem.getBlock().getDefaultState().getSoundGroup().getPlaceSound();
         }
         return SoundEvents.BLOCK_STONE_BREAK;
 

@@ -31,7 +31,7 @@ public class SlingShotItem extends ModfiableBowItem implements FovModifierItem {
     float fov = 1.0F;
 
     public static final Predicate<ItemStack> SLINGSHOT_HELD_PROJECTILES = (stack) -> {
-        return stack.getItem() instanceof BlockItem;
+        return stack.getItem() instanceof BlockItem && !stack.isOf(Items.HEAVY_CORE);
     };
 
     public SlingShotItem(Settings settings) {
@@ -53,7 +53,7 @@ public class SlingShotItem extends ModfiableBowItem implements FovModifierItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_END.value(), SoundCategory.PLAYERS, 1f, 1.5f);
-        world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE.value(), SoundCategory.PLAYERS, 1f, 0.5f);
+        world.playSound((Entity) user, user.getBlockPos(), SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE.value(), SoundCategory.PLAYERS, 1f, 1.5f);
         return super.use(world, user, hand);
     }
 
@@ -86,7 +86,7 @@ public class SlingShotItem extends ModfiableBowItem implements FovModifierItem {
                             SoundInit.BOW_RELEASE,
                             SoundCategory.PLAYERS,
                             1.5F,
-                            0.75F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
+                            2.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
                     );
                     playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
                 }

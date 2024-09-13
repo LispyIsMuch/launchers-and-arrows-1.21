@@ -1,5 +1,5 @@
 {
-    "parent": "item/generated",
+    "parent": "launchers_and_arrows:item/slingshot",
     "textures": {
         "layer0": "launchers_and_arrows:item/slingshot_pulling"
     }
