@@ -9,4 +9,6 @@ import net.stln.launchersandarrows.LaunchersAndArrows;
 public class ModItemTags {
     public static final TagKey<Item> ARROWS_WITH_EFFECT =
             TagKey.of(RegistryKeys.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, "arrows_with_effect"));
+    public static final TagKey<Item> BOXED_BOLTS =
+            TagKey.of(RegistryKeys.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, "boxed_bolts"));
 }

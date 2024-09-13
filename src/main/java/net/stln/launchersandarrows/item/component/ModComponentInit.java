@@ -20,4 +20,16 @@ public class ModComponentInit {
             Identifier.of(LaunchersAndArrows.MOD_ID, "arrow_selecter"),
             ComponentType.<String>builder().codec(Codec.STRING).build()
     );
+
+    public static final ComponentType<Integer> BOLT_COUNT_COMPONENT = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of(LaunchersAndArrows.MOD_ID, "bolt_count"),
+            ComponentType.<Integer>builder().codec(Codec.INT).build()
+    );
+
+    public static final ComponentType<Integer> CHARGED_BOLT_COUNT_COMPONENT = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of(LaunchersAndArrows.MOD_ID, "charged_bolt_count"),
+            ComponentType.<Integer>builder().codec(Codec.INT).build()
+    );
 }
