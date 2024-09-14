@@ -1,6 +1,8 @@
 package net.stln.launchersandarrows.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ChargedProjectilesComponent;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -12,6 +14,7 @@ import net.stln.launchersandarrows.item.bow.MultiShotBowItem;
 import net.stln.launchersandarrows.item.bow.RapidBowItem;
 import net.stln.launchersandarrows.item.component.ModComponentInit;
 import net.stln.launchersandarrows.item.component.ModifierComponent;
+import net.stln.launchersandarrows.item.launcher.BoltThrowerItem;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 import net.stln.launchersandarrows.item.launcher.HookLauncherItem;
 import net.stln.launchersandarrows.item.launcher.SlingShotItem;
@@ -26,17 +29,16 @@ import java.util.List;
 public class ItemInit {
 
     public static final Item LONG_BOW = registerItem("long_bow",
-            new LongBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
-                    ModifierComponent.DEFAULT)));
+            new LongBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item RAPID_BOW = registerItem("rapid_bow",
-            new RapidBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
-                    ModifierComponent.DEFAULT)));
+            new RapidBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item MULTISHOT_BOW = registerItem("multishot_bow",
-            new MultiShotBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
-                    ModifierComponent.DEFAULT)));
+            new MultiShotBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item BOLT_THROWER = registerItem("bolt_thrower",
-            new SlingShotItem(new Item.Settings().maxDamage(512).component(ModComponentInit.BOLT_COUNT_COMPONENT,
-                    0).component(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0)));
+            new BoltThrowerItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)
+                    .component(ModComponentInit.BOLT_COUNT_COMPONENT, 0)
+                    .component(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0)
+                    .component(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
     public static final Item HOOK_LAUNCHER = registerItem("hook_launcher", new HookLauncherItem(new Item.Settings().maxDamage(512)));
     public static final Item SLINGSHOT = registerItem("slingshot",

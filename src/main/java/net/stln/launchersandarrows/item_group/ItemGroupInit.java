@@ -18,6 +18,7 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.LONG_BOW);
                 entries.add(ItemInit.RAPID_BOW);
                 entries.add(ItemInit.MULTISHOT_BOW);
+                entries.add(ItemInit.BOLT_THROWER);
                 entries.add(ItemInit.CROSSLAUNCHER);
                 entries.add(ItemInit.HOOK_LAUNCHER);
                 entries.add(ItemInit.SLINGSHOT);

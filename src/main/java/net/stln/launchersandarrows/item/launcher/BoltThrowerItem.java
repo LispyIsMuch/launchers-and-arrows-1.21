@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.item.ModifierItem;
@@ -40,7 +41,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
             } else {
                 int i = this.getMaxUseTime(stack, player) - remainingUseTicks;
                 int count = getChargedCount(i, stack);
-                stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, i);
+                stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, count);
             }
         }
     }
@@ -52,12 +53,42 @@ public class BoltThrowerItem extends ModfiableBowItem {
     private void loadBolt(ItemStack stack, PlayerEntity playerEntity, int remainingUseTicks) {
         int i = this.getMaxUseTime(stack, playerEntity) - remainingUseTicks;
         float f = getModifiedPullProgress(i, stack);
-        if (f >= 1.0) {
+        if (f >= 1.0F) {
             ItemStack itemStack = this.getProjectileTypeWithSelector(playerEntity, stack);
             ChargedProjectilesComponent component = ChargedProjectilesComponent.of(itemStack);
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, component);
             stack.set(ModComponentInit.BOLT_COUNT_COMPONENT, 60);
+            World world = playerEntity.getWorld();
+            world.playSound(
+                    null,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN,
+                    SoundCategory.PLAYERS,
+                    1.5F,
+                    1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F
+            );
+            world.playSound(
+                    null,
+                    playerEntity.getX(),
+                    playerEntity.getY(),
+                    playerEntity.getZ(),
+                    SoundEvents.BLOCK_PISTON_CONTRACT,
+                    SoundCategory.PLAYERS,
+                    0.5F,
+                    2.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F
+            );
         }
+    }
+
+    @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
+        float f = getModifiedPullProgress(i, stack);
+        if (f == 1.0F && stack.get(ModComponentInit.BOLT_COUNT_COMPONENT) == 0) {
+        }
+        super.usageTick(world, user, stack, remainingUseTicks);
     }
 
     @Override
@@ -91,7 +122,6 @@ public class BoltThrowerItem extends ModfiableBowItem {
                             );
                         }
                     }
-                    stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, count - 1);
                     stack.set(ModComponentInit.BOLT_COUNT_COMPONENT, leftCount - 1);
                 } else {
                     world.playSound(
@@ -105,9 +135,18 @@ public class BoltThrowerItem extends ModfiableBowItem {
                             1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F
                     );
                 }
-            } else {
+                stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, count - 1);
+            }
+            if (count == 0 && leftCount == 0) {
                 stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT);
             }
+        } else {
+            stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0);
         }
+    }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.CROSSBOW;
     }
 }
