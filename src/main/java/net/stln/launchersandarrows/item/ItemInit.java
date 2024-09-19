@@ -38,7 +38,8 @@ public class ItemInit {
             new BoltThrowerItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)
                     .component(ModComponentInit.BOLT_COUNT_COMPONENT, 0)
                     .component(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0)
-                    .component(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)));
+                    .component(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
+                    .component(ModComponentInit.CHARGING_COMPONENT, false)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
     public static final Item HOOK_LAUNCHER = registerItem("hook_launcher", new HookLauncherItem(new Item.Settings().maxDamage(512)));
     public static final Item SLINGSHOT = registerItem("slingshot",

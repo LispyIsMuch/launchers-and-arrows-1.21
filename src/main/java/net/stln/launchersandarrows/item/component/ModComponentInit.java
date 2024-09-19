@@ -32,4 +32,10 @@ public class ModComponentInit {
             Identifier.of(LaunchersAndArrows.MOD_ID, "charged_bolt_count"),
             ComponentType.<Integer>builder().codec(Codec.INT).build()
     );
+
+    public static final ComponentType<Boolean> CHARGING_COMPONENT = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of(LaunchersAndArrows.MOD_ID, "charging"),
+            ComponentType.<Boolean>builder().codec(Codec.BOOL).build()
+    );
 }

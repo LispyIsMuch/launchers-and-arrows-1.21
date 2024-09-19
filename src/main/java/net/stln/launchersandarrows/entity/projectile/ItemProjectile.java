@@ -34,6 +34,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.stln.launchersandarrows.LaunchersAndArrows;
@@ -250,7 +251,6 @@ public class ItemProjectile extends ThrownItemEntity {
         if (entity instanceof LivingEntity livingEntity) {
             StatusEffectUtil.applyAttributeEffect(livingEntity, this.getStack());
         }
-        this.hitEffect();
     }
 
     @Override
@@ -325,10 +325,10 @@ public class ItemProjectile extends ThrownItemEntity {
         }
         this.getWorld().playSound(null, blockHitResult.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
                 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F);
-        this.hitEffect();
     }
 
-    private void hitEffect() {
+    @Override
+    protected void onCollision(HitResult hitResult) {
         if (this.getStack().isOf(Items.ENDER_EYE)) {
             this.getDataTracker().set(HIT, true);
             this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.PLAYERS,
@@ -338,6 +338,7 @@ public class ItemProjectile extends ThrownItemEntity {
         } else {
             this.kill();
         }
+        super.onCollision(hitResult);
     }
 
     @Override

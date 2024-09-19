@@ -1,6 +1,7 @@
 package net.stln.launchersandarrows;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.stln.launchersandarrows.client.hud.HudInit;
 import net.stln.launchersandarrows.entity.EntityInit;
 import net.stln.launchersandarrows.item.CustomModelPredicateProvider;
 import net.stln.launchersandarrows.item.ItemInit;
@@ -13,5 +14,6 @@ public class LaunhchersAndArrowsClient implements ClientModInitializer {
         ParticleInit.registerParticleClient();
         ItemInit.registerAttributeEffect();
         EntityInit.registerModEntitiesRenderer();
+        HudInit.registerHud();
     }
 }
