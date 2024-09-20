@@ -32,7 +32,7 @@ public class StatusEffectInit {
     public static final RegistryEntry<StatusEffect> SHOCK_EXPLOSION = register("shock_explosion", new ShockExplosionEffect());
     public static final RegistryEntry<StatusEffect> BURNING = register("burning", new BurningEffect());
     public static final RegistryEntry<StatusEffect> FREEZE = register("freeze", new FreezeEffect());
-    public static final RegistryEntry<StatusEffect> ELECTRICK_SHOCK = register("electric_shock", new ElectricShockEffect());
+    public static final RegistryEntry<StatusEffect> ELECTRIC_SHOCK = register("electric_shock", new ElectricShockEffect());
     public static final RegistryEntry<StatusEffect> CORROSION = register("corrosion", new CorrosionEffect());
     public static final RegistryEntry<StatusEffect> SUBMERGED = register("submerged", new SubmergedEffect());
     public static final RegistryEntry<StatusEffect> CONFUSION = register("confusion", new ConfusionEffect());

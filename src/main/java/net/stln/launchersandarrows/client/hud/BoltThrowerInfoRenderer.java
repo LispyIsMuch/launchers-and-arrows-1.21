@@ -25,6 +25,10 @@ public class BoltThrowerInfoRenderer {
                         offStack.getItem() instanceof BoltThrowerItem ? offStack : null;
                 if (renderStack != null) {
                     drawContext.drawText(renderer, renderStack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT).toString(), (int) (cw * 1.5), (int) (ch * 1.5), 0xFFFFFF, true);
+                    drawContext.drawText(renderer,
+                            String.valueOf((renderStack.get(ModComponentInit.BOLT_COUNT_COMPONENT)
+                                    - renderStack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT))),
+                            (int) (cw * 1.5), (int) (ch * 1.5) + 8, 0x808080, true);
                 }
             }
         }));

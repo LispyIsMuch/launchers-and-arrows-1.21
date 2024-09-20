@@ -42,30 +42,7 @@ public abstract class LivingEntityMixin {
     @Shadow public abstract boolean isFallFlying();
 
     @Unique
-    private static final TrackedData<Integer> EFFECT_STATUS =
-        DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
-    @Unique
-    private static int FLAME = 1;
-    @Unique
-    private static int FROST = 2;
-    @Unique
-    private static int LIGHTNING = 3;
-    @Unique
-    private static int ACID = 4;
-    @Unique
-    private static int FLOOD = 5;
-    @Unique
-    private static int WAVE = 6;
-
-    @Unique
     LivingEntity entity = (LivingEntity) (Object) this;
-
-    @Unique
-    private @NotNull ParticleEffect setParticleAndAmplifier(int status, ParticleEffect particleEffect, RegistryEntry<StatusEffect> statusEffect) {
-        entity.getDataTracker().set(EFFECT_STATUS, status);
-        return particleEffect;
-    }
 
     @Unique
     DamageSource damageSource = null;
@@ -119,41 +96,17 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "tickStatusEffects", at = @At("TAIL"))
     private void tickStatusEffects(CallbackInfo ci) {
-        ParticleEffect particleEffect = null;
-        if (entity.hasStatusEffect(StatusEffectInit.BURNING)
-                || (entity.getDataTracker().get(EFFECT_STATUS) == FLAME && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(FLAME, ParticleInit.FLAME_EFFECT, StatusEffectInit.BURNING);
+        addStatusEffectParticle(StatusEffectInit.BURNING, ParticleInit.FLAME_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.FREEZE, ParticleInit.FROST_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.ELECTRIC_SHOCK, ParticleInit.LIGHTNING_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.CORROSION, ParticleInit.ACID_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.SUBMERGED, ParticleInit.FLOOD_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.CONFUSION, ParticleInit.ECHO_EFFECT);
+    }
 
-
-        } else if (entity.hasStatusEffect(StatusEffectInit.FREEZE)
-                || (entity.getDataTracker().get(EFFECT_STATUS) == FROST && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(FROST, ParticleInit.FROST_EFFECT, StatusEffectInit.FREEZE);
-
-
-
-        } else if (entity.hasStatusEffect(StatusEffectInit.ELECTRICK_SHOCK)
-                || (entity.getDataTracker().get(EFFECT_STATUS) == LIGHTNING && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(LIGHTNING, ParticleInit.LIGHTNING_EFFECT, StatusEffectInit.ELECTRICK_SHOCK);
-
-
-
-        } else if (entity.hasStatusEffect(StatusEffectInit.CORROSION)
-                || (entity.getDataTracker().get(EFFECT_STATUS) == ACID && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(ACID, ParticleInit.ACID_EFFECT, StatusEffectInit.CORROSION);
-
-
-
-        } else if (entity.hasStatusEffect(StatusEffectInit.SUBMERGED)
-                || (entity.getDataTracker().get(EFFECT_STATUS) == FLOOD && entity.getWorld().isClient())) {
-            particleEffect = setParticleAndAmplifier(FLOOD, ParticleInit.FLOOD_EFFECT, StatusEffectInit.SUBMERGED);
-
-
-
-        } else {
-            entity.getDataTracker().set(EFFECT_STATUS, 0);
-        }
-
-        if (particleEffect != null) {
+    @Unique
+    private void addStatusEffectParticle(RegistryEntry<StatusEffect> statusEffect, ParticleEffect particleEffect) {
+        if (entity.hasStatusEffect(statusEffect)) {
             float w = entity.getWidth();
             float h = entity.getHeight();
             int entitySize = (int) (w * h * 10);
@@ -167,10 +120,5 @@ public abstract class LivingEntityMixin {
                 );
             }
         }
-    }
-
-    @Inject(method = "initDataTracker", at = @At("HEAD"))
-    private void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
-        builder.add(EFFECT_STATUS, 0);
     }
 }

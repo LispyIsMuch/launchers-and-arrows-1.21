@@ -9,6 +9,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.HoverEvent;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 
 public class ElectricShockEffect extends StatusEffect {
     protected ElectricShockEffect() {
@@ -36,6 +37,7 @@ public class ElectricShockEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
+        StatusEffectUtil.removeOtherAttributeEffect(entity, 2);
         entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.ENTITY_FIREWORK_ROCKET_TWINKLE, SoundCategory.PLAYERS, 1.0F, 2.0F);
         entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.PLAYERS, 1.0F, 2.0F);
     }

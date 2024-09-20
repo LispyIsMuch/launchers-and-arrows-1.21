@@ -55,6 +55,14 @@ public class ItemInit {
     public static final Item WAVE_ARROW = registerItem("wave_arrow", new ArrowItem(new Item.Settings()));
     public static final Item PIERCING_ARROW = registerItem("piercing_arrow", new ArrowItem(new Item.Settings()));
 
+    public static final Item BOXED_BOLTS = registerItem("boxed_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_FLAME_BOLTS = registerItem("boxed_flame_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_FREEZING_BOLTS = registerItem("boxed_freezing_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_LIGHTNING_BOLTS = registerItem("boxed_lightning_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_CORROSIVE_BOLTS = registerItem("boxed_corrosive_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_FLOOD_BOLTS = registerItem("boxed_flood_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_REVERBERATING_BOLTS = registerItem("boxed_reverberating_bolts", new BoltItem(new Item.Settings()));
+
     public static final Item GRAPPLING_HOOK = registerItem("grappling_hook", new ArrowItem(new Item.Settings()));
 
     public static final Item IGNITION_STRING = registerItem("ignition_string", new ModifierItem(new Item.Settings()));
@@ -83,6 +91,13 @@ public class ItemInit {
         AttributeEffectsDictionary.registerToDict(FLOOD_ARROW, AttributeEnum.FLOOD.get(), 15);
         AttributeEffectsDictionary.registerToDict(REVERBERATING_ARROW, AttributeEnum.ECHO.get(), 15);
         AttributeEffectsDictionary.registerToDict(PIERCING_ARROW, AttributeEnum.INJURY.get(), 5);
+
+        AttributeEffectsDictionary.registerToDict(BOXED_FLAME_BOLTS, AttributeEnum.FLAME.get(), 2);
+        AttributeEffectsDictionary.registerToDict(BOXED_FREEZING_BOLTS, AttributeEnum.FROST.get(), 2);
+        AttributeEffectsDictionary.registerToDict(BOXED_LIGHTNING_BOLTS, AttributeEnum.LIGHTNING.get(), 2);
+        AttributeEffectsDictionary.registerToDict(BOXED_CORROSIVE_BOLTS, AttributeEnum.ACID.get(), 2);
+        AttributeEffectsDictionary.registerToDict(BOXED_FLOOD_BOLTS, AttributeEnum.FLOOD.get(), 2);
+        AttributeEffectsDictionary.registerToDict(BOXED_REVERBERATING_BOLTS, AttributeEnum.ECHO.get(), 2);
 
         AttributeEffectsDictionary.registerToDict(Items.MAGMA_CREAM, AttributeEnum.FLAME.get(), 5);
         AttributeEffectsDictionary.registerToDict(Items.SNOWBALL, AttributeEnum.FROST.get(), 5);

@@ -10,6 +10,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -24,6 +26,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
+import net.stln.launchersandarrows.LaunchersAndArrows;
+import net.stln.launchersandarrows.item.BoltItem;
+import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.item.ModifierItem;
 import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
@@ -40,9 +45,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
     private boolean played1 = false;
     private boolean played2 = false;
 
-    public static final Predicate<ItemStack> SLINGSHOT_HELD_PROJECTILES = (stack) -> {
-        return stack.isIn(ModItemTags.BOXED_BOLTS);
-    };
+    public static final Predicate<ItemStack> BOLT_THROWER_PROJECTILES = (stack) -> stack.isIn(ModItemTags.BOXED_BOLTS);
     private static final CrossbowItem.LoadingSounds DEFAULT_LOADING_SOUNDS = new CrossbowItem.LoadingSounds(
             Optional.of(SoundEvents.ITEM_CROSSBOW_LOADING_START),
             Optional.of(SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE),
@@ -52,6 +55,16 @@ public class BoltThrowerItem extends ModfiableBowItem {
     public BoltThrowerItem(Settings settings) {
         super(settings);
         pulltime = 40;
+    }
+
+    @Override
+    public Predicate<ItemStack> getProjectiles() {
+        return BOLT_THROWER_PROJECTILES;
+    }
+
+    @Override
+    public Predicate<ItemStack> getHeldProjectiles() {
+        return BOLT_THROWER_PROJECTILES;
     }
 
     @Override
@@ -80,6 +93,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
         float f = getModifiedPullProgress(i, stack);
         if (f >= 1.0F) {
             ItemStack itemStack = this.getProjectileTypeWithSelector(playerEntity, stack);
+            LaunchersAndArrows.LOGGER.info(String.valueOf(itemStack.getName()));
             ChargedProjectilesComponent component = ChargedProjectilesComponent.of(itemStack);
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, component);
             stack.set(ModComponentInit.BOLT_COUNT_COMPONENT, 60);
@@ -175,10 +189,12 @@ public class BoltThrowerItem extends ModfiableBowItem {
                     ChargedProjectilesComponent chargedProjectilesComponent = (ChargedProjectilesComponent) stack.get(DataComponentTypes.CHARGED_PROJECTILES);
                     if (chargedProjectilesComponent != null && !chargedProjectilesComponent.isEmpty()) {
                         ItemStack itemStack = chargedProjectilesComponent.getProjectiles().get(0);
+                        LaunchersAndArrows.LOGGER.info(itemStack.getName().getString());
                         if (!itemStack.isEmpty()) {
                             List<ItemStack> list = load(stack, itemStack, playerEntity);
                             if (world instanceof ServerWorld serverWorld && !list.isEmpty()) {
-                                this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, 2.0F, 10.0F, true, null);
+                                boolean critical = playerEntity.getRandom().nextFloat() > 0.6;
+                                this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, 2.0F, 3.0F, critical, null);
                             }
                             world.playSound(
                                     null,
@@ -214,6 +230,28 @@ public class BoltThrowerItem extends ModfiableBowItem {
             stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0);
         }
     }
+
+    @Override
+    protected ProjectileEntity createArrowEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical) {
+        BoltItem var10000;
+        if (BOLT_THROWER_PROJECTILES.test(projectileStack)) {
+            var10000 = (BoltItem) projectileStack.getItem();
+        } else {
+            var10000 = (BoltItem) ItemInit.BOXED_BOLTS;
+        }
+
+        BoltItem arrowItem2 = var10000;
+        PersistentProjectileEntity persistentProjectileEntity = arrowItem2.createArrow(world, projectileStack, shooter, weaponStack);
+        if (critical) {
+            persistentProjectileEntity.setCritical(true);
+        }
+        persistentProjectileEntity.setDamage(0.5F);
+        persistentProjectileEntity.setPos(shooter.getX(), shooter.getEyeY() - 0.5, shooter.getZ());
+
+        return persistentProjectileEntity;
+    }
+
+
 
     @Override
     public UseAction getUseAction(ItemStack stack) {

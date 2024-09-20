@@ -21,6 +21,27 @@ public class StatusEffectUtil {
         }
     }
 
+    public static void removeOtherAttributeEffect(LivingEntity entity, int id) {
+        if (id != AttributeEnum.FLAME.get()) {
+            entity.removeStatusEffect(StatusEffectInit.BURNING);
+        }
+        if (id != AttributeEnum.FROST.get()) {
+            entity.removeStatusEffect(StatusEffectInit.FREEZE);
+        }
+        if (id != AttributeEnum.LIGHTNING.get()) {
+            entity.removeStatusEffect(StatusEffectInit.ELECTRIC_SHOCK);
+        }
+        if (id != AttributeEnum.ACID.get()) {
+            entity.removeStatusEffect(StatusEffectInit.CORROSION);
+        }
+        if (id != AttributeEnum.FLOOD.get()) {
+            entity.removeStatusEffect(StatusEffectInit.SUBMERGED);
+        }
+        if (id != AttributeEnum.ECHO.get()) {
+            entity.removeStatusEffect(StatusEffectInit.CONFUSION);
+        }
+    }
+
     public static void applyAttributeEffect(LivingEntity entity, ItemStack stack) {
             Integer[] attributes = new Integer[7];
             Item item = stack.getItem();
