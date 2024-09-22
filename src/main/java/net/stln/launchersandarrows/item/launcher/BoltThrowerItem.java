@@ -33,13 +33,24 @@ import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.item.ModifierItem;
 import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
 import net.stln.launchersandarrows.item.component.ModComponentInit;
+import net.stln.launchersandarrows.item.util.ModifierDictionary;
 import net.stln.launchersandarrows.sound.SoundInit;
+import net.stln.launchersandarrows.util.InventoryUtil;
+import net.stln.launchersandarrows.util.ModifierEnum;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class BoltThrowerItem extends ModfiableBowItem {
+
+    private int maxCount = 60;
+    private int maxChargeCount = 20;
+    private int chargeDelay = 2;
+    private int shootDelay = 2;
+
+    private int shootCooldown = 0;
 
     private boolean played0 = false;
     private boolean played1 = false;
@@ -93,10 +104,21 @@ public class BoltThrowerItem extends ModfiableBowItem {
         float f = getModifiedPullProgress(i, stack);
         if (f >= 1.0F) {
             ItemStack itemStack = this.getProjectileTypeWithSelector(playerEntity, stack);
-            LaunchersAndArrows.LOGGER.info(String.valueOf(itemStack.getName()));
             ChargedProjectilesComponent component = ChargedProjectilesComponent.of(itemStack);
+            int loadCount = 0;
+            if (playerEntity.isCreative()) {
+                loadCount = maxCount;
+            } else {
+                for (int j = 0; j < Math.ceilDiv(maxCount, 10); j++) {
+                    ItemStack itemInInventory = InventoryUtil.getItemInInventory(playerEntity, itemStack.getItem());
+                    if (itemInInventory != null) {
+                        itemInInventory.setCount(itemInInventory.getCount() - 1);
+                        loadCount = Math.min(loadCount + 10, maxCount);
+                    }
+                }
+            }
             stack.set(DataComponentTypes.CHARGED_PROJECTILES, component);
-            stack.set(ModComponentInit.BOLT_COUNT_COMPONENT, 60);
+            stack.set(ModComponentInit.BOLT_COUNT_COMPONENT, loadCount);
         }
     }
 
@@ -141,7 +163,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
                 );
                 played2 = true;
             }
-            if (count < Math.min(pulltime, leftCount) && leftCount > 0) {
+            if (count < Math.min(maxChargeCount, leftCount) && leftCount > 0) {
                 world.playSound(
                         null,
                         user.getX(),
@@ -153,7 +175,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
                         2.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F
                 );
             }
-            if (count >= Math.min(pulltime, leftCount) && leftCount > 0 && !played2) {
+            if (count >= Math.min(maxChargeCount, leftCount) && leftCount > 0 && !played2) {
                 world.playSound(
                         null,
                         user.getX(),
@@ -168,11 +190,35 @@ public class BoltThrowerItem extends ModfiableBowItem {
             }
         }
         int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
-        if (leftCount > 0 && stack.get(ModComponentInit.CHARGING_COMPONENT)) {
-            stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, Math.min(count + 1, Math.min(pulltime, leftCount)));
+        if (leftCount > 0 && stack.get(ModComponentInit.CHARGING_COMPONENT) && remainingUseTicks % chargeDelay == 0) {
+            stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, Math.min(count + 1, Math.min(maxChargeCount, leftCount)));
         }
         float f = getModifiedPullProgress(i, stack);
         super.usageTick(world, user, stack, remainingUseTicks);
+    }
+
+    @Override
+    public float getModifiedPullProgress(int useTicks, ItemStack stack) {
+        if (stack.get(ModComponentInit.BOLT_COUNT_COMPONENT) == 0) {
+            return super.getModifiedPullProgress(useTicks, stack);
+        }
+        float lightweightMod = 1F;
+        for (int i = 0; i < slotsize; i++) {
+            if (i < getModifiers(stack).size()) {
+                ItemStack modifier = getModifier(i, stack);
+                if (ModifierDictionary.getEffect(modifier.getItem(), ModifierEnum.LIGHTWEIGHT.get()) != null) {
+                    lightweightMod -= ModifierDictionary.getEffect(modifier.getItem(), ModifierEnum.LIGHTWEIGHT.get()) / 100.0F;
+                }
+            }
+        }
+        lightweightMod = lightweightMod < 0 ? 0 : lightweightMod;
+        float f = (float)useTicks / (maxChargeCount * chargeDelay * lightweightMod);
+        f = (f * f + f * 2.0F) / 3.0F;
+        if (f > 1.0F) {
+            f = 1.0F;
+        }
+
+        return f;
     }
 
     @Override
@@ -184,17 +230,19 @@ public class BoltThrowerItem extends ModfiableBowItem {
                 && stack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT) != null) {
             int count = stack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT);
             int leftCount = stack.get(ModComponentInit.BOLT_COUNT_COMPONENT);
-            if (count > 0) {
+            if (count > 0 && this.shootCooldown == 0) {
                 if (leftCount > 0) {
                     ChargedProjectilesComponent chargedProjectilesComponent = (ChargedProjectilesComponent) stack.get(DataComponentTypes.CHARGED_PROJECTILES);
                     if (chargedProjectilesComponent != null && !chargedProjectilesComponent.isEmpty()) {
                         ItemStack itemStack = chargedProjectilesComponent.getProjectiles().get(0);
-                        LaunchersAndArrows.LOGGER.info(itemStack.getName().getString());
                         if (!itemStack.isEmpty()) {
                             List<ItemStack> list = load(stack, itemStack, playerEntity);
                             if (world instanceof ServerWorld serverWorld && !list.isEmpty()) {
                                 boolean critical = playerEntity.getRandom().nextFloat() > 0.6;
-                                this.shootAll(serverWorld, playerEntity, playerEntity.getActiveHand(), stack, list, 2.0F, 3.0F, critical, null);
+                                this.shootAll(serverWorld, playerEntity,
+                                        playerEntity.getMainHandStack().equals(stack) ? Hand.MAIN_HAND : Hand.OFF_HAND,
+                                        stack, list, 2.0F, 3.0F, critical, null);
+                                this.shootCooldown = this.shootDelay - 1;
                             }
                             world.playSound(
                                     null,
@@ -222,6 +270,8 @@ public class BoltThrowerItem extends ModfiableBowItem {
                     );
                 }
                 stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, count - 1);
+            } else if (shootCooldown > 0 && !world.isClient) {
+                shootCooldown--;
             }
             if (count == 0 && leftCount == 0) {
                 stack.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT);
@@ -247,6 +297,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
         }
         persistentProjectileEntity.setDamage(0.5F);
         persistentProjectileEntity.setPos(shooter.getX(), shooter.getEyeY() - 0.5, shooter.getZ());
+        persistentProjectileEntity.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 
         return persistentProjectileEntity;
     }
@@ -292,6 +343,19 @@ public class BoltThrowerItem extends ModfiableBowItem {
     @Override
     public int getRange() {
         return 8;
+    }
+
+    public int getMaxChargeCount() {
+        return maxChargeCount;
+    }
+
+    public int getTickUntilMaxCharge(ItemStack stack) {
+        if (stack.get(ModComponentInit.BOLT_COUNT_COMPONENT) == 0) {
+            return this.pulltime;
+        } else {
+            return (Math.min(maxChargeCount, stack.get(ModComponentInit.BOLT_COUNT_COMPONENT))
+                    - stack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT)) * this.chargeDelay;
+        }
     }
 
     public static record LoadingSounds(Optional<RegistryEntry<SoundEvent>> start, Optional<RegistryEntry<SoundEvent>> mid, Optional<RegistryEntry<SoundEvent>> end) {

@@ -1,0 +1,6 @@
+{
+    "parent": "launchers_and_arrows:item/bolt_thrower",
+    "textures": {
+        "layer0": "launchers_and_arrows:item/bolt_thrower_charging_2"
+    }
+}

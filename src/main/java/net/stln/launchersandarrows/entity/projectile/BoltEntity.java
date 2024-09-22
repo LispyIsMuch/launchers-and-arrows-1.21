@@ -45,19 +45,16 @@ public class BoltEntity extends PersistentProjectileEntity {
     
     public BoltEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(EntityInit.BOLT_PROJECTILE, owner, world, stack, shotFrom);
-        LaunchersAndArrows.LOGGER.info(this.getName().getString());
         ((BypassDamageCooldownProjectile)this).setBypass(true);
     }
 
     public BoltEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(EntityInit.BOLT_PROJECTILE, x, y, z, world, stack, shotFrom);
-        LaunchersAndArrows.LOGGER.info(this.getName().getString());
         ((BypassDamageCooldownProjectile)this).setBypass(true);
     }
 
     public BoltEntity(EntityType<? extends BoltEntity> entityType, World world) {
         super(entityType, world);
-        LaunchersAndArrows.LOGGER.info(this.getName().getString());
         ((BypassDamageCooldownProjectile)this).setBypass(true);
     }
 

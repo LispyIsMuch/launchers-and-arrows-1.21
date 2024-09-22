@@ -13,6 +13,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.GlobalPos;
 import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
+import net.stln.launchersandarrows.item.component.ModComponentInit;
+import net.stln.launchersandarrows.item.launcher.BoltThrowerItem;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 
 @Environment(EnvType.CLIENT)
@@ -21,6 +23,7 @@ public class CustomModelPredicateProvider {
         registerModBow(ItemInit.LONG_BOW);
         registerModBow(ItemInit.RAPID_BOW);
         registerModBow(ItemInit.MULTISHOT_BOW);
+        registerBoltThrower(ItemInit.BOLT_THROWER);
         registerCrosslauncher(ItemInit.CROSSLAUNCHER);
         registerCrosslauncher(ItemInit.HOOK_LAUNCHER);
         registerCrosslauncher(ItemInit.SLINGSHOT);
@@ -36,6 +39,19 @@ public class CustomModelPredicateProvider {
             }
         });
         ModelPredicateProviderRegistry.register(bow, Identifier.ofVanilla("pulling"), (stack, world, entity, seed) ->
+                entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F
+        );
+    }
+
+    private static void registerBoltThrower(Item thrower) {
+        ModelPredicateProviderRegistry.register(thrower, Identifier.ofVanilla("pull"), (stack, world, entity, seed) -> {
+            if (entity == null) {
+                return 0.0F;
+            } else {
+                return entity.getActiveItem() != stack ? (float) stack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT) / ((BoltThrowerItem) thrower).getMaxChargeCount() : ((BoltThrowerItem) thrower).getModifiedPullProgress(stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft(), stack);
+            }
+        });
+        ModelPredicateProviderRegistry.register(thrower, Identifier.ofVanilla("pulling"), (stack, world, entity, seed) ->
                 entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F
         );
     }

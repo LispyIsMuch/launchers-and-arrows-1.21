@@ -3,14 +3,15 @@
   "package": "net.stln.launchersandarrows.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ArrowEffectMixin",
     "AddDataProjectileMixin",
+    "ArrowEffectMixin",
     "LivingEntityMixin",
     "SnowballEntityMixin"
   ],
   "client": [
     "FovMixin",
     "ItemTooltipMixin",
+    "MovementSpeedMixin",
     "PlayerEntityRendererMixin",
     "RenderFirstPersonItemMixin"
   ],
