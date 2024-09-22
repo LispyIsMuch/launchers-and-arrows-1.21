@@ -11,6 +11,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.Vec3d;
+import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +41,21 @@ public abstract class LivingEntityMixin {
     @Shadow public abstract void damageArmor(DamageSource source, float amount);
 
     @Shadow public abstract boolean isFallFlying();
+
+    @Shadow public abstract void endCombat();
+
+    @Unique
+    private static final TrackedData<Boolean> BURNING_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Boolean> FREEZE_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Boolean> ELECTRIC_SHOCK_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Boolean> CORROSION_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Boolean> SUBMERGED_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Boolean> CONFUSION_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
     LivingEntity entity = (LivingEntity) (Object) this;
@@ -96,17 +112,17 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "tickStatusEffects", at = @At("TAIL"))
     private void tickStatusEffects(CallbackInfo ci) {
-        addStatusEffectParticle(StatusEffectInit.BURNING, ParticleInit.FLAME_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.FREEZE, ParticleInit.FROST_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.ELECTRIC_SHOCK, ParticleInit.LIGHTNING_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.CORROSION, ParticleInit.ACID_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.SUBMERGED, ParticleInit.FLOOD_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.CONFUSION, ParticleInit.ECHO_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.BURNING, BURNING_FLAG, ParticleInit.FLAME_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.FREEZE, FREEZE_FLAG, ParticleInit.FROST_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.ELECTRIC_SHOCK, ELECTRIC_SHOCK_FLAG, ParticleInit.LIGHTNING_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.CORROSION, CORROSION_FLAG, ParticleInit.ACID_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.SUBMERGED, SUBMERGED_FLAG, ParticleInit.FLOOD_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.CONFUSION, CONFUSION_FLAG, ParticleInit.ECHO_EFFECT);
     }
 
     @Unique
-    private void addStatusEffectParticle(RegistryEntry<StatusEffect> statusEffect, ParticleEffect particleEffect) {
-        if (entity.hasStatusEffect(statusEffect)) {
+    private void addStatusEffectParticle(RegistryEntry<StatusEffect> statusEffect, TrackedData<Boolean> data, ParticleEffect particleEffect) {
+        if (entity.getWorld().isClient && entity.getDataTracker().get(data)) {
             float w = entity.getWidth();
             float h = entity.getHeight();
             int entitySize = (int) (w * h * 10);
@@ -119,6 +135,20 @@ public abstract class LivingEntityMixin {
                         0.0, 0.0, 0.0
                 );
             }
+        } else if (entity.hasStatusEffect(statusEffect)) {
+            entity.getDataTracker().set(data, true);
+        } else {
+            entity.getDataTracker().set(data, false);
         }
+    }
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(BURNING_FLAG, false);
+        builder.add(FREEZE_FLAG, false);
+        builder.add(ELECTRIC_SHOCK_FLAG, false);
+        builder.add(CORROSION_FLAG, false);
+        builder.add(SUBMERGED_FLAG, false);
+        builder.add(CONFUSION_FLAG, false);
     }
 }
