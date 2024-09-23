@@ -35,7 +35,7 @@ public class ItemInit {
     public static final Item MULTISHOT_BOW = registerItem("multishot_bow",
             new MultiShotBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item BOLT_THROWER = registerItem("bolt_thrower",
-            new BoltThrowerItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)
+            new BoltThrowerItem(new Item.Settings().maxDamage(2048).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)
                     .component(ModComponentInit.BOLT_COUNT_COMPONENT, 0)
                     .component(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0)
                     .component(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
@@ -65,15 +65,26 @@ public class ItemInit {
 
     public static final Item GRAPPLING_HOOK = registerItem("grappling_hook", new ArrowItem(new Item.Settings()));
 
-    public static final Item IGNITION_STRING = registerItem("ignition_string", new ModifierItem(new Item.Settings()));
-    public static final Item FROSTBITE_STRING = registerItem("frostbite_string", new ModifierItem(new Item.Settings()));
-    public static final Item CHARGING_STRING = registerItem("charging_string", new ModifierItem(new Item.Settings()));
-    public static final Item DETERIORATION_STRING = registerItem("deterioration_string", new ModifierItem(new Item.Settings()));
-    public static final Item PERMEATION_STRING = registerItem("permeation_string", new ModifierItem(new Item.Settings()));
-    public static final Item VIBRATING_STRING = registerItem("vibrating_string", new ModifierItem(new Item.Settings()));
-    public static final Item RANGE_STRING = registerItem("range_string", new ModifierItem(new Item.Settings()));
-    public static final Item STURDY_STRING = registerItem("sturdy_string", new ModifierItem(new Item.Settings()));
-    public static final Item LIGHTWEIGHT_STRING = registerItem("lightweight_string", new ModifierItem(new Item.Settings()));
+    public static final Item IGNITION_STRING = registerItem("ignition_string", new BowModifierItem(new Item.Settings()));
+    public static final Item FROSTBITE_STRING = registerItem("frostbite_string", new BowModifierItem(new Item.Settings()));
+    public static final Item CHARGING_STRING = registerItem("charging_string", new BowModifierItem(new Item.Settings()));
+    public static final Item DETERIORATION_STRING = registerItem("deterioration_string", new BowModifierItem(new Item.Settings()));
+    public static final Item PERMEATION_STRING = registerItem("permeation_string", new BowModifierItem(new Item.Settings()));
+    public static final Item VIBRATING_STRING = registerItem("vibrating_string", new BowModifierItem(new Item.Settings()));
+    public static final Item RANGE_STRING = registerItem("range_string", new BowModifierItem(new Item.Settings()));
+    public static final Item STURDY_STRING = registerItem("sturdy_string", new BowModifierItem(new Item.Settings()));
+    public static final Item LIGHTWEIGHT_STRING = registerItem("lightweight_string", new BowModifierItem(new Item.Settings()));
+
+    public static final Item IGNITION_PULLEY = registerItem("ignition_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item COOLING_PULLEY = registerItem("cooling_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item POWER_GENERATION_PULLEY = registerItem("power_generation_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item CORROSION_RESISTANT_PULLEY = registerItem("corrosion_resistant_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item HYDROPHILIC_PULLEY = registerItem("hydrophilic_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item CONDUCTION_PULLEY = registerItem("conduction_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item COMPOUND_PULLEY = registerItem("compound_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item REINFORCED_PULLEY = registerItem("reinforced_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item LUBRICATION_PULLEY = registerItem("lubrication_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+    public static final Item POWERED_PULLEY = registerItem("powered_pulley", new BoltThrowerModifierItem(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);
@@ -92,12 +103,12 @@ public class ItemInit {
         AttributeEffectsDictionary.registerToDict(REVERBERATING_ARROW, AttributeEnum.ECHO.get(), 15);
         AttributeEffectsDictionary.registerToDict(PIERCING_ARROW, AttributeEnum.INJURY.get(), 5);
 
-        AttributeEffectsDictionary.registerToDict(BOXED_FLAME_BOLTS, AttributeEnum.FLAME.get(), 2);
-        AttributeEffectsDictionary.registerToDict(BOXED_FREEZING_BOLTS, AttributeEnum.FROST.get(), 2);
-        AttributeEffectsDictionary.registerToDict(BOXED_LIGHTNING_BOLTS, AttributeEnum.LIGHTNING.get(), 2);
-        AttributeEffectsDictionary.registerToDict(BOXED_CORROSIVE_BOLTS, AttributeEnum.ACID.get(), 2);
-        AttributeEffectsDictionary.registerToDict(BOXED_FLOOD_BOLTS, AttributeEnum.FLOOD.get(), 2);
-        AttributeEffectsDictionary.registerToDict(BOXED_REVERBERATING_BOLTS, AttributeEnum.ECHO.get(), 2);
+        AttributeEffectsDictionary.registerToDict(BOXED_FLAME_BOLTS, AttributeEnum.FLAME.get(), 3);
+        AttributeEffectsDictionary.registerToDict(BOXED_FREEZING_BOLTS, AttributeEnum.FROST.get(), 3);
+        AttributeEffectsDictionary.registerToDict(BOXED_LIGHTNING_BOLTS, AttributeEnum.LIGHTNING.get(), 3);
+        AttributeEffectsDictionary.registerToDict(BOXED_CORROSIVE_BOLTS, AttributeEnum.ACID.get(), 3);
+        AttributeEffectsDictionary.registerToDict(BOXED_FLOOD_BOLTS, AttributeEnum.FLOOD.get(), 3);
+        AttributeEffectsDictionary.registerToDict(BOXED_REVERBERATING_BOLTS, AttributeEnum.ECHO.get(), 3);
 
         AttributeEffectsDictionary.registerToDict(Items.MAGMA_CREAM, AttributeEnum.FLAME.get(), 5);
         AttributeEffectsDictionary.registerToDict(Items.SNOWBALL, AttributeEnum.FROST.get(), 5);
@@ -124,5 +135,18 @@ public class ItemInit {
         ModifierDictionary.registerToDict(RANGE_STRING, ModifierEnum.RANGE.get(), 25);
         ModifierDictionary.registerToDict(STURDY_STRING, ModifierEnum.STURDY.get(), 25);
         ModifierDictionary.registerToDict(LIGHTWEIGHT_STRING, ModifierEnum.LIGHTWEIGHT.get(), 15);
+
+        AttributeModifierDictionary.registerToDict(IGNITION_PULLEY, AttributeEnum.FLAME_RATIO.get(), 80);
+        AttributeModifierDictionary.registerToDict(COOLING_PULLEY, AttributeEnum.FROST_RATIO.get(), 80);
+        AttributeModifierDictionary.registerToDict(POWER_GENERATION_PULLEY, AttributeEnum.LIGHTNING_RATIO.get(), 80);
+        AttributeModifierDictionary.registerToDict(CORROSION_RESISTANT_PULLEY, AttributeEnum.ACID_RATIO.get(), 80);
+        AttributeModifierDictionary.registerToDict(HYDROPHILIC_PULLEY, AttributeEnum.FLOOD_RATIO.get(), 80);
+        AttributeModifierDictionary.registerToDict(CONDUCTION_PULLEY, AttributeEnum.ECHO_RATIO.get(), 80);
+
+        ModifierDictionary.registerToDict(COMPOUND_PULLEY, ModifierEnum.RANGE.get(), 15);
+        ModifierDictionary.registerToDict(REINFORCED_PULLEY, ModifierEnum.STURDY.get(), 30);
+        ModifierDictionary.registerToDict(LUBRICATION_PULLEY, ModifierEnum.LIGHTWEIGHT.get(), 25);
+        ModifierDictionary.registerToDict(POWERED_PULLEY, ModifierEnum.CAPACITY.get(), 50);
+        ModifierDictionary.registerToDict(POWERED_PULLEY, ModifierEnum.LIGHTWEIGHT.get(), -15);
     }
 }

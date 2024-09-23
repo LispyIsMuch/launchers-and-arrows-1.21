@@ -9,16 +9,19 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
 
-public class ModifierItem extends Item {
+public abstract class ModifierItem extends Item {
     public ModifierItem(Settings settings) {
         super(settings);
     }
+
+    protected Class<?> targetItemClass;
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack mainhandStack = user.getMainHandStack();
         ItemStack offhandStack = user.getOffHandStack();
-        if (hand == Hand.MAIN_HAND && offhandStack.getItem() instanceof ModfiableBowItem bow && user.isSneaking()) {
+        if (hand == Hand.MAIN_HAND && getCorrectTarget(offhandStack.getItem()) != null && user.isSneaking()) {
+            ModfiableBowItem bow = (ModfiableBowItem)offhandStack.getItem();
             for (int i = 0; i < bow.getSlotsize(); i++) {
                 if (bow.getModifier(i, offhandStack) == null) {
                     bow.setModifier(i, offhandStack, mainhandStack.copy());
@@ -34,4 +37,6 @@ public class ModifierItem extends Item {
         }
         return super.use(world, user, hand);
     }
+
+    protected abstract Item getCorrectTarget(Item item);
 }

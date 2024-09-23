@@ -47,6 +47,16 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.RANGE_STRING);
                 entries.add(ItemInit.STURDY_STRING);
                 entries.add(ItemInit.LIGHTWEIGHT_STRING);
+                entries.add(ItemInit.IGNITION_PULLEY);
+                entries.add(ItemInit.COOLING_PULLEY);
+                entries.add(ItemInit.POWER_GENERATION_PULLEY);
+                entries.add(ItemInit.CORROSION_RESISTANT_PULLEY);
+                entries.add(ItemInit.HYDROPHILIC_PULLEY);
+                entries.add(ItemInit.CONDUCTION_PULLEY);
+                entries.add(ItemInit.COMPOUND_PULLEY);
+                entries.add(ItemInit.REINFORCED_PULLEY);
+                entries.add(ItemInit.LUBRICATION_PULLEY);
+                entries.add(ItemInit.POWERED_PULLEY);
             })
             .build();
 

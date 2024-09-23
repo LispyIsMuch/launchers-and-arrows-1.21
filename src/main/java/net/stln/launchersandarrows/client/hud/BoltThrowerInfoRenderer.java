@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.stln.launchersandarrows.item.component.ModComponentInit;
 import net.stln.launchersandarrows.item.launcher.BoltThrowerItem;
+import net.stln.launchersandarrows.util.TextUtil;
 
 public class BoltThrowerInfoRenderer {
     public static void register() {
@@ -24,11 +25,13 @@ public class BoltThrowerInfoRenderer {
                 ItemStack renderStack = mainStack.getItem() instanceof BoltThrowerItem ? mainStack :
                         offStack.getItem() instanceof BoltThrowerItem ? offStack : null;
                 if (renderStack != null) {
-                    drawContext.drawText(renderer, renderStack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT).toString(), (int) (cw * 1.5), (int) (ch * 1.5), 0xFFFFFF, true);
+                    Integer chargedCount = renderStack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT);
+                    Integer count = renderStack.get(ModComponentInit.BOLT_COUNT_COMPONENT);
+                    drawContext.drawText(renderer, "| " + chargedCount.toString() + " |",
+                            cw - TextUtil.getNumberCenter(chargedCount) - 6, (int) (ch * 1.3), 0xFFFFFF, true);
                     drawContext.drawText(renderer,
-                            String.valueOf((renderStack.get(ModComponentInit.BOLT_COUNT_COMPONENT)
-                                    - renderStack.get(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT))),
-                            (int) (cw * 1.5), (int) (ch * 1.5) + 8, 0x808080, true);
+                            "| " + (count - chargedCount) + " |",
+                            cw - TextUtil.getNumberCenter((count - chargedCount)) - 6, (int) (ch * 1.3) + 8, 0x808080, true);
                 }
             }
         }));

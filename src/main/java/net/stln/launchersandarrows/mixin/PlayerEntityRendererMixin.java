@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.stln.launchersandarrows.item.ItemInit;
+import net.stln.launchersandarrows.item.component.ModComponentInit;
+import net.stln.launchersandarrows.item.launcher.BoltThrowerItem;
 import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 import net.stln.launchersandarrows.item.launcher.HookLauncherItem;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,6 +29,8 @@ public class PlayerEntityRendererMixin {
         if (!player.handSwinging && itemStack.isOf(ItemInit.CROSSLAUNCHER) && CrossLauncherItem.isCharged(itemStack)) {
             cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_HOLD);
         } else if (!player.handSwinging && itemStack.isOf(ItemInit.HOOK_LAUNCHER) && HookLauncherItem.isCharged(itemStack)) {
+            cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_HOLD);
+        } else if (!player.handSwinging && itemStack.isOf(ItemInit.BOLT_THROWER) && itemStack.get(ModComponentInit.BOLT_COUNT_COMPONENT) > 0) {
             cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_HOLD);
         }
     }

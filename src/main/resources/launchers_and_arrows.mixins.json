@@ -5,6 +5,8 @@
   "mixins": [
     "AddDataProjectileMixin",
     "ArrowEffectMixin",
+    "CancelKnockbackMixin",
+    "DeleteBoltKnockbackMixin",
     "LivingEntityMixin",
     "SnowballEntityMixin"
   ],

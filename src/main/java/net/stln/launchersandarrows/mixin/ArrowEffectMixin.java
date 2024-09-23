@@ -7,6 +7,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -74,7 +75,7 @@ public abstract class ArrowEffectMixin {
         }
         itemStack = arrowEntity.getDataTracker().get(ITEM_STACK);
         if (itemStack.isOf(ItemInit.WAVE_ARROW)) {
-
+            arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
             NbtCompound nbt = new NbtCompound();
             arrowEntity.writeCustomDataToNbt(nbt);
             if (nbt.getBoolean("inGround")) {

@@ -4,6 +4,7 @@ public enum ModifierEnum {
     RANGE(0),
     STURDY(1),
     LIGHTWEIGHT(2),
+    CAPACITY(3),
     ;
 
     private final int id;

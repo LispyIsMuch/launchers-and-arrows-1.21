@@ -256,75 +256,80 @@ public class ItemProjectile extends ThrownItemEntity {
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (this.getStack().isOf(Items.TORCH)) {
-            BlockPos pos = blockHitResult.getBlockPos();
-            Direction direction = blockHitResult.getSide();
-            if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
-                this.getWorld().setBlockState(pos, Blocks.TORCH.getDefaultState());
-            } else {
-                int x = 0;
-                int y = 0;
-                int z = 0;
-                switch (direction) {
-                    case UP -> y = 1;
-                    case NORTH -> z = -1;
-                    case SOUTH -> z = 1;
-                    case EAST -> x = 1;
-                    case WEST -> x = -1;
-                }
-                pos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+        if (!this.getWorld().isClient) {
+            if (this.getStack().isOf(Items.TORCH)) {
+                BlockPos pos = blockHitResult.getBlockPos();
+                Direction direction = blockHitResult.getSide();
                 if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
-                    switch (direction) {
-                        case UP -> this.getWorld().setBlockState(pos, Blocks.TORCH.getDefaultState());
-                        case NORTH -> this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState());
-                        case SOUTH -> this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().rotate(BlockRotation.CLOCKWISE_180));
-                        case EAST -> this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().rotate(BlockRotation.CLOCKWISE_90));
-                        case WEST -> this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().rotate(BlockRotation.COUNTERCLOCKWISE_90));
-                    }
+                    this.getWorld().setBlockState(pos, Blocks.TORCH.getDefaultState());
                 } else {
-                    this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.TORCH)));
+                    int x = 0;
+                    int y = 0;
+                    int z = 0;
+                    switch (direction) {
+                        case UP -> y = 1;
+                        case NORTH -> z = -1;
+                        case SOUTH -> z = 1;
+                        case EAST -> x = 1;
+                        case WEST -> x = -1;
+                    }
+                    pos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+                    if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
+                        switch (direction) {
+                            case UP -> this.getWorld().setBlockState(pos, Blocks.TORCH.getDefaultState());
+                            case NORTH -> this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState());
+                            case SOUTH ->
+                                    this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().rotate(BlockRotation.CLOCKWISE_180));
+                            case EAST ->
+                                    this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().rotate(BlockRotation.CLOCKWISE_90));
+                            case WEST ->
+                                    this.getWorld().setBlockState(pos, Blocks.WALL_TORCH.getDefaultState().rotate(BlockRotation.COUNTERCLOCKWISE_90));
+                        }
+                    } else {
+                        this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.TORCH)));
+                    }
                 }
-            }
-        } else if (this.getStack().isOf(Items.HEART_OF_THE_SEA)) {
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    for (int k = -1; k < 2; k++) {
-                        BlockPos pos = blockHitResult.getBlockPos();
-                        if (this.getWorld().getBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)).isOf(Blocks.AIR)) {
-                            this.getWorld().setBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k),
-                                    Fluids.FLOWING_WATER.getDefaultState().getBlockState());
+            } else if (this.getStack().isOf(Items.HEART_OF_THE_SEA)) {
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        for (int k = -1; k < 2; k++) {
+                            BlockPos pos = blockHitResult.getBlockPos();
+                            if (this.getWorld().getBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k)).isOf(Blocks.AIR)) {
+                                this.getWorld().setBlockState(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k),
+                                        Fluids.FLOWING_WATER.getDefaultState().getBlockState());
+                            }
                         }
                     }
                 }
-            }
-        } else if (this.getStack().getItem() instanceof BlockItem blockItem) {
-            Block block = blockItem.getBlock();
-            BlockPos pos = blockHitResult.getBlockPos();
-            Direction direction = blockHitResult.getSide();
-            if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
-                this.getWorld().setBlockState(pos, Blocks.HEAVY_CORE.getDefaultState());
-            } else {
-                int x = 0;
-                int y = 0;
-                int z = 0;
-                switch (direction) {
-                    case UP -> y = 1;
-                    case DOWN -> y = -1;
-                    case NORTH -> z = -1;
-                    case SOUTH -> z = 1;
-                    case EAST -> x = 1;
-                    case WEST -> x = -1;
-                }
-                pos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+            } else if (this.getStack().getItem() instanceof BlockItem blockItem) {
+                Block block = blockItem.getBlock();
+                BlockPos pos = blockHitResult.getBlockPos();
+                Direction direction = blockHitResult.getSide();
                 if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
-                    this.getWorld().setBlockState(pos, block.getDefaultState());
+                    this.getWorld().setBlockState(pos, Blocks.HEAVY_CORE.getDefaultState());
                 } else {
-                    this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(blockItem)));
+                    int x = 0;
+                    int y = 0;
+                    int z = 0;
+                    switch (direction) {
+                        case UP -> y = 1;
+                        case DOWN -> y = -1;
+                        case NORTH -> z = -1;
+                        case SOUTH -> z = 1;
+                        case EAST -> x = 1;
+                        case WEST -> x = -1;
+                    }
+                    pos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+                    if (this.getWorld().getBlockState(pos).isOf(Blocks.AIR)) {
+                        this.getWorld().setBlockState(pos, block.getDefaultState());
+                    } else {
+                        this.getWorld().spawnEntity(new ItemEntity(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(blockItem)));
+                    }
                 }
             }
+            this.getWorld().playSound(null, blockHitResult.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
+                    1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F);
         }
-        this.getWorld().playSound(null, blockHitResult.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
-                1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F);
     }
 
     @Override

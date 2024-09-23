@@ -45,11 +45,13 @@ public class BoltEntity extends PersistentProjectileEntity {
     
     public BoltEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(EntityInit.BOLT_PROJECTILE, owner, world, stack, shotFrom);
+        this.itemStack = stack;
         ((BypassDamageCooldownProjectile)this).setBypass(true);
     }
 
     public BoltEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(EntityInit.BOLT_PROJECTILE, x, y, z, world, stack, shotFrom);
+        this.itemStack = stack;
         ((BypassDamageCooldownProjectile)this).setBypass(true);
     }
 
@@ -118,6 +120,7 @@ public class BoltEntity extends PersistentProjectileEntity {
         }
         super.onHit(target);
     }
+
 
     protected ItemStack getDefaultItemStack() {
         return new ItemStack(ItemInit.BOXED_BOLTS);

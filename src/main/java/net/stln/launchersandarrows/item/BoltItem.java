@@ -21,7 +21,9 @@ public class BoltItem extends ArrowItem {
 
     @Override
     public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
-        return new BoltEntity(world, shooter, stack.copyWithCount(1), shotFrom);
+        BoltEntity bolt = new BoltEntity(world, shooter, stack.copyWithCount(1), shotFrom);
+        bolt.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
+        return bolt;
     }
 
     @Override

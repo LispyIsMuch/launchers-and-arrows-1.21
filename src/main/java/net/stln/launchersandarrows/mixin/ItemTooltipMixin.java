@@ -72,12 +72,12 @@ public class ItemTooltipMixin {
 
 
         Integer[] attributeModifiers = new Integer[13];
-        Integer[] otherModifiers = new Integer[3];
+        Integer[] otherModifiers = new Integer[4];
         Item modifier = stack.getItem();
         for (int i = 0; i < 13; i++) {
             attributeModifiers[i] = AttributeModifierDictionary.getAttributeEffect(modifier, i - 6);
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             otherModifiers[i] = ModifierDictionary.getEffect(modifier, i);
         }
         if (AttributeModifierDictionary.getDict().containsKey1(modifier) || ModifierDictionary.getDict().containsKey1(modifier)) {
@@ -93,7 +93,7 @@ public class ItemTooltipMixin {
             if (stack.get(ModComponentInit.MODIFIER_COMPONENT) != null) {
                 List<ItemStack> modifiers = stack.get(ModComponentInit.MODIFIER_COMPONENT).getModifiers();
                 Integer[] attributeModifier = new Integer[13];
-                Integer[] otherModifier = new Integer[3];
+                Integer[] otherModifier = new Integer[4];
                 for (int i = 0; i < ((ModfiableBowItem) stack.getItem()).getSlotsize(); i++) {
                     if (i < modifiers.size() && modifiers.get(i) != null) {
                         tooltip.add(Text.literal("- ").withColor(0x808080)
@@ -108,7 +108,7 @@ public class ItemTooltipMixin {
                                 attributeModifier[j] += AttributeModifierDictionary.getAttributeEffect(mod, j - 6);
                             }
                         }
-                        for (int j = 0; j < 3; j++) {
+                        for (int j = 0; j < 4; j++) {
                             if (otherModifier[j] == null) {
                                 otherModifier[j] = ModifierDictionary.getEffect(mod, j);
                             } else if (ModifierDictionary.getEffect(mod, j) != null) {
@@ -129,61 +129,61 @@ public class ItemTooltipMixin {
     private static void getAttributeModifierTooltip(List<Text> tooltip, Integer[] attributeModifiers, Identifier iconFont) {
         if (attributeModifiers[AttributeEnum.FLAME.get() + 6] != null) {
             tooltip.add(Text.literal("\u0001").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.FLAME.get() + 6]).withColor(0xFFC080)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.FLAME.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.FLAME.get() + 6], 0xFFC080))));
         }
         if (attributeModifiers[AttributeEnum.FLAME_RATIO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0001").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + attributeModifiers[AttributeEnum.FLAME_RATIO.get() + 6]) + "%").withColor(0xFFC080)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.FLAME_RATIO.get() + 6]) + "%").withColor(getColorWithSign(attributeModifiers[AttributeEnum.FLAME_RATIO.get() + 6], 0xFFC080))));
         }
 
         if (attributeModifiers[AttributeEnum.FROST.get() + 6] != null) {
             tooltip.add(Text.literal("\u0002").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.FROST.get() + 6]).withColor(0x80FFFF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.FROST.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.FROST.get() + 6], 0x80FFFF))));
         }
         if (attributeModifiers[AttributeEnum.FROST_RATIO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0002").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + attributeModifiers[AttributeEnum.FROST_RATIO.get() + 6]) + "%").withColor(0x80FFFF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.FROST_RATIO.get() + 6]) + "%").withColor(getColorWithSign(attributeModifiers[AttributeEnum.FROST_RATIO.get() + 6], 0x80FFFF))));
         }
 
         if (attributeModifiers[AttributeEnum.LIGHTNING.get() + 6] != null) {
             tooltip.add(Text.literal("\u0003").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.LIGHTNING.get() + 6]).withColor(0x8080FF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.LIGHTNING.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.LIGHTNING.get() + 6], 0x8080FF))));
         }
         if (attributeModifiers[AttributeEnum.LIGHTNING_RATIO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0003").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + attributeModifiers[AttributeEnum.LIGHTNING_RATIO.get() + 6]) + "%").withColor(0x8080FF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.LIGHTNING_RATIO.get() + 6]) + "%").withColor(getColorWithSign(attributeModifiers[AttributeEnum.LIGHTNING_RATIO.get() + 6], 0x8080FF))));
         }
 
         if (attributeModifiers[AttributeEnum.ACID.get() + 6] != null) {
             tooltip.add(Text.literal("\u0004").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ACID.get() + 6]).withColor(0xC0FF80)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.ACID.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.ACID.get() + 6], 0xC0FF80))));
         }
         if (attributeModifiers[AttributeEnum.ACID_RATIO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0004").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + attributeModifiers[AttributeEnum.ACID_RATIO.get() + 6]) + "%").withColor(0xC0FF80)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.ACID_RATIO.get() + 6]) + "%").withColor(getColorWithSign(attributeModifiers[AttributeEnum.ACID_RATIO.get() + 6], 0xC0FF80))));
         }
 
         if (attributeModifiers[AttributeEnum.FLOOD.get() + 6] != null) {
             tooltip.add(Text.literal("\u0005").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.FLOOD.get() + 6]).withColor(0x80C0FF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.FLOOD.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.FLOOD.get() + 6], 0x80C0FF))));
         }
         if (attributeModifiers[AttributeEnum.FLOOD_RATIO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0005").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + attributeModifiers[AttributeEnum.FLOOD_RATIO.get() + 6]) + "%").withColor(0x80C0FF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.FLOOD_RATIO.get() + 6]) + "%").withColor(getColorWithSign(attributeModifiers[AttributeEnum.FLOOD_RATIO.get() + 6], 0x80C0FF))));
         }
 
         if (attributeModifiers[AttributeEnum.ECHO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0006").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ECHO.get() + 6]).withColor(0x008080)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.ECHO.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.ECHO.get() + 6], 0x008080))));
         }
 
         if (attributeModifiers[AttributeEnum.ECHO_RATIO.get() + 6] != null) {
             tooltip.add(Text.literal("\u0006").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.ECHO_RATIO.get() + 6] + "%").withColor(0x008080)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.ECHO_RATIO.get() + 6]) + "%").withColor(getColorWithSign(attributeModifiers[AttributeEnum.ECHO_RATIO.get() + 6], 0x008080))));
         }
         if (attributeModifiers[AttributeEnum.INJURY.get() + 6] != null) {
             tooltip.add(Text.literal("\u0007").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal("+" + attributeModifiers[AttributeEnum.INJURY.get() + 6]).withColor(0xFFFFFF)));
+                    .append(Text.literal(getSign(attributeModifiers[AttributeEnum.INJURY.get() + 6])).withColor(getColorWithSign(attributeModifiers[AttributeEnum.INJURY.get() + 6], 0xFFFFFF))));
         }
     }
 
@@ -191,15 +191,42 @@ public class ItemTooltipMixin {
     private static void getOtherModifierTooltip(List<Text> tooltip, Integer[] modifiers, Identifier iconFont) {
         if (modifiers[ModifierEnum.RANGE.get()] != null) {
             tooltip.add(Text.literal("\u0008").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + modifiers[ModifierEnum.RANGE.get()]) + "%").withColor(0xFFFFFF)));
+                    .append(Text.literal(getSign(modifiers[ModifierEnum.RANGE.get()]) + "%").withColor(getColorWithSign(modifiers[ModifierEnum.RANGE.get()], 0xFFFFFF))));
         }
         if (modifiers[ModifierEnum.STURDY.get()] != null) {
             tooltip.add(Text.literal("\u0009").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + modifiers[ModifierEnum.STURDY.get()]) + "%").withColor(0xFFFFFF)));
+                    .append(Text.literal(getSign(modifiers[ModifierEnum.STURDY.get()]) + "%").withColor(getColorWithSign(modifiers[ModifierEnum.STURDY.get()], 0xFFFFFF))));
         }
         if (modifiers[ModifierEnum.LIGHTWEIGHT.get()] != null) {
             tooltip.add(Text.literal("\u000b").setStyle(Style.EMPTY.withFont(iconFont))
-                    .append(Text.literal(("+" + modifiers[ModifierEnum.LIGHTWEIGHT.get()]) + "%").withColor(0xFFFFFF)));
+                    .append(Text.literal(getSign(modifiers[ModifierEnum.LIGHTWEIGHT.get()]) + "%").withColor(getColorWithSign(modifiers[ModifierEnum.LIGHTWEIGHT.get()], 0xFFFFFF))));
         }
+        if (modifiers[ModifierEnum.CAPACITY.get()] != null) {
+            tooltip.add(Text.literal("\u000c").setStyle(Style.EMPTY.withFont(iconFont))
+                    .append(Text.literal(getSign(modifiers[ModifierEnum.CAPACITY.get()]) + "%").withColor(getColorWithSign(modifiers[ModifierEnum.CAPACITY.get()], 0xFFFFFF))));
+        }
+    }
+
+    @Unique
+    private static String getSign(int i) {
+        if (i >= 0) {
+            return "+" + i;
+        } else {
+            return String.valueOf(i);
+        }
+    }
+
+    @Unique
+    private static int getColorWithSign(int i, int color) {
+        int R = color >> 16;
+        int G = color >> 8 & 0x00FF;
+        int B = color & 0x0000FF;
+
+        if (i < 0) {
+            R /= 2;
+            G /= 2;
+            B /= 2;
+        }
+        return (R << 16) + (G << 8) + B;
     }
 }

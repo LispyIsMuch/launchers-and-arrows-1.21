@@ -62,6 +62,12 @@
         },
         {
             "type": "bitmap",
+            "file": "launchers_and_arrows:icon/capacity.png",
+            "ascent": 8,
+            "chars": ["\u000c"]
+        },
+        {
+            "type": "bitmap",
             "file": "launchers_and_arrows:item/ignition_string.png",
             "ascent": 7,
             "chars": ["\u1000"]
@@ -113,6 +119,66 @@
             "file": "launchers_and_arrows:item/lightweight_string.png",
             "ascent": 7,
             "chars": ["\u2002"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/ignition_pulley.png",
+            "ascent": 7,
+            "chars": ["\u3000"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/cooling_pulley.png",
+            "ascent": 7,
+            "chars": ["\u3001"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/power_generation_pulley.png",
+            "ascent": 7,
+            "chars": ["\u3002"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/corrosion_resistant_pulley.png",
+            "ascent": 7,
+            "chars": ["\u3003"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/hydrophilic_pulley.png",
+            "ascent": 7,
+            "chars": ["\u3004"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/conduction_pulley.png",
+            "ascent": 7,
+            "chars": ["\u3005"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/compound_pulley.png",
+            "ascent": 7,
+            "chars": ["\u4000"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/reinforced_pulley.png",
+            "ascent": 7,
+            "chars": ["\u4001"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/lubrication_pulley.png",
+            "ascent": 7,
+            "chars": ["\u4002"]
+        },
+        {
+            "type": "bitmap",
+            "file": "launchers_and_arrows:item/powered_pulley.png",
+            "ascent": 7,
+            "chars": ["\u4003"]
         },
         {
             "type": "reference",

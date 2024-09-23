@@ -1,5 +1,6 @@
 package net.stln.launchersandarrows.util;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.item.Item;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -38,6 +39,45 @@ public class TextUtil {
         if (item == ItemInit.LIGHTWEIGHT_STRING) {
             return Text.literal("\u2002").setStyle(Style.EMPTY.withFont(iconFont));
         }
+        if (item == ItemInit.IGNITION_PULLEY) {
+            return Text.literal("\u3000").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.COOLING_PULLEY) {
+            return Text.literal("\u3001").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.POWER_GENERATION_PULLEY) {
+            return Text.literal("\u3002").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.CORROSION_RESISTANT_PULLEY) {
+            return Text.literal("\u3003").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.HYDROPHILIC_PULLEY) {
+            return Text.literal("\u3004").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.CONDUCTION_PULLEY) {
+            return Text.literal("\u3005").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.COMPOUND_PULLEY) {
+            return Text.literal("\u4000").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.REINFORCED_PULLEY) {
+            return Text.literal("\u4001").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.LUBRICATION_PULLEY) {
+            return Text.literal("\u4002").setStyle(Style.EMPTY.withFont(iconFont));
+        }
+        if (item == ItemInit.POWERED_PULLEY) {
+            return Text.literal("\u4003").setStyle(Style.EMPTY.withFont(iconFont));
+        }
         return Text.empty();
+    }
+
+    public static int getNumberCenter(int i) {
+        return getNumberLength(i) / 2;
+    }
+
+    public static int getNumberLength(int i) {
+        String s = String.valueOf(i);
+        return s.length() * 6;
     }
 }
