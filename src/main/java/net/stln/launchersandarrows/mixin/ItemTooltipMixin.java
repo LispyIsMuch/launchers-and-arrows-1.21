@@ -2,6 +2,8 @@ package net.stln.launchersandarrows.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -9,8 +11,10 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.stln.launchersandarrows.LaunchersAndArrows;
+import net.stln.launchersandarrows.item.BoltThrowerModifierItem;
 import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
 import net.stln.launchersandarrows.item.component.ModComponentInit;
+import net.stln.launchersandarrows.item.launcher.BoltThrowerItem;
 import net.stln.launchersandarrows.item.util.AttributeEffectsDictionary;
 import net.stln.launchersandarrows.item.util.AttributeModifierDictionary;
 import net.stln.launchersandarrows.item.util.ModifierDictionary;
@@ -81,6 +85,19 @@ public class ItemTooltipMixin {
             otherModifiers[i] = ModifierDictionary.getEffect(modifier, i);
         }
         if (AttributeModifierDictionary.getDict().containsKey1(modifier) || ModifierDictionary.getDict().containsKey1(modifier)) {
+            if (!Screen.hasShiftDown()) {
+                tooltip.add(Text.empty());
+                tooltip.add(Text.translatable("tooltip.launchers_and_arrows.shift").withColor(0x808080));
+            } else {
+                tooltip.add(Text.empty());
+                if (stack.getItem() instanceof BoltThrowerModifierItem) {
+                    tooltip.add(Text.translatable("tooltip.launchers_and_arrows.bolt_thrower_modifier").withColor(0x406080));
+                    tooltip.add(Text.translatable("tooltip.launchers_and_arrows.bolt_thrower_modifier_2").withColor(0x406080));
+                } else {
+                    tooltip.add(Text.translatable("tooltip.launchers_and_arrows.bow_modifier").withColor(0x406080));
+                    tooltip.add(Text.translatable("tooltip.launchers_and_arrows.bow_modifier_2").withColor(0x406080));
+                }
+            }
             tooltip.add(Text.empty());
             tooltip.add(Text.translatable("tooltip.launchers_and_arrows.attribute_modifiers").append(":").withColor(0xC0C0C0));
         }

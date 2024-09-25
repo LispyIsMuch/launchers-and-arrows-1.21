@@ -37,6 +37,7 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.BOXED_CORROSIVE_BOLTS);
                 entries.add(ItemInit.BOXED_FLOOD_BOLTS);
                 entries.add(ItemInit.BOXED_REVERBERATING_BOLTS);
+                entries.add(ItemInit.BOXED_EXPLOSIVE_BOLTS);
                 entries.add(ItemInit.GRAPPLING_HOOK);
                 entries.add(ItemInit.IGNITION_STRING);
                 entries.add(ItemInit.FROSTBITE_STRING);
@@ -57,6 +58,14 @@ public final class ItemGroupInit {
                 entries.add(ItemInit.REINFORCED_PULLEY);
                 entries.add(ItemInit.LUBRICATION_PULLEY);
                 entries.add(ItemInit.POWERED_PULLEY);
+                entries.add(ItemInit.VOLATILE_FUEL);
+                entries.add(ItemInit.COOLANT);
+                entries.add(ItemInit.REDSTONE_CAPACITOR);
+                entries.add(ItemInit.ACID);
+                entries.add(ItemInit.VISCOUS_WATER);
+                entries.add(ItemInit.ECHO_COIL);
+                entries.add(ItemInit.METAL_ARROWHEAD);
+                entries.add(ItemInit.CUSTOMMADE_TICKET);
             })
             .build();
 

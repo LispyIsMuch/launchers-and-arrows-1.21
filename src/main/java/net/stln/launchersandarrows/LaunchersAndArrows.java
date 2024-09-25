@@ -3,6 +3,7 @@ package net.stln.launchersandarrows;
 import net.fabricmc.api.ModInitializer;
 
 import net.stln.launchersandarrows.entity.EntityInit;
+import net.stln.launchersandarrows.entity.VillagerTradeInit;
 import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.item_group.ItemGroupInit;
 import net.stln.launchersandarrows.particle.ParticleInit;
@@ -22,5 +23,6 @@ public class LaunchersAndArrows implements ModInitializer {
 		StatusEffectInit.registerStatusEffect();
 		ItemInit.registerModItems();
 		ItemGroupInit.registerItemGroup();
+		VillagerTradeInit.registerVillagerTrades();
 	}
 }

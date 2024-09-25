@@ -113,7 +113,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
             } else {
                 for (int j = 0; j < Math.ceilDiv(getModifiedMaxCount(stack), 10); j++) {
                     ItemStack itemInInventory = InventoryUtil.getItemInInventory(playerEntity, itemStack.getItem());
-                    if (itemInInventory != null) {
+                    if (itemInInventory != null && !itemInInventory.isEmpty()) {
                         itemInInventory.setCount(itemInInventory.getCount() - 1);
                         loadCount = Math.min(loadCount + 10, getModifiedMaxCount(stack));
                     }

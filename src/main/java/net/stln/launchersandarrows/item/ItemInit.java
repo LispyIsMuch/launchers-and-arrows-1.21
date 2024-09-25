@@ -29,21 +29,21 @@ import java.util.List;
 public class ItemInit {
 
     public static final Item LONG_BOW = registerItem("long_bow",
-            new LongBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
+            new LongBowItem(new Item.Settings().maxDamage(1024).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item RAPID_BOW = registerItem("rapid_bow",
-            new RapidBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
+            new RapidBowItem(new Item.Settings().maxDamage(2048).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item MULTISHOT_BOW = registerItem("multishot_bow",
-            new MultiShotBowItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
+            new MultiShotBowItem(new Item.Settings().maxDamage(2048).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)));
     public static final Item BOLT_THROWER = registerItem("bolt_thrower",
-            new BoltThrowerItem(new Item.Settings().maxDamage(2048).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)
+            new BoltThrowerItem(new Item.Settings().maxDamage(3072).component(ModComponentInit.MODIFIER_COMPONENT, ModifierComponent.DEFAULT)
                     .component(ModComponentInit.BOLT_COUNT_COMPONENT, 0)
                     .component(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, 0)
                     .component(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT)
                     .component(ModComponentInit.CHARGING_COMPONENT, false)));
     public static final Item CROSSLAUNCHER = registerItem("crosslauncher", new CrossLauncherItem(new Item.Settings().maxDamage(1024)));
-    public static final Item HOOK_LAUNCHER = registerItem("hook_launcher", new HookLauncherItem(new Item.Settings().maxDamage(512)));
+    public static final Item HOOK_LAUNCHER = registerItem("hook_launcher", new HookLauncherItem(new Item.Settings().maxDamage(1024)));
     public static final Item SLINGSHOT = registerItem("slingshot",
-            new SlingShotItem(new Item.Settings().maxDamage(512).component(ModComponentInit.MODIFIER_COMPONENT,
+            new SlingShotItem(new Item.Settings().maxDamage(1024).component(ModComponentInit.MODIFIER_COMPONENT,
                     ModifierComponent.DEFAULT)));
 
     public static final Item FLAME_ARROW = registerItem("flame_arrow", new ArrowItem(new Item.Settings()));
@@ -62,6 +62,7 @@ public class ItemInit {
     public static final Item BOXED_CORROSIVE_BOLTS = registerItem("boxed_corrosive_bolts", new BoltItem(new Item.Settings()));
     public static final Item BOXED_FLOOD_BOLTS = registerItem("boxed_flood_bolts", new BoltItem(new Item.Settings()));
     public static final Item BOXED_REVERBERATING_BOLTS = registerItem("boxed_reverberating_bolts", new BoltItem(new Item.Settings()));
+    public static final Item BOXED_EXPLOSIVE_BOLTS = registerItem("boxed_explosive_bolts", new BoltItem(new Item.Settings()));
 
     public static final Item GRAPPLING_HOOK = registerItem("grappling_hook", new ArrowItem(new Item.Settings()));
 
@@ -85,6 +86,16 @@ public class ItemInit {
     public static final Item REINFORCED_PULLEY = registerItem("reinforced_pulley", new BoltThrowerModifierItem(new Item.Settings()));
     public static final Item LUBRICATION_PULLEY = registerItem("lubrication_pulley", new BoltThrowerModifierItem(new Item.Settings()));
     public static final Item POWERED_PULLEY = registerItem("powered_pulley", new BoltThrowerModifierItem(new Item.Settings()));
+
+    public static final Item VOLATILE_FUEL = registerItem("volatile_fuel", new Item(new Item.Settings()));
+    public static final Item COOLANT = registerItem("coolant", new Item(new Item.Settings()));
+    public static final Item REDSTONE_CAPACITOR = registerItem("redstone_capacitor", new Item(new Item.Settings()));
+    public static final Item ACID = registerItem("acid", new Item(new Item.Settings()));
+    public static final Item VISCOUS_WATER = registerItem("viscous_water", new Item(new Item.Settings()));
+    public static final Item ECHO_COIL = registerItem("echo_coil", new Item(new Item.Settings()));
+
+    public static final Item METAL_ARROWHEAD = registerItem("metal_arrowhead", new Item(new Item.Settings()));
+    public static final Item CUSTOMMADE_TICKET = registerItem("custommade_ticket", new Item(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(LaunchersAndArrows.MOD_ID, name), item);

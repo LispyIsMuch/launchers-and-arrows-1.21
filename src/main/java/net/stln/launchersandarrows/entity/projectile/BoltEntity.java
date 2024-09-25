@@ -1,42 +1,43 @@
 package net.stln.launchersandarrows.entity.projectile;
 
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.potion.Potion;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.stln.launchersandarrows.LaunchersAndArrows;
+import net.minecraft.world.explosion.AdvancedExplosionBehavior;
+import net.minecraft.world.explosion.Explosion;
+import net.minecraft.world.explosion.ExplosionBehavior;
 import net.stln.launchersandarrows.entity.AttributedProjectile;
 import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import net.stln.launchersandarrows.entity.EntityInit;
 import net.stln.launchersandarrows.item.ItemInit;
-import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.Function;
+
+import static net.minecraft.entity.projectile.AbstractWindChargeEntity.EXPLOSION_BEHAVIOR;
 
 public class BoltEntity extends PersistentProjectileEntity {
     
     private int inGroundTime = 0;
+
+    private static ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
+            false, true, Optional.of(0.5F), Optional.empty());
 
     private static final TrackedData<ItemStack> ITEM_STACK =
             DataTracker.registerData(BoltEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
@@ -67,6 +68,7 @@ public class BoltEntity extends PersistentProjectileEntity {
         else if (itemStack.isOf(ItemInit.BOXED_CORROSIVE_BOLTS)) return ParticleInit.ACID_EFFECT;
         else if (itemStack.isOf(ItemInit.BOXED_FLOOD_BOLTS)) return ParticleInit.FLOOD_EFFECT;
         else if (itemStack.isOf(ItemInit.BOXED_REVERBERATING_BOLTS)) return ParticleInit.ECHO_EFFECT;
+        else if (itemStack.isOf(ItemInit.BOXED_EXPLOSIVE_BOLTS)) return ParticleTypes.SMOKE;
         return null;
     }
     
@@ -90,6 +92,29 @@ public class BoltEntity extends PersistentProjectileEntity {
             this.getDataTracker().set(ITEM_STACK, this.getItemStack());
         }
         itemStack = this.getDataTracker().get(ITEM_STACK);
+        if (itemStack.isOf(ItemInit.BOXED_EXPLOSIVE_BOLTS)) {
+            this.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
+            NbtCompound nbt = new NbtCompound();
+            this.writeCustomDataToNbt(nbt);
+            if (nbt.getBoolean("inGround")) {
+                inGroundTime++;
+            } else {
+                inGroundTime = 0;
+            }
+            if (inGroundTime > 20) {
+                generateExplosion();
+            }
+        }
+    }
+
+    private void generateExplosion() {
+        Vec3d pos = this.getPos();
+
+        this.getWorld().createExplosion(this, Explosion.createDamageSource(this.getWorld(), this),
+                EXPLOSION_BEHAVIOR, pos.getX(), pos.getY(), pos.getZ(),
+                1.2F, false, World.ExplosionSourceType.MOB,
+                ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.ENTITY_GENERIC_EXPLODE);
+        this.kill();
     }
 
     private void spawnParticles(int amount) {
@@ -109,6 +134,14 @@ public class BoltEntity extends PersistentProjectileEntity {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    protected void onEntityHit(EntityHitResult entityHitResult) {
+        super.onEntityHit(entityHitResult);
+        if (itemStack.isOf(ItemInit.BOXED_EXPLOSIVE_BOLTS)) {
+            generateExplosion();
         }
     }
 

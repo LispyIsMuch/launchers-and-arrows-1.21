@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "launchers_and_arrows:metal_arrowhead"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "launchers_and_arrows:grappling_hook"
+  }
+}

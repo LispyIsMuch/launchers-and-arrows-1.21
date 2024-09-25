@@ -3,14 +3,14 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "launchers_and_arrows:metal_arrowhead"
+      "item": "launchers_and_arrows:echo_coil"
     },
     {
       "item": "minecraft:stick"
     }
   ],
   "result": {
-    "count": 4,
-    "id": "launchers_and_arrows:piercing_arrow"
+    "count": 16,
+    "id": "launchers_and_arrows:reverberating_arrow"
   }
 }

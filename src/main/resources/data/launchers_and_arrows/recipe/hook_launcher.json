@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "T": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "I#I",
+    "SGS",
+    "T#T"
+  ],
+  "result": {
+    "count": 1,
+    "id": "launchers_and_arrows:hook_launcher"
+  }
+}
