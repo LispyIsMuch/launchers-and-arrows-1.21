@@ -13,6 +13,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -20,6 +21,7 @@ import net.stln.launchersandarrows.entity.AttributedProjectile;
 import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.item.ModItemTags;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 import org.spongepowered.asm.mixin.Mixin;
@@ -79,6 +81,9 @@ public abstract class ArrowEffectMixin {
             NbtCompound nbt = new NbtCompound();
             arrowEntity.writeCustomDataToNbt(nbt);
             if (nbt.getBoolean("inGround")) {
+                if (inGroundTime == 0) {
+                    arrowEntity.getWorld().playSound(null, arrowEntity.getBlockPos(), SoundInit.WAVE, SoundCategory.PLAYERS);
+                }
                 inGroundTime++;
             } else {
                 inGroundTime = 0;
@@ -115,6 +120,10 @@ public abstract class ArrowEffectMixin {
     private void onHit(LivingEntity target, CallbackInfo ci) {
         if (target instanceof LivingEntity livingEntity) {
             StatusEffectUtil.applyAttributeEffect(livingEntity, this.itemStack);
+            if (itemStack.isOf(ItemInit.WAVE_ARROW)) {
+                StatusEffectUtil.stackStatusEffect(livingEntity, new StatusEffectInstance(StatusEffectInit.SHOCK_EXPLOSION, 50, 0));
+                arrowEntity.getWorld().playSound(null, arrowEntity.getBlockPos(), SoundInit.WAVE, SoundCategory.PLAYERS);
+            }
             StatusEffectUtil.applyAttributeModifier(livingEntity, ((AttributedProjectile) arrowEntity).getAttributes());
             StatusEffectUtil.applyAttributeRatioModifier(livingEntity, this.itemStack, ((AttributedProjectile) arrowEntity).getRatioAttributes());
         }

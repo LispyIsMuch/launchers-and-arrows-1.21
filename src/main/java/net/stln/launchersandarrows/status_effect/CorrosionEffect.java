@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 
 public class CorrosionEffect extends StatusEffect {
@@ -31,6 +32,6 @@ public class CorrosionEffect extends StatusEffect {
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         StatusEffectUtil.removeOtherAttributeEffect(entity, 3);
-        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 0.5F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundInit.ACID_EFFECT, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -24,6 +25,7 @@ import net.stln.launchersandarrows.entity.BypassDamageCooldownProjectile;
 import net.stln.launchersandarrows.entity.EntityInit;
 import net.stln.launchersandarrows.item.ItemInit;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -113,7 +115,7 @@ public class BoltEntity extends PersistentProjectileEntity {
         this.getWorld().createExplosion(this, Explosion.createDamageSource(this.getWorld(), this),
                 EXPLOSION_BEHAVIOR, pos.getX(), pos.getY(), pos.getZ(),
                 1.2F, false, World.ExplosionSourceType.MOB,
-                ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.ENTITY_GENERIC_EXPLODE);
+                ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundInit.EXPLODE_ENTRY);
         this.kill();
     }
 

@@ -178,7 +178,7 @@ public class CrossLauncherItem extends CrossbowItem {
 
         projectile.setVelocity((double)vector3f.x(), (double)vector3f.y(), (double)vector3f.z(), speed, divergence);
         float h = 1.0F / (shooter.getRandom().nextFloat() * 0.5F + 1.8F) + 0.53F;
-        shooter.getWorld().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundInit.BOW_RELEASE, shooter.getSoundCategory(), 1.0F, h);
+        shooter.getWorld().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundInit.CROSSLAUNCHER, shooter.getSoundCategory(), 1.0F, h);
         shooter.getWorld().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.BLOCK_COPPER_BULB_PLACE, shooter.getSoundCategory(), 1.0F, h);
         shooter.getWorld().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.BLOCK_LANTERN_BREAK, shooter.getSoundCategory(), 1.0F, h);
         shooter.getWorld().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, shooter.getSoundCategory(), 1.0F, h - 0.7F);

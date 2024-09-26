@@ -254,7 +254,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
                                     playerEntity.getX(),
                                     playerEntity.getY(),
                                     playerEntity.getZ(),
-                                    SoundInit.BOW_RELEASE,
+                                    SoundInit.BOLT_THROWER,
                                     SoundCategory.PLAYERS,
                                     1.5F,
                                     1.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F

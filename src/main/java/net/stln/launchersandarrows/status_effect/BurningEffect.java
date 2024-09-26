@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.stln.launchersandarrows.mixin.LivingEntityMixin;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 
 public class BurningEffect extends StatusEffect {
@@ -36,6 +37,6 @@ public class BurningEffect extends StatusEffect {
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         StatusEffectUtil.removeOtherAttributeEffect(entity, 0);
-        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1.0F, 0.5F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundInit.FLAME_EFFECT, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 }

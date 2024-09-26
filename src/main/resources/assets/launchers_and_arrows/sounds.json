@@ -4,5 +4,65 @@
     "sounds" :  [
       "launchers_and_arrows:bow_release"
     ]
+  },
+  "bolt_thrower" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.bolt_thrower" ,
+    "sounds" :  [
+      "launchers_and_arrows:bolt_thrower"
+    ]
+  },
+  "crosslauncher" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.crosslauncher" ,
+    "sounds" :  [
+      "launchers_and_arrows:crosslauncher"
+    ]
+  },
+  "flame_effect" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.flame_effect" ,
+    "sounds" :  [
+      "launchers_and_arrows:flame_effect"
+    ]
+  },
+  "frost_effect" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.frost_effect" ,
+    "sounds" :  [
+      "launchers_and_arrows:frost_effect"
+    ]
+  },
+  "lightning_effect" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.lightning_effect" ,
+    "sounds" :  [
+      "launchers_and_arrows:lightning_effect"
+    ]
+  },
+  "acid_effect" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.acid_effect" ,
+    "sounds" :  [
+      "launchers_and_arrows:acid_effect"
+    ]
+  },
+  "flood_effect" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.flood_effect" ,
+    "sounds" :  [
+      "launchers_and_arrows:flood_effect"
+    ]
+  },
+  "echo_effect" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.echo_effect" ,
+    "sounds" :  [
+      "launchers_and_arrows:echo_effect"
+    ]
+  },
+  "explode" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.explode" ,
+    "sounds" :  [
+      "launchers_and_arrows:explode"
+    ]
+  },
+  "wave" :  {
+    "subtitle" :  "subtitles.launchers_and_arrows.wave" ,
+    "sounds" :  [
+      "launchers_and_arrows:wave"
+    ]
   }
 }

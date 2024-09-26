@@ -12,6 +12,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.Vec3d;
 import net.stln.launchersandarrows.LaunchersAndArrows;
+import net.stln.launchersandarrows.entity.AttriburteDataTracker;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+public abstract class LivingEntityMixin implements AttriburteDataTracker {
 
     @Shadow public abstract Vec3d applyMovementInput(Vec3d movementInput, float slipperiness);
 
@@ -58,10 +59,53 @@ public abstract class LivingEntityMixin {
     private static final TrackedData<Boolean> CONFUSION_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
+    private static final TrackedData<Integer> FLAME_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> FROST_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> LIGHTNING_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> ACID_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> FLOOD_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> ECHO_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> SERIOUS_INJURY = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Unique
     LivingEntity entity = (LivingEntity) (Object) this;
 
     @Unique
     DamageSource damageSource = null;
+
+    @Override
+    public int getTracker(int id) {
+        switch (id) {
+            case 0 -> {
+                return entity.getDataTracker().get(FLAME_ACCUMULATION);
+            }
+            case 1 -> {
+                return entity.getDataTracker().get(FROST_ACCUMULATION);
+            }
+            case 2 -> {
+                return entity.getDataTracker().get(LIGHTNING_ACCUMULATION);
+            }
+            case 3 -> {
+                return entity.getDataTracker().get(ACID_ACCUMULATION);
+            }
+            case 4 -> {
+                return entity.getDataTracker().get(FLOOD_ACCUMULATION);
+            }
+            case 5 -> {
+                return entity.getDataTracker().get(ECHO_ACCUMULATION);
+            }
+            case 6 -> {
+                return entity.getDataTracker().get(SERIOUS_INJURY);
+            }
+        }
+        return 0;
+    }
 
     @Inject(method = "damage", at = @At("HEAD"))
     private void getDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
@@ -118,6 +162,50 @@ public abstract class LivingEntityMixin {
         addStatusEffectParticle(StatusEffectInit.CORROSION, CORROSION_FLAG, ParticleInit.ACID_EFFECT);
         addStatusEffectParticle(StatusEffectInit.SUBMERGED, SUBMERGED_FLAG, ParticleInit.FLOOD_EFFECT);
         addStatusEffectParticle(StatusEffectInit.CONFUSION, CONFUSION_FLAG, ParticleInit.ECHO_EFFECT);
+        if (!entity.getWorld().isClient) {
+            if (entity.hasStatusEffect(StatusEffectInit.FLAME_ACCUMULATION)) {
+                entity.getDataTracker().set(FLAME_ACCUMULATION,
+                        entity.getStatusEffect(StatusEffectInit.FLAME_ACCUMULATION).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(FLAME_ACCUMULATION, 0);
+            }
+            if (entity.hasStatusEffect(StatusEffectInit.FROST_ACCUMULATION)) {
+                entity.getDataTracker().set(FROST_ACCUMULATION,
+                        entity.getStatusEffect(StatusEffectInit.FROST_ACCUMULATION).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(FROST_ACCUMULATION, 0);
+            }
+            if (entity.hasStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION)) {
+                entity.getDataTracker().set(LIGHTNING_ACCUMULATION,
+                        entity.getStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(LIGHTNING_ACCUMULATION, 0);
+            }
+            if (entity.hasStatusEffect(StatusEffectInit.ACID_ACCUMULATION)) {
+                entity.getDataTracker().set(ACID_ACCUMULATION,
+                        entity.getStatusEffect(StatusEffectInit.ACID_ACCUMULATION).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(ACID_ACCUMULATION, 0);
+            }
+            if (entity.hasStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION)) {
+                entity.getDataTracker().set(FLOOD_ACCUMULATION,
+                        entity.getStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(FLOOD_ACCUMULATION, 0);
+            }
+            if (entity.hasStatusEffect(StatusEffectInit.ECHO_ACCUMULATION)) {
+                entity.getDataTracker().set(ECHO_ACCUMULATION,
+                        entity.getStatusEffect(StatusEffectInit.ECHO_ACCUMULATION).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(ECHO_ACCUMULATION, 0);
+            }
+            if (entity.hasStatusEffect(StatusEffectInit.SERIOUS_INJURY)) {
+                entity.getDataTracker().set(SERIOUS_INJURY,
+                        entity.getStatusEffect(StatusEffectInit.SERIOUS_INJURY).getAmplifier() + 1);
+            } else {
+                entity.getDataTracker().set(SERIOUS_INJURY, 0);
+            }
+        }
     }
 
     @Unique
@@ -150,5 +238,12 @@ public abstract class LivingEntityMixin {
         builder.add(CORROSION_FLAG, false);
         builder.add(SUBMERGED_FLAG, false);
         builder.add(CONFUSION_FLAG, false);
+        builder.add(FLAME_ACCUMULATION, 0);
+        builder.add(FROST_ACCUMULATION, 0);
+        builder.add(LIGHTNING_ACCUMULATION, 0);
+        builder.add(ACID_ACCUMULATION, 0);
+        builder.add(FLOOD_ACCUMULATION, 0);
+        builder.add(ECHO_ACCUMULATION, 0);
+        builder.add(SERIOUS_INJURY, 0);
     }
 }

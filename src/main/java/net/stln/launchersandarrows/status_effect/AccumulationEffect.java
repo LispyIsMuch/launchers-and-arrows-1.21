@@ -20,7 +20,7 @@ public abstract class AccumulationEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (amplifier > Math.sqrt(entity.getMaxHealth()) * 5) {
+        if (amplifier + 1 > Math.sqrt(entity.getMaxHealth()) * 5) {
             amplifier = 0;
             this.remove = true;
             applyEffect();

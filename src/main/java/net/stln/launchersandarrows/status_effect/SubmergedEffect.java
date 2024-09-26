@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 
 public class SubmergedEffect extends StatusEffect {
@@ -41,6 +42,6 @@ public class SubmergedEffect extends StatusEffect {
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         StatusEffectUtil.removeOtherAttributeEffect(entity, 4);
-        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.PLAYERS, 1.0F, 0.5F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundInit.FLOOD_EFFECT, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 }

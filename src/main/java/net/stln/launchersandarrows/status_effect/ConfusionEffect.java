@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.stln.launchersandarrows.particle.ParticleInit;
+import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 
 import java.util.List;
@@ -64,6 +65,6 @@ public class ConfusionEffect extends StatusEffect {
     public void onApplied(LivingEntity entity, int amplifier) {
         super.onApplied(entity, amplifier);
         StatusEffectUtil.removeOtherAttributeEffect(entity, 5);
-        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_SCULK_SHRIEKER_SHRIEK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+        entity.getWorld().playSound(entity, entity.getBlockPos(), SoundInit.ECHO_EFFECT, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
 }
