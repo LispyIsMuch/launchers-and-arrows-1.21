@@ -5,6 +5,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.stln.launchersandarrows.LaunchersAndArrows;
 
 public class SoundInit {
     public static final Identifier BOW_RELEASE_ID = Identifier.of("launchers_and_arrows:bow_release");
@@ -31,8 +32,11 @@ public class SoundInit {
     public static RegistryEntry.Reference<SoundEvent> EXPLODE_ENTRY = Registry.registerReference(Registries.SOUND_EVENT, EXPLODE_ID, EXPLODE);
     public static final Identifier WAVE_ID = Identifier.of("launchers_and_arrows:wave");
     public static SoundEvent WAVE = SoundEvent.of(WAVE_ID);
+    public static final Identifier RELOAD_ID = Identifier.of("launchers_and_arrows:reload");
+    public static SoundEvent RELOAD = SoundEvent.of(RELOAD_ID);
 
     public static void registerSoundEvents() {
+        LaunchersAndArrows.LOGGER.info("Registering Sounds for " + LaunchersAndArrows.MOD_ID);
         Registry.register(Registries.SOUND_EVENT, BOW_RELEASE_ID, BOW_RELEASE);
         Registry.register(Registries.SOUND_EVENT, BOLT_THROWER_ID, BOLT_THROWER);
         Registry.register(Registries.SOUND_EVENT, CROSSLAUNCHER_ID, CROSSLAUNCHER);
@@ -44,5 +48,6 @@ public class SoundInit {
         Registry.register(Registries.SOUND_EVENT, ECHO_EFFECT_ID, ECHO_EFFECT);
         Registry.register(Registries.SOUND_EVENT, EXPLODE_ID, EXPLODE);
         Registry.register(Registries.SOUND_EVENT, WAVE_ID, WAVE);
+        Registry.register(Registries.SOUND_EVENT, RELOAD_ID, RELOAD);
     }
 }

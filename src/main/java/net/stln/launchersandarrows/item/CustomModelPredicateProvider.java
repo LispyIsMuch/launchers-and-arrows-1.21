@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.GlobalPos;
+import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.item.bow.ModfiableBowItem;
 import net.stln.launchersandarrows.item.component.ModComponentInit;
 import net.stln.launchersandarrows.item.launcher.BoltThrowerItem;
@@ -20,6 +21,7 @@ import net.stln.launchersandarrows.item.launcher.CrossLauncherItem;
 @Environment(EnvType.CLIENT)
 public class CustomModelPredicateProvider {
     public static void registerModModels() {
+        LaunchersAndArrows.LOGGER.info("Registering Item Model for " + LaunchersAndArrows.MOD_ID);
         registerModBow(ItemInit.LONG_BOW);
         registerModBow(ItemInit.RAPID_BOW);
         registerModBow(ItemInit.MULTISHOT_BOW);

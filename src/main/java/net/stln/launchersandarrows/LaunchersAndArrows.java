@@ -22,7 +22,9 @@ public class LaunchersAndArrows implements ModInitializer {
 		ParticleInit.registerParticleTypes();
 		StatusEffectInit.registerStatusEffect();
 		ItemInit.registerModItems();
+		ItemInit.registerAttributeEffect();
 		ItemGroupInit.registerItemGroup();
+		EntityInit.registerModEntities();
 		VillagerTradeInit.registerVillagerTrades();
 	}
 }

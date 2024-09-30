@@ -49,9 +49,11 @@ public class ShockExplosionEffect extends StatusEffect {
     }
 
     private void generateWindExplosion() {
+        if (entity != null) {
         entity.getWorld().createExplosion(null, null,
                 EXPLOSION_BEHAVIOR, entity.getParticleX(0.5F), entity.getRandomBodyY() - 0.1F, entity.getParticleZ(0.5F),
                 this.amplifier * 2 + 2, false, World.ExplosionSourceType.TRIGGER,
                 ParticleTypes.GUST_EMITTER_SMALL, ParticleTypes.GUST_EMITTER_LARGE, SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST);
+        }
     }
 }

@@ -168,9 +168,11 @@ public class ItemProjectile extends ThrownItemEntity {
             }
             if (this.getDataTracker().get(HIT_EFFECT_TICK) >= getLifeTimeAfterHit()) {
                 this.kill();
-                ParticleEffect particleEffect = this.getParticleParameters();
-                for(int i = 0; i < 8; ++i) {
-                    this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                if (getWorld().isClient) {
+                    ParticleEffect particleEffect = this.getParticleParameters();
+                    for (int i = 0; i < 8; ++i) {
+                        this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                    }
                 }
                 this.getWorld().playSound(null, this.getBlockPos(), getHitSound(), SoundCategory.PLAYERS,
                         1.0F, 1.0F / (this.getRandom().nextFloat() * 0.5F + 1.8F) + 0.33F);

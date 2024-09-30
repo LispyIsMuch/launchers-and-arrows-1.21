@@ -102,10 +102,11 @@ public class ItemInit {
     }
 
     public static void  registerModItems() {
-        LaunchersAndArrows.LOGGER.info("Registering Mod Items for" + LaunchersAndArrows.MOD_ID);
+        LaunchersAndArrows.LOGGER.info("Registering Mod Items for " + LaunchersAndArrows.MOD_ID);
     }
 
     public static void registerAttributeEffect() {
+        LaunchersAndArrows.LOGGER.info("Registering Dictionary for " + LaunchersAndArrows.MOD_ID);
         AttributeEffectsDictionary.registerToDict(FLAME_ARROW, AttributeEnum.FLAME.get(), 15);
         AttributeEffectsDictionary.registerToDict(FREEZING_ARROW, AttributeEnum.FROST.get(), 15);
         AttributeEffectsDictionary.registerToDict(LIGHTNING_ARROW, AttributeEnum.LIGHTNING.get(), 15);

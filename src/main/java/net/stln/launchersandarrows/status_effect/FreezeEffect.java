@@ -19,9 +19,6 @@ public class FreezeEffect extends StatusEffect {
         if (entity.getFrozenTicks() <= entity.getMinFreezeDamageTicks() + 20) {
             entity.setFrozenTicks(Math.min(entity.getFrozenTicks() + ((amplifier + 1) * 10), entity.getMinFreezeDamageTicks() + 20));
         }
-        if (entity.hasStatusEffect(StatusEffectInit.FROST_ACCUMULATION)) {
-            entity.removeStatusEffect(StatusEffectInit.FROST_ACCUMULATION);
-        }
         return super.applyUpdateEffect(entity, amplifier);
     }
 

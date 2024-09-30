@@ -85,10 +85,19 @@ public class BoltThrowerItem extends ModfiableBowItem {
         this.played0 = false;
         this.played1 = false;
         this.played2 = false;
-        if (user.getStackInHand(hand).get(ModComponentInit.BOLT_COUNT_COMPONENT) > 0) {
-            user.getStackInHand(hand).set(ModComponentInit.CHARGING_COMPONENT, true);
+        ItemStack itemStack = user.getStackInHand(hand);
+        if (itemStack.get(ModComponentInit.BOLT_COUNT_COMPONENT) > 0) {
+            itemStack.set(ModComponentInit.CHARGING_COMPONENT, true);
+            user.setCurrentHand(hand);
+            return TypedActionResult.consume(itemStack);
         }
-        return super.use(world, user, hand);
+        boolean bl = !user.getProjectileType(itemStack).isEmpty();
+        if (!user.isInCreativeMode() && !bl) {
+            return TypedActionResult.fail(itemStack);
+        } else {
+            user.setCurrentHand(hand);
+            return TypedActionResult.consume(itemStack);
+        }
     }
 
     @Override
@@ -165,18 +174,6 @@ public class BoltThrowerItem extends ModfiableBowItem {
                 );
                 played2 = true;
             }
-            if (count < Math.min(getModifiedMaxChargeCount(stack), leftCount) && leftCount > 0) {
-                world.playSound(
-                        null,
-                        user.getX(),
-                        user.getY(),
-                        user.getZ(),
-                        SoundEvents.BLOCK_PISTON_CONTRACT,
-                        SoundCategory.PLAYERS,
-                        0.2F,
-                        2.0F / (world.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F
-                );
-            }
             if (count >= Math.min(getModifiedMaxChargeCount(stack), leftCount) && leftCount > 0 && !played2) {
                 world.playSound(
                         null,
@@ -193,6 +190,18 @@ public class BoltThrowerItem extends ModfiableBowItem {
         }
         int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
         if (leftCount > 0 && stack.get(ModComponentInit.CHARGING_COMPONENT) && remainingUseTicks % chargeDelay == 0) {
+            if (count < Math.min(getModifiedMaxChargeCount(stack), leftCount)) {
+                world.playSound(
+                        null,
+                        user.getX(),
+                        user.getY(),
+                        user.getZ(),
+                        SoundInit.RELOAD,
+                        SoundCategory.PLAYERS,
+                        0.5F,
+                        world.getRandom().nextFloat() * 0.2F + 0.9F
+                );
+            }
             stack.set(ModComponentInit.CHARGED_BOLT_COUNT_COMPONENT, Math.min(count + 1, Math.min(getModifiedMaxChargeCount(stack), leftCount)));
         }
         float f = getModifiedPullProgress(i, stack);
@@ -305,7 +314,7 @@ public class BoltThrowerItem extends ModfiableBowItem {
             persistentProjectileEntity.setCritical(true);
         }
         persistentProjectileEntity.setDamage(0.5F);
-        persistentProjectileEntity.setPos(shooter.getX(), shooter.getEyeY() - 0.5, shooter.getZ());
+        persistentProjectileEntity.setPos(shooter.getX(), shooter.getEyeY() - 0.2, shooter.getZ());
         for (int i = 0; i < slotsize; i++) {
             if (i < getModifiers(weaponStack).size()) {
                 ItemStack modifier = getModifier(i, weaponStack);

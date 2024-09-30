@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.stln.launchersandarrows.LaunchersAndArrows;
-import net.stln.launchersandarrows.entity.AttriburteDataTracker;
+import net.stln.launchersandarrows.entity.AttributeDataTracker;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,16 +25,17 @@ public class AttributeEffectInfoRenderer {
             int offsetH = 32;
             int barW = 0;
             int frameW = 0;
-            int flame = ((AttriburteDataTracker)playerEntity).getTracker(0);
-            barW = getScaledBarWidth(playerEntity, flame, StatusEffectInit.BURNING);
-            frameW = getScaledFrameWidth(playerEntity, StatusEffectInit.BURNING);
+            int flame = ((AttributeDataTracker)playerEntity).getAccumulationTracker(0);
+            int burning = ((AttributeDataTracker)playerEntity).getEffectDuration(0);
+            barW = getScaledBarWidth(playerEntity, flame, burning);
+            frameW = getScaledFrameWidth(playerEntity, burning);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 0, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 1, barW, 6, 64, 64);
                 if (frameW > -1) {
                     drawContext.drawTexture(TEXTURE, 2, h - offsetH, 0, 56, frameW, 8, 64, 64);
                     drawContext.drawText(renderer,
-                            String.valueOf(playerEntity.getStatusEffect(StatusEffectInit.BURNING).getDuration() / 20),
+                            String.valueOf(burning / 20),
                             30, h - offsetH, 0xFFFFFF, true);
                 } else {
                     drawContext.drawText(renderer,
@@ -43,16 +44,17 @@ public class AttributeEffectInfoRenderer {
                 }
                 offsetH += 10;
             }
-            int frost = ((AttriburteDataTracker)playerEntity).getTracker(1);
-            barW = getScaledBarWidth(playerEntity, frost, StatusEffectInit.FREEZE);
-            frameW = getScaledFrameWidth(playerEntity, StatusEffectInit.FREEZE);
+            int frost = ((AttributeDataTracker)playerEntity).getAccumulationTracker(1);
+            int freeze = ((AttributeDataTracker)playerEntity).getEffectDuration(1);
+            barW = getScaledBarWidth(playerEntity, frost, freeze);
+            frameW = getScaledFrameWidth(playerEntity, freeze);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 8, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 9, barW, 6, 64, 64);
                 if (frameW > -1) {
                     drawContext.drawTexture(TEXTURE, 2, h - offsetH, 0, 56, frameW, 8, 64, 64);
                     drawContext.drawText(renderer,
-                            String.valueOf(playerEntity.getStatusEffect(StatusEffectInit.FREEZE).getDuration() / 20),
+                            String.valueOf(freeze / 20),
                             30, h - offsetH, 0xFFFFFF, true);
                 } else {
                     drawContext.drawText(renderer,
@@ -61,16 +63,17 @@ public class AttributeEffectInfoRenderer {
                 }
                 offsetH += 10;
             }
-            int lightning = ((AttriburteDataTracker)playerEntity).getTracker(2);
-            barW = getScaledBarWidth(playerEntity, lightning, StatusEffectInit.ELECTRIC_SHOCK);
-            frameW = getScaledFrameWidth(playerEntity, StatusEffectInit.ELECTRIC_SHOCK);
+            int lightning = ((AttributeDataTracker)playerEntity).getAccumulationTracker(2);
+            int electricShock = ((AttributeDataTracker)playerEntity).getEffectDuration(2);
+            barW = getScaledBarWidth(playerEntity, lightning, electricShock);
+            frameW = getScaledFrameWidth(playerEntity, electricShock);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 16, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 17, barW, 6, 64, 64);
                 if (frameW > -1) {
                     drawContext.drawTexture(TEXTURE, 2, h - offsetH, 0, 56, frameW, 8, 64, 64);
                     drawContext.drawText(renderer,
-                            String.valueOf(playerEntity.getStatusEffect(StatusEffectInit.ELECTRIC_SHOCK).getDuration() / 20),
+                            String.valueOf(electricShock / 20),
                             30, h - offsetH, 0xFFFFFF, true);
                 } else {
                     drawContext.drawText(renderer,
@@ -79,16 +82,17 @@ public class AttributeEffectInfoRenderer {
                 }
                 offsetH += 10;
             }
-            int acid = ((AttriburteDataTracker)playerEntity).getTracker(3);
-            barW = getScaledBarWidth(playerEntity, acid, StatusEffectInit.CORROSION);
-            frameW = getScaledFrameWidth(playerEntity, StatusEffectInit.CORROSION);
+            int acid = ((AttributeDataTracker)playerEntity).getAccumulationTracker(3);
+            int corrosion = ((AttributeDataTracker)playerEntity).getEffectDuration(3);
+            barW = getScaledBarWidth(playerEntity, acid, corrosion);
+            frameW = getScaledFrameWidth(playerEntity, corrosion);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 24, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 25, barW, 6, 64, 64);
                 if (frameW > -1) {
                     drawContext.drawTexture(TEXTURE, 2, h - offsetH, 0, 56, frameW, 8, 64, 64);
                     drawContext.drawText(renderer,
-                            String.valueOf(playerEntity.getStatusEffect(StatusEffectInit.CORROSION).getDuration() / 20),
+                            String.valueOf(corrosion / 20),
                             30, h - offsetH, 0xFFFFFF, true);
                 } else {
                     drawContext.drawText(renderer,
@@ -97,16 +101,17 @@ public class AttributeEffectInfoRenderer {
                 }
                 offsetH += 10;
             }
-            int flood = ((AttriburteDataTracker)playerEntity).getTracker(4);
-            barW = getScaledBarWidth(playerEntity, flood, StatusEffectInit.SUBMERGED);
-            frameW = getScaledFrameWidth(playerEntity, StatusEffectInit.SUBMERGED);
+            int flood = ((AttributeDataTracker)playerEntity).getAccumulationTracker(4);
+            int submerged = ((AttributeDataTracker)playerEntity).getEffectDuration(4);
+            barW = getScaledBarWidth(playerEntity, flood, submerged);
+            frameW = getScaledFrameWidth(playerEntity, submerged);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 32, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 33, barW, 6, 64, 64);
                 if (frameW > -1) {
                     drawContext.drawTexture(TEXTURE, 2, h - offsetH, 0, 56, frameW, 8, 64, 64);
                     drawContext.drawText(renderer,
-                            String.valueOf(playerEntity.getStatusEffect(StatusEffectInit.SUBMERGED).getDuration() / 20),
+                            String.valueOf(submerged / 20),
                             30, h - offsetH, 0xFFFFFF, true);
                 } else {
                     drawContext.drawText(renderer,
@@ -115,16 +120,17 @@ public class AttributeEffectInfoRenderer {
                 }
                 offsetH += 10;
             }
-            int echo = ((AttriburteDataTracker)playerEntity).getTracker(5);
-            barW = getScaledBarWidth(playerEntity, echo, StatusEffectInit.CONFUSION);
-            frameW = getScaledFrameWidth(playerEntity, StatusEffectInit.CONFUSION);
+            int echo = ((AttributeDataTracker)playerEntity).getAccumulationTracker(5);
+            int confusion = ((AttributeDataTracker)playerEntity).getEffectDuration(5);
+            barW = getScaledBarWidth(playerEntity, echo, confusion);
+            frameW = getScaledFrameWidth(playerEntity, confusion);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 40, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 41, barW, 6, 64, 64);
                 if (frameW > -1) {
                     drawContext.drawTexture(TEXTURE, 2, h - offsetH, 0, 56, frameW, 8, 64, 64);
                     drawContext.drawText(renderer,
-                            String.valueOf(playerEntity.getStatusEffect(StatusEffectInit.CONFUSION).getDuration() / 20),
+                            String.valueOf(confusion / 20),
                             30, h - offsetH, 0xFFFFFF, true);
                 } else {
                     drawContext.drawText(renderer,
@@ -133,8 +139,8 @@ public class AttributeEffectInfoRenderer {
                 }
                 offsetH += 10;
             }
-            int injury = ((AttriburteDataTracker)playerEntity).getTracker(6);
-            barW = getScaledBarWidth(playerEntity, injury, null);
+            int injury = ((AttributeDataTracker)playerEntity).getAccumulationTracker(6);
+            barW = getScaledBarWidth(playerEntity, injury, 0);
             if (barW > -1) {
                 drawContext.drawTexture(TEXTURE, 2, h - offsetH, 24, 48, 24, 8, 64, 64);
                 drawContext.drawTexture(TEXTURE, 3, h - offsetH + 1, 1, 49, barW, 6, 64, 64);
@@ -145,8 +151,8 @@ public class AttributeEffectInfoRenderer {
         }));
     }
 
-    private static int getScaledBarWidth(PlayerEntity playerEntity, int accumulation, @Nullable RegistryEntry<StatusEffect> effect) {
-        if (effect != null && playerEntity.hasStatusEffect(effect)) {
+    private static int getScaledBarWidth(PlayerEntity playerEntity, int accumulation, int duration) {
+        if (duration > 0) {
             return 22;
         }
         if (accumulation > 0) {
@@ -155,9 +161,9 @@ public class AttributeEffectInfoRenderer {
         }
         return -1;
     }
-    private static int getScaledFrameWidth(PlayerEntity playerEntity, RegistryEntry<StatusEffect> effect) {
-        if (playerEntity.hasStatusEffect(effect)) {
-            return playerEntity.getStatusEffect(effect).getDuration() * 24 / 300;
+    private static int getScaledFrameWidth(PlayerEntity playerEntity, int duration) {
+        if (duration > 0) {
+            return duration * 24 / 300;
         }
         return -1;
     }

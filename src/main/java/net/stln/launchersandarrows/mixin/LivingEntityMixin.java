@@ -2,7 +2,6 @@ package net.stln.launchersandarrows.mixin;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -11,11 +10,9 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.Vec3d;
-import net.stln.launchersandarrows.LaunchersAndArrows;
-import net.stln.launchersandarrows.entity.AttriburteDataTracker;
+import net.stln.launchersandarrows.entity.AttributeDataTracker;
 import net.stln.launchersandarrows.particle.ParticleInit;
 import net.stln.launchersandarrows.status_effect.StatusEffectInit;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements AttriburteDataTracker {
+public abstract class LivingEntityMixin implements AttributeDataTracker {
 
     @Shadow public abstract Vec3d applyMovementInput(Vec3d movementInput, float slipperiness);
 
@@ -59,6 +56,19 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
     private static final TrackedData<Boolean> CONFUSION_FLAG = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
+    private static final TrackedData<Integer> BURNING_DURATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> FREEZE_DURATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> ELECTRIC_SHOCK_DURATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> CORROSION_DURATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> SUBMERGED_DURATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> CONFUSION_DURATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Unique
     private static final TrackedData<Integer> FLAME_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
     private static final TrackedData<Integer> FROST_ACCUMULATION = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -80,7 +90,7 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
     DamageSource damageSource = null;
 
     @Override
-    public int getTracker(int id) {
+    public int getAccumulationTracker(int id) {
         switch (id) {
             case 0 -> {
                 return entity.getDataTracker().get(FLAME_ACCUMULATION);
@@ -102,6 +112,56 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
             }
             case 6 -> {
                 return entity.getDataTracker().get(SERIOUS_INJURY);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean getEffectTracker(int id) {
+        switch (id) {
+            case 0 -> {
+                return entity.getDataTracker().get(BURNING_FLAG);
+            }
+            case 1 -> {
+                return entity.getDataTracker().get(FREEZE_FLAG);
+            }
+            case 2 -> {
+                return entity.getDataTracker().get(ELECTRIC_SHOCK_FLAG);
+            }
+            case 3 -> {
+                return entity.getDataTracker().get(CORROSION_FLAG);
+            }
+            case 4 -> {
+                return entity.getDataTracker().get(SUBMERGED_FLAG);
+            }
+            case 5 -> {
+                return entity.getDataTracker().get(CONFUSION_FLAG);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int getEffectDuration(int id) {
+        switch (id) {
+            case 0 -> {
+                return entity.getDataTracker().get(BURNING_DURATION);
+            }
+            case 1 -> {
+                return entity.getDataTracker().get(FREEZE_DURATION);
+            }
+            case 2 -> {
+                return entity.getDataTracker().get(ELECTRIC_SHOCK_DURATION);
+            }
+            case 3 -> {
+                return entity.getDataTracker().get(CORROSION_DURATION);
+            }
+            case 4 -> {
+                return entity.getDataTracker().get(SUBMERGED_DURATION);
+            }
+            case 5 -> {
+                return entity.getDataTracker().get(CONFUSION_DURATION);
             }
         }
         return 0;
@@ -156,12 +216,12 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
 
     @Inject(method = "tickStatusEffects", at = @At("TAIL"))
     private void tickStatusEffects(CallbackInfo ci) {
-        addStatusEffectParticle(StatusEffectInit.BURNING, BURNING_FLAG, ParticleInit.FLAME_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.FREEZE, FREEZE_FLAG, ParticleInit.FROST_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.ELECTRIC_SHOCK, ELECTRIC_SHOCK_FLAG, ParticleInit.LIGHTNING_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.CORROSION, CORROSION_FLAG, ParticleInit.ACID_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.SUBMERGED, SUBMERGED_FLAG, ParticleInit.FLOOD_EFFECT);
-        addStatusEffectParticle(StatusEffectInit.CONFUSION, CONFUSION_FLAG, ParticleInit.ECHO_EFFECT);
+        addStatusEffectParticle(StatusEffectInit.BURNING, BURNING_FLAG, ParticleInit.FLAME_EFFECT, BURNING_DURATION);
+        addStatusEffectParticle(StatusEffectInit.FREEZE, FREEZE_FLAG, ParticleInit.FROST_EFFECT, FREEZE_DURATION);
+        addStatusEffectParticle(StatusEffectInit.ELECTRIC_SHOCK, ELECTRIC_SHOCK_FLAG, ParticleInit.LIGHTNING_EFFECT, ELECTRIC_SHOCK_DURATION);
+        addStatusEffectParticle(StatusEffectInit.CORROSION, CORROSION_FLAG, ParticleInit.ACID_EFFECT, CORROSION_DURATION);
+        addStatusEffectParticle(StatusEffectInit.SUBMERGED, SUBMERGED_FLAG, ParticleInit.FLOOD_EFFECT, SUBMERGED_DURATION);
+        addStatusEffectParticle(StatusEffectInit.CONFUSION, CONFUSION_FLAG, ParticleInit.ECHO_EFFECT, CONFUSION_DURATION);
         if (!entity.getWorld().isClient) {
             if (entity.hasStatusEffect(StatusEffectInit.FLAME_ACCUMULATION)) {
                 entity.getDataTracker().set(FLAME_ACCUMULATION,
@@ -209,7 +269,7 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
     }
 
     @Unique
-    private void addStatusEffectParticle(RegistryEntry<StatusEffect> statusEffect, TrackedData<Boolean> data, ParticleEffect particleEffect) {
+    private void addStatusEffectParticle(RegistryEntry<StatusEffect> statusEffect, TrackedData<Boolean> data, ParticleEffect particleEffect, TrackedData<Integer> durationData) {
         if (entity.getWorld().isClient && entity.getDataTracker().get(data)) {
             float w = entity.getWidth();
             float h = entity.getHeight();
@@ -225,8 +285,10 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
             }
         } else if (entity.hasStatusEffect(statusEffect)) {
             entity.getDataTracker().set(data, true);
+            entity.getDataTracker().set(durationData, entity.getStatusEffect(statusEffect).getDuration());
         } else {
             entity.getDataTracker().set(data, false);
+            entity.getDataTracker().set(durationData, 0);
         }
     }
 
@@ -238,6 +300,12 @@ public abstract class LivingEntityMixin implements AttriburteDataTracker {
         builder.add(CORROSION_FLAG, false);
         builder.add(SUBMERGED_FLAG, false);
         builder.add(CONFUSION_FLAG, false);
+        builder.add(BURNING_DURATION, 0);
+        builder.add(FREEZE_DURATION, 0);
+        builder.add(ELECTRIC_SHOCK_DURATION, 0);
+        builder.add(CORROSION_DURATION, 0);
+        builder.add(SUBMERGED_DURATION, 0);
+        builder.add(CONFUSION_DURATION, 0);
         builder.add(FLAME_ACCUMULATION, 0);
         builder.add(FROST_ACCUMULATION, 0);
         builder.add(LIGHTNING_ACCUMULATION, 0);

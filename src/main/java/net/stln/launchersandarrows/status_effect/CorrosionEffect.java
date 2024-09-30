@@ -17,9 +17,6 @@ public class CorrosionEffect extends StatusEffect {
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.damage(entity.getDamageSources().magic(), amplifier + 1);
-        if (entity.hasStatusEffect(StatusEffectInit.ACID_ACCUMULATION)) {
-            entity.removeStatusEffect(StatusEffectInit.ACID_ACCUMULATION);
-        }
         return super.applyUpdateEffect(entity, amplifier);
     }
 

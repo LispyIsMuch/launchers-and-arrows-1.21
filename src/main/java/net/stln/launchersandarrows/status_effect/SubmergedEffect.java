@@ -26,9 +26,6 @@ public class SubmergedEffect extends StatusEffect {
                 entity.damage(entity.getDamageSources().drown(), 1);
             }
         }
-        if (entity.hasStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION)) {
-            entity.removeStatusEffect(StatusEffectInit.FLOOD_ACCUMULATION);
-        }
         return super.applyUpdateEffect(entity, amplifier);
     }
 

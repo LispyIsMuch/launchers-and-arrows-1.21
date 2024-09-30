@@ -70,6 +70,7 @@ public final class ItemGroupInit {
             .build();
 
     public static void registerItemGroup() {
+        LaunchersAndArrows.LOGGER.info("Registering Item Group for " + LaunchersAndArrows.MOD_ID);
         Registry.register(Registries.ITEM_GROUP, Identifier.of(LaunchersAndArrows.MOD_ID, "launchers_and_arrows"), LAUNCHERS_AND_ARROWS);
     }
 }

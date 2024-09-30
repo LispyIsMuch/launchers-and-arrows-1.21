@@ -24,9 +24,6 @@ public class ElectricShockEffect extends StatusEffect {
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, 9));
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 20, 9));
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20, 9));
-        if (entity.hasStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION)) {
-            entity.removeStatusEffect(StatusEffectInit.LIGHTNING_ACCUMULATION);
-        }
         return super.applyUpdateEffect(entity, amplifier);
     }
 

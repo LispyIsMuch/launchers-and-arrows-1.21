@@ -6,12 +6,14 @@ import net.minecraft.item.Items;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 import net.minecraft.village.VillagerProfession;
+import net.stln.launchersandarrows.LaunchersAndArrows;
 import net.stln.launchersandarrows.item.ItemInit;
 
 import java.util.Optional;
 
 public class VillagerTradeInit {
     public static void registerVillagerTrades() {
+        LaunchersAndArrows.LOGGER.info("Registering Villager Trades for " + LaunchersAndArrows.MOD_ID);
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FLETCHER, 1, factories -> {
             factories.add(((entity, random) ->
                 new TradeOffer(new TradedItem(Items.STICK, 30), new ItemStack(ItemInit.METAL_ARROWHEAD, 1),

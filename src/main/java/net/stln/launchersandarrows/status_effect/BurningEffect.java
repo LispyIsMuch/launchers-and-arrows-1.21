@@ -22,9 +22,6 @@ public class BurningEffect extends StatusEffect {
     @Override
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.damage(entity.getDamageSources().inFire(), amplifier + 1);
-        if (entity.hasStatusEffect(StatusEffectInit.FLAME_ACCUMULATION)) {
-            entity.removeStatusEffect(StatusEffectInit.FLAME_ACCUMULATION);
-        }
         return super.applyUpdateEffect(entity, amplifier);
     }
 

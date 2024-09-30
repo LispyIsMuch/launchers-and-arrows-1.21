@@ -49,9 +49,6 @@ public class ConfusionEffect extends StatusEffect {
                 mobEntity.setTarget(livingEntities.get(mobEntity.getRandom().nextInt(livingEntities.size())));
             }
         }
-        if (entity.hasStatusEffect(StatusEffectInit.ECHO_ACCUMULATION)) {
-            entity.removeStatusEffect(StatusEffectInit.ECHO_ACCUMULATION);
-        }
         return super.applyUpdateEffect(entity, amplifier);
     }
 

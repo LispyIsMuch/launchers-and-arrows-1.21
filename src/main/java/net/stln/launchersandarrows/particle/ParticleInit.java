@@ -19,6 +19,7 @@ public class ParticleInit {
     public static final SimpleParticleType WAVE_EFFECT = FabricParticleTypes.simple(true);
 
     public static void registerParticleTypes() {
+        LaunchersAndArrows.LOGGER.info("Registering Particle Types for " + LaunchersAndArrows.MOD_ID);
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "flame_effect"), FLAME_EFFECT);
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "frost_effect"), FROST_EFFECT);
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(LaunchersAndArrows.MOD_ID, "lightning_effect"), LIGHTNING_EFFECT);
@@ -29,6 +30,7 @@ public class ParticleInit {
     }
 
     public static void registerParticleClient() {
+        LaunchersAndArrows.LOGGER.info("Registering Client Particle for " + LaunchersAndArrows.MOD_ID);
         ParticleFactoryRegistry.getInstance().register(ParticleInit.FLAME_EFFECT, FlameEffectParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleInit.FROST_EFFECT, FrostEffectParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleInit.LIGHTNING_EFFECT, LightningEffectParticle.Factory::new);

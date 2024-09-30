@@ -29,6 +29,7 @@ import net.stln.launchersandarrows.sound.SoundInit;
 import net.stln.launchersandarrows.status_effect.util.StatusEffectUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -88,6 +89,15 @@ public class BoltEntity extends PersistentProjectileEntity {
                 }
             } else {
                 this.spawnParticles(2);
+            }
+            Vec3d pos = this.getPos();
+            if (inGroundTime > 18) {
+            for (int i = 0; i < 10; i++) {
+                double rx = Math.sin(this.getRandom().nextFloat() * 2 * Math.PI) / 2;
+                double ry = Math.sin(this.getRandom().nextFloat() * 2 * Math.PI) / 2;
+                double rz = Math.sin(this.getRandom().nextFloat() * 2 * Math.PI) / 2;
+                this.getWorld().addParticle(ParticleTypes.SMOKE, rx + pos.x, ry + pos.y, rz + pos.z, rx / 10, ry / 10, rz / 10);
+            }
             }
         }
         if (!this.getWorld().isClient()) {
